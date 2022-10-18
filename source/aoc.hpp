@@ -46,7 +46,6 @@ struct advent {
     auto operator()(int day) const -> void
     {
         assert(day >= 1 && day <= 25);
-        fmt::print("day = {}\n", day);
         (this->* days[day-1])();
     }
 
