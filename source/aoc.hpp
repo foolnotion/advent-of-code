@@ -25,6 +25,8 @@
 #include <robin_hood.h>
 #include <scn/scn.h>
 
+#include <Eigen/Core>
+
 #define XXH_INLINE_ALL
 #include <xxh3.h>
 
@@ -76,9 +78,10 @@ struct advent {
     auto day25() const -> void;
 
     private:
-    using func = void(advent<year>::*)() const;
-
-    std::array<func, 1> days = { &advent<year>::day01 };
+    std::array<void(advent::*)() const, 2> days = {
+        &advent<year>::day01,
+        &advent<year>::day02
+    };
 };
 
 #endif

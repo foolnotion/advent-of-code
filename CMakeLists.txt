@@ -19,6 +19,7 @@ add_library(
     aoc_lib OBJECT
     source/aoc.cpp
     source/2017/01/solution.cpp
+    source/2017/02/solution.cpp
 )
 
 target_include_directories(
