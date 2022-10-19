@@ -2,6 +2,7 @@
 #define ADVENT_OF_CODE_HPP
 
 #include <charconv>
+#include <cmath>
 #include <cstdint>
 
 #include <array>
@@ -9,6 +10,7 @@
 #include <vector>
 #include <queue>
 #include <string>
+#include <tuple>
 
 #include <algorithm>
 #include <functional>
@@ -78,10 +80,29 @@ struct advent {
     auto day25() const -> void;
 
     private:
-    std::array<void(advent::*)() const, 2> days = {
+    std::array<void(advent::*)() const, 4> days = {
         &advent<year>::day01,
-        &advent<year>::day02
+        &advent<year>::day02,
+        &advent<year>::day03,
+        &advent<year>::day04,
     };
 };
+
+namespace util {
+    // useful for hashing most things
+    struct hash {
+        template<std::ranges::sized_range R>
+        inline auto operator()(R&& r) const -> u64 {
+            using T = decltype(std::declval<R>()[0]);
+            return XXH_INLINE_XXH3_64bits(r.data(), r.size() * sizeof(T));
+        }
+
+        template<typename... Args>
+        inline auto operator()(Args... args) const -> u64 {
+            std::array arr = { args... };
+            return (*this)(arr);
+        }
+    };
+} // namespace util
 
 #endif
