@@ -80,11 +80,13 @@ struct advent {
     auto day25() const -> void;
 
     private:
-    std::array<void(advent::*)() const, 4> days = {
+    std::array<void(advent::*)() const, 6> days = {
         &advent<year>::day01,
         &advent<year>::day02,
         &advent<year>::day03,
         &advent<year>::day04,
+        &advent<year>::day05,
+        &advent<year>::day06,
     };
 };
 
