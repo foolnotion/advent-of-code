@@ -22,6 +22,8 @@ add_library(
     source/2017/02/solution.cpp
     source/2017/03/solution.cpp
     source/2017/04/solution.cpp
+    source/2017/05/solution.cpp
+    source/2017/06/solution.cpp
 )
 
 target_include_directories(
