@@ -10,13 +10,13 @@ auto advent<2017>::day04() const -> void {
     for (std::string line; std::getline(f, line); ) {
         std::vector<u64> word;
         std::vector<u64> anagram;
-        for (auto s : std::ranges::views::split(line, ' ')) {
+        for (auto s : lz::split(line, ' ')) {
             auto h = XXH_INLINE_XXH3_64bits(s.data(), s.size());
             word.push_back(h);
 
-            std::ranges::sort(s);
-            h = XXH_INLINE_XXH3_64bits(s.data(), s.size());
-            anagram.push_back(h);
+            std::string str(s.begin(), s.end());
+            std::ranges::sort(str);
+            anagram.push_back(util::hash{}(str));
         }
         std::ranges::sort(word);
         words.push_back(word);
