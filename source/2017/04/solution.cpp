@@ -16,7 +16,7 @@ auto advent<2017>::day04() const -> void {
 
             std::string str(s.begin(), s.end());
             std::ranges::sort(str);
-            anagram.push_back(util::hash{}(str));
+            anagram.push_back(aoc::util::hash{}(str));
         }
         std::ranges::sort(word);
         words.push_back(word);

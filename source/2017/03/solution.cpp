@@ -22,7 +22,7 @@ auto advent<2017>::day03() const -> void {
 
     // part 2
     using point = std::array<i64, 2>;
-    robin_hood::unordered_map<point, u64, util::hash> map;
+    robin_hood::unordered_map<point, u64, aoc::util::hash> map;
 
     auto get = [&](point p) {
         auto it = map.find(p);
