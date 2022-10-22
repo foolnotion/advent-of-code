@@ -92,6 +92,7 @@ struct advent {
     };
 };
 
+namespace aoc {
 namespace util {
     // useful for hashing most things
     struct hash {
@@ -108,5 +109,17 @@ namespace util {
         }
     };
 } // namespace util
+
+template<typename T>
+using point = std::array<T, 2>;
+
+} // namespace aoc
+
+template<typename T>
+struct std::hash<aoc::point<T>> {
+    auto operator()(aoc::point<T> p) const noexcept -> std::size_t {
+        return aoc::util::hash{}(p);
+    }
+};
 
 #endif
