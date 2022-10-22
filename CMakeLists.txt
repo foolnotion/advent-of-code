@@ -18,6 +18,15 @@ include(cmake/variables.cmake)
 add_library(
     aoc_lib OBJECT
     source/aoc.cpp
+    # 2015
+    source/2015/01/solution.cpp
+    source/2015/02/solution.cpp
+    source/2015/03/solution.cpp
+    source/2015/04/solution.cpp
+    source/2015/05/solution.cpp
+    source/2015/06/solution.cpp
+    source/2015/07/solution.cpp
+    # 2017
     source/2017/01/solution.cpp
     source/2017/02/solution.cpp
     source/2017/03/solution.cpp
