@@ -2,6 +2,6 @@
 
 auto main() -> int
 {
-    advent<2017>{}(6);
+    advent<2017>{}(7);
     return 0;
 }
