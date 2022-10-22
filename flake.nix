@@ -13,14 +13,17 @@
             inherit system;
             overlays = [ foolnotion.overlay ];
           };
-          stdenv = pkgs.gcc12Stdenv;
+          llvm = pkgs.llvmPackages_14;
+          stdenv = pkgs.overrideCC llvm.stdenv (
+            llvm.clang.override { gccForLibs = pkgs.gcc12.cc; }
+          );
         in rec
         {
           devShells.default = stdenv.mkDerivation {
             name = "aoc-2021";
             hardeningDisable = [ "all" ];
             impureUseNativeOptimizations = true;
-            nativeBuildInputs = with pkgs; [ bear cmake-init cmake clang_14 clang-tools cppcheck ];
+            nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools cppcheck ];
             buildInputs = with pkgs; [
                 # python environment for bindings and scripting
                 cmake-language-server

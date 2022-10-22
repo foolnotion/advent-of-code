@@ -28,6 +28,7 @@
 #include <scn/scn.h>
 
 #include <Eigen/Core>
+#include <Lz/Lz.hpp>
 
 #define XXH_INLINE_ALL
 #include <xxh3.h>
@@ -80,13 +81,14 @@ struct advent {
     auto day25() const -> void;
 
     private:
-    std::array<void(advent::*)() const, 6> days = {
+    std::array<void(advent::*)() const, 7> days = {
         &advent<year>::day01,
         &advent<year>::day02,
         &advent<year>::day03,
         &advent<year>::day04,
         &advent<year>::day05,
         &advent<year>::day06,
+        &advent<year>::day07,
     };
 };
 
