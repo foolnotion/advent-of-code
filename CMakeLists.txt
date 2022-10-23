@@ -52,8 +52,9 @@ find_package(scn REQUIRED)
 find_package(cpp-lazy REQUIRED)
 find_package(xxHash REQUIRED)
 find_package(mdspan REQUIRED)
+find_package(OpenSSL REQUIRED)
 
-target_link_libraries(aoc_lib PUBLIC Eigen3::Eigen cpp-lazy::cpp-lazy fmt::fmt scn::scn xxHash::xxhash)
+target_link_libraries(aoc_lib PUBLIC Eigen3::Eigen cpp-lazy::cpp-lazy fmt::fmt scn::scn xxHash::xxhash OpenSSL::Crypto)
 
 # ---- Declare executable ----
 

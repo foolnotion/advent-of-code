@@ -113,6 +113,10 @@ namespace util {
 template<typename T>
 using point = std::array<T, 2>;
 
+template<char... args>
+auto equals(char c) {
+    return ((c == args) || ...);
+}
 } // namespace aoc
 
 template<typename T>

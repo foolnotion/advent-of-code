@@ -43,6 +43,7 @@
                 seer
                 valgrind
                 xxHash
+                openssl
               ];
 
               shellHook = ''
