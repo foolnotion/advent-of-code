@@ -4,26 +4,15 @@
 struct node {
     std::string id;
     std::function<u16(u16, u16)> op{nullptr}; // NONE means that the node is a leaf node
-
     node* lhs{nullptr};
     node* rhs{nullptr};
     node* parent{nullptr};
+    std::optional<u16> signal{};
 
-    u16 signal{0};
-    bool cycle{false};
-
-    auto reset() {
-        cycle = false;
-        signal = 0;
-    }
-
-    auto eval() -> u16 // NOLINT
-    {
-        if (cycle) { return signal; }
-        cycle = true;
-        if (!static_cast<bool>(op)) { return signal; }
-        signal = op(lhs->eval(), rhs ? rhs->eval() : 0);
-        return signal;
+    auto reset() { signal = std::nullopt; }
+    auto eval() -> u16 {
+        if(!signal) { signal = op(lhs->eval(), rhs ? rhs->eval() : 0); }
+        return signal.value();
     }
 };
 
@@ -31,7 +20,7 @@ template <>
 auto advent<2015>::day07() const -> void
 {
     std::fstream f("./source/2015/07/input.txt");
-    auto const npos = std::string::npos;
+    constexpr auto npos = std::string::npos;
     std::vector<node> nodes;
     nodes.reserve(1024); // NOLINT
     robin_hood::unordered_map<std::string, node*> map;
@@ -47,7 +36,8 @@ auto advent<2015>::day07() const -> void
                 p = it->second;
             }
             if (std::isdigit(id[0])) { // leaf node
-                (void)scn::scan(id, "{}", p->signal);
+                u16 s{}; (void)scn::scan(id, "{}", s);
+                p->signal = s;
             }
             return p;
         };
@@ -55,9 +45,7 @@ auto advent<2015>::day07() const -> void
     };
 
     for (std::string s; std::getline(f, s); ) {
-        std::string a {};
-        std::string b {};
-        std::string c {};
+        std::string a, b, c; // NOLINT
         decltype(node::op) func{nullptr}; 
 
         // figure out the OP
@@ -101,13 +89,12 @@ auto advent<2015>::day07() const -> void
 
     std::ranges::for_each(lz::filter(nodes, isroot), &node::eval);
     auto a = std::ranges::find_if(nodes, [](auto const& n) { return n.id == "a"; });
-    auto s = a->signal;
-    fmt::print("part 1: {}\n", a->signal);
+    auto s = *a->signal;
+    fmt::print("part 1: {}\n", *a->signal);
 
     auto b = std::ranges::find_if(nodes, [](auto const& n) { return n.id == "b"; });
     std::ranges::for_each(lz::filter(nodes, isfunc), &node::reset);
     b->signal = s;
-    b->op = nullptr; // override
     std::ranges::for_each(lz::filter(nodes, isroot), &node::eval);
-    fmt::print("part 2: {}\n", a->signal);
+    fmt::print("part 2: {}\n", *a->signal);
 }
