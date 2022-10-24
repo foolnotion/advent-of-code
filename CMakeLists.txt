@@ -18,6 +18,7 @@ include(cmake/variables.cmake)
 add_library(
     aoc_lib OBJECT
     source/aoc.cpp
+    source/util/md5.cpp
     # 2015
     source/2015/01/solution.cpp
     source/2015/02/solution.cpp
@@ -52,9 +53,8 @@ find_package(scn REQUIRED)
 find_package(cpp-lazy REQUIRED)
 find_package(xxHash REQUIRED)
 find_package(mdspan REQUIRED)
-find_package(OpenSSL REQUIRED)
 
-target_link_libraries(aoc_lib PUBLIC Eigen3::Eigen cpp-lazy::cpp-lazy fmt::fmt scn::scn xxHash::xxhash OpenSSL::Crypto)
+target_link_libraries(aoc_lib PUBLIC Eigen3::Eigen cpp-lazy::cpp-lazy fmt::fmt scn::scn xxHash::xxhash)
 
 # ---- Declare executable ----
 

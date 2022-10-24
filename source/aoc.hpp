@@ -113,9 +113,9 @@ namespace util {
 template<typename T>
 using point = std::array<T, 2>;
 
-template<char... args>
+template<char... C>
 auto equals(char c) {
-    return ((c == args) || ...);
+    return ((c == C) || ...);
 }
 } // namespace aoc
 

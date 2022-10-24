@@ -1,28 +1,23 @@
 #include <aoc.hpp>
-#include <openssl/md5.h>
+#include <util/md5.h>
 
 template <>
 auto advent<2015>::day04() const -> void
 {
     constexpr auto input { "iwrupvqb" };
-    std::array<unsigned char, 16> buf;
+    std::array<u8, 16> buf{};
+    MD5 md5;
 
     auto count = [&](int n) -> std::optional<i64> {
-        for (auto i = 0; ; ++i) {
+        for (auto i = 0;; ++i) {
             auto const s = fmt::format("{}{}", input, i);
-            auto const* val = MD5(reinterpret_cast<unsigned char const*>(s.data()), s.size(), buf.data());
+            md5.reset();
+            md5.add(s.data(), s.size());
+            md5.getHash(buf.data());
+            auto cnt = std::transform_reduce(buf.begin(), buf.begin() + n/2 + n%2, 0UL, std::plus{},
+                    [&](auto c) { return ((c & 0xF0) == 0) + ((c & 0x0F) == 0); }); // NOLINT
 
-            int c = 0;
-            constexpr u64 mask{0xFF};
-            for (int j = 0; j < n/2 + n%2; ++j) {
-                auto v = buf[j];
-                c += (static_cast<u64>(v >> 4UL) & mask) == 0;
-                c += (v & mask) == 0;
-            }
-
-            if (c >= n) {
-                return std::optional{i};
-            }
+            if (cnt >= n) { return std::optional{i}; }
         }
         return std::nullopt;
     };

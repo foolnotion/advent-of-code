@@ -32,6 +32,7 @@
                 eigen
                 fmt
                 gdb
+                gcc12
                 hotspot
                 hyperfine
                 linuxPackages_latest.perf
@@ -43,7 +44,6 @@
                 seer
                 valgrind
                 xxHash
-                openssl
               ];
 
               shellHook = ''
