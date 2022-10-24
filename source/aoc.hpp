@@ -81,7 +81,7 @@ struct advent {
     auto day25() const -> void;
 
     private:
-    std::array<void(advent::*)() const, 7> days = {
+    std::array<void(advent::*)() const, 8> days = {
         &advent<year>::day01,
         &advent<year>::day02,
         &advent<year>::day03,
@@ -89,6 +89,7 @@ struct advent {
         &advent<year>::day05,
         &advent<year>::day06,
         &advent<year>::day07,
+        &advent<year>::day08,
     };
 };
 
@@ -108,6 +109,18 @@ namespace util {
             return (*this)(arr);
         }
     };
+
+    inline auto readlines(std::string const& path) {
+        std::ifstream f(path);
+        if (f.is_open()) {
+            std::vector<std::string> lines;
+            for (std::string s; std::getline(f, s); ) {
+                lines.push_back(s);
+            }
+            return lines;
+        }
+        throw std::runtime_error(fmt::format("could not open path {}\n", path));
+    }
 } // namespace util
 
 template<typename T>
