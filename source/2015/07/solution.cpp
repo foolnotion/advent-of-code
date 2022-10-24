@@ -1,17 +1,15 @@
 #include <aoc.hpp>
 #include <functional>
 
-enum op { AND, OR, LSHIFT, RSHIFT, NOT, ASSIGN, NONE }; // NOLINT
-
 struct node {
     std::string id;
-    op op; // NONE means that the node is a leaf node
+    std::function<u16(u16, u16)> op{nullptr}; // NONE means that the node is a leaf node
 
-    node* lhs;
-    node* rhs;
-    node* parent;
+    node* lhs{nullptr};
+    node* rhs{nullptr};
+    node* parent{nullptr};
 
-    u16 signal;
+    u16 signal{0};
     bool cycle{false};
 
     auto reset() {
@@ -19,123 +17,87 @@ struct node {
         signal = 0;
     }
 
-    auto eval() -> u16
+    auto eval() -> u16 // NOLINT
     {
         if (cycle) { return signal; }
         cycle = true;
-        switch (op) {
-        case op::AND: {
-            signal = lhs->eval() & rhs->eval();
-            return signal;
-        }
-        case op::OR: {
-            signal = lhs->eval() | rhs->eval();
-            return signal;
-        }
-        case op::LSHIFT: {
-            signal = lhs->eval() << rhs->eval();
-            return signal;
-        }
-        case op::RSHIFT: {
-            signal = lhs->eval() >> rhs->eval();
-            return signal;
-        }
-        case op::NOT: {
-            signal = ~lhs->eval();
-            return signal;
-        }
-        case op::ASSIGN: {
-            signal = lhs->eval();
-            return signal;
-        }
-        default: {
-            return signal;
-        }
-        }
+        if (!static_cast<bool>(op)) { return signal; }
+        signal = op(lhs->eval(), rhs ? rhs->eval() : 0);
+        return signal;
     }
 };
 
 template <>
 auto advent<2015>::day07() const -> void
 {
-    constexpr std::array binary_labels = { "AND", "OR", "LSHIFT", "RSHIFT" };
-    constexpr std::array unary_labels = { "NOT" };
-
     std::fstream f("./source/2015/07/input.txt");
-    std::vector<std::string> input;
-    for (std::string s; std::getline(f, s);) {
-        input.push_back(s);
-    }
     auto const npos = std::string::npos;
-
     std::vector<node> nodes;
-    nodes.reserve(input.size() * 2);
+    nodes.reserve(1024); // NOLINT
     robin_hood::unordered_map<std::string, node*> map;
 
     auto add_node = [&](auto const&... ids) {
-        std::array<node*, sizeof...(ids)> pointers = { nullptr };
-        int pos { 0 };
         auto try_add = [&](auto const& id) {
             node* p { nullptr };
             if (auto it = map.find(id); it == map.end()) {
-                nodes.push_back({ id, NONE, nullptr, nullptr, nullptr, 0U });
+                nodes.push_back({ id });
                 p = &nodes.back();
                 map[id] = p;
             } else {
                 p = it->second;
             }
-            pointers[pos++] = p;
             if (std::isdigit(id[0])) { // leaf node
                 (void)scn::scan(id, "{}", p->signal);
             }
+            return p;
         };
-        (try_add(ids), ...);
-        return pointers;
+        return std::array {try_add(ids)...};
     };
 
-    for (auto const& s : input) {
+    for (std::string s; std::getline(f, s); ) {
         std::string a {};
         std::string b {};
         std::string c {};
-        op op { op::NONE };
+        decltype(node::op) func{nullptr}; 
 
         // figure out the OP
+        bool binary{true};
         if (s.find("AND") != npos) {
-            op = op::AND;
+            func = [](u16 x, u16 y) { return x & y; }; 
             (void)scn::scan(s, "{} AND {} -> {}", a, b, c);
         } else if (s.find("OR") != npos) {
-            op = op::OR;
+            func = [](u16 x, u16 y) { return x | y; }; 
             (void)scn::scan(s, "{} OR {} -> {}", a, b, c);
         } else if (s.find("RSHIFT") != npos) {
-            op = op::RSHIFT;
+            func = [](u16 x, u16 y) { return x >> y; }; 
             (void)scn::scan(s, "{} RSHIFT {} -> {}", a, b, c);
         } else if (s.find("LSHIFT") != npos) {
-            op = op::LSHIFT;
+            func = [](u16 x, u16 y) { return x << y; }; 
             (void)scn::scan(s, "{} LSHIFT {} -> {}", a, b, c);
         } else if (s.find("NOT") != npos) {
-            op = op::NOT;
+            binary = false;
+            func = [](u16 x, u16) { return ~x; }; 
             (void)scn::scan(s, "NOT {} -> {}", a, b);
-        } else {
-            op = op::ASSIGN;
+        } else { // ASSIGN
+            binary = false;
+            func = [](u16 x, u16) { return x; };
             (void)scn::scan(s, "{} -> {}", a, b);
         }
-
         // make wires
-        if (op < op::NOT) {
-            // binary symbol
+        if (binary) { // binary node
             auto [pa, pb, pc] = add_node(a, b, c);
             pc->lhs = pa; pa->parent = pc;
             pc->rhs = pb; pb->parent = pc;
-            pc->op = op;
-        } else {
+            pc->op = func;
+        } else { // unary node
             auto [pa, pb] = add_node(a, b);
             pb->lhs = pa; pa->parent = pb;
-            pb->op = op;
+            pb->op = func;
         }
     }
 
     auto isroot = [](auto const& n) { return n.parent == nullptr; };
-    auto isfunc = [](auto const& n) { return n.op != op::NONE; };
+    auto isfunc = [](auto const& n) { return static_cast<bool>(n.op); };
 
     std::ranges::for_each(lz::filter(nodes, isroot), &node::eval);
     auto a = std::ranges::find_if(nodes, [](auto const& n) { return n.id == "a"; });
@@ -145,7 +107,7 @@ auto advent<2015>::day07() const -> void
     auto b = std::ranges::find_if(nodes, [](auto const& n) { return n.id == "b"; });
     std::ranges::for_each(lz::filter(nodes, isfunc), &node::reset);
     b->signal = s;
-    b->op = op::NONE;
+    b->op = nullptr; // override
     std::ranges::for_each(lz::filter(nodes, isroot), &node::eval);
     fmt::print("part 2: {}\n", a->signal);
 }
