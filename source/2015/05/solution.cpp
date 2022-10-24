@@ -6,8 +6,9 @@ auto advent<2015>::day05() const -> void {
 
     auto is_nice_part1 = [&](auto const& str) {
         static constexpr std::array forbidden = { "ab", "cd", "pq", "xy" };
-        auto v = std::ranges::count_if(str, &aoc::equals<'a', 'e', 'i', 'o', 'u'>);
-        if (v < 3) { return false; }
+        if (std::ranges::count_if(str, &aoc::equals<'a', 'e', 'i', 'o', 'u'>) < 3) {
+            return false;
+        }
 
         bool contains_double{false};
         bool contains_forbidden{false};
