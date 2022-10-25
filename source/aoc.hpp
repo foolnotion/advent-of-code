@@ -9,6 +9,7 @@
 #include <deque>
 #include <vector>
 #include <queue>
+#include <stack>
 #include <string>
 #include <tuple>
 
@@ -81,7 +82,7 @@ struct advent {
     auto day25() const -> void;
 
     private:
-    std::array<void(advent::*)() const, 8> days = {
+    std::array<void(advent::*)() const, 9> days = { // NOLINT
         &advent<year>::day01,
         &advent<year>::day02,
         &advent<year>::day03,
@@ -90,6 +91,7 @@ struct advent {
         &advent<year>::day06,
         &advent<year>::day07,
         &advent<year>::day08,
+        &advent<year>::day09,
     };
 };
 
