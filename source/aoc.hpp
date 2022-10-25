@@ -82,7 +82,7 @@ struct advent {
     auto day25() const -> void;
 
     private:
-    std::array<void(advent::*)() const, 9> days = { // NOLINT
+    std::array<void(advent::*)() const, 10> days = { // NOLINT
         &advent<year>::day01,
         &advent<year>::day02,
         &advent<year>::day03,
@@ -92,6 +92,7 @@ struct advent {
         &advent<year>::day07,
         &advent<year>::day08,
         &advent<year>::day09,
+        &advent<year>::day10,
     };
 };
 
