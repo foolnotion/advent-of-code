@@ -30,7 +30,7 @@
                 cpp-lazy
                 doctest
                 eigen
-                fmt
+                fmt_9
                 gdb
                 gcc12
                 hotspot
