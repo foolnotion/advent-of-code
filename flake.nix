@@ -25,18 +25,18 @@
             impureUseNativeOptimizations = true;
             nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools cppcheck ];
             buildInputs = with pkgs; [
-                # python environment for bindings and scripting
                 cmake-language-server
                 cpp-lazy
                 doctest
                 eigen
                 fmt_9
-                gdb
                 gcc12
+                gdb
                 hotspot
                 hyperfine
                 linuxPackages_latest.perf
                 mdspan
+                nlohmann_json
                 openlibm
                 pkg-config
                 robin-hood-hashing

@@ -31,6 +31,7 @@ add_library(
     source/2015/09/solution.cpp
     source/2015/10/solution.cpp
     source/2015/11/solution.cpp
+    source/2015/12/solution.cpp
     # 2017
     source/2017/01/solution.cpp
     source/2017/02/solution.cpp
@@ -43,6 +44,7 @@ add_library(
     source/2017/09/solution.cpp
     source/2017/10/solution.cpp
     source/2017/11/solution.cpp
+    source/2017/12/solution.cpp
 )
 
 target_include_directories(
@@ -61,8 +63,9 @@ find_package(scn REQUIRED)
 find_package(cpp-lazy REQUIRED)
 find_package(xxHash REQUIRED)
 find_package(mdspan REQUIRED)
+find_package(nlohmann_json REQUIRED)
 
-target_link_libraries(aoc_lib PUBLIC Eigen3::Eigen cpp-lazy::cpp-lazy fmt::fmt scn::scn xxHash::xxhash)
+target_link_libraries(aoc_lib PUBLIC Eigen3::Eigen cpp-lazy::cpp-lazy fmt::fmt scn::scn xxHash::xxhash nlohmann_json::nlohmann_json)
 
 # ---- Declare executable ----
 
