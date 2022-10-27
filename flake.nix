@@ -20,7 +20,7 @@
         in rec
         {
           devShells.default = stdenv.mkDerivation {
-            name = "aoc-2021";
+            name = "aoc";
             hardeningDisable = [ "all" ];
             impureUseNativeOptimizations = true;
             nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools cppcheck ];
@@ -42,6 +42,7 @@
                 robin-hood-hashing
                 scnlib
                 seer
+                unordered_dense
                 valgrind
                 xxHash
               ];
