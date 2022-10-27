@@ -27,8 +27,10 @@
 #include <fmt/ranges.h>
 #include <robin_hood.h>
 #include <scn/scn.h>
+#include <ankerl/unordered_dense.h>
 
 #include <Eigen/Core>
+
 #include <Lz/Lz.hpp>
 
 #define XXH_INLINE_ALL
@@ -82,7 +84,7 @@ struct advent {
     auto day25() const -> void;
 
     private:
-    std::array<void(advent::*)() const, 12> days = { // NOLINT
+    std::array<void(advent::*)() const, 14> days = { // NOLINT
         &advent<year>::day01,
         &advent<year>::day02,
         &advent<year>::day03,
@@ -95,41 +97,47 @@ struct advent {
         &advent<year>::day10,
         &advent<year>::day11,
         &advent<year>::day12,
+        &advent<year>::day13,
+        &advent<year>::day14,
     };
 };
 
 namespace aoc {
+// useful for hashing most things
 namespace util {
-    // useful for hashing most things
-    struct hash {
-        template<std::ranges::sized_range R>
+struct hash {
+    template<std::ranges::sized_range R>
         inline auto operator()(R&& r) const -> u64 {
             using T = decltype(std::declval<R>()[0]);
             return XXH_INLINE_XXH3_64bits(r.data(), r.size() * sizeof(T));
         }
 
-        template<typename... Args>
+    template<typename... Args>
         inline auto operator()(Args... args) const -> u64 {
             std::array arr = { args... };
             return (*this)(arr);
         }
-    };
+};
 
-    inline auto readlines(std::string const& path) {
-        std::ifstream f(path);
-        if (f.is_open()) {
-            std::vector<std::string> lines;
-            for (std::string s; std::getline(f, s); ) {
-                lines.push_back(s);
-            }
-            return lines;
+inline auto readlines(std::string const& path) {
+    std::ifstream f(path);
+    if (f.is_open()) {
+        std::vector<std::string> lines;
+        for (std::string s; std::getline(f, s); ) {
+            lines.push_back(s);
         }
-        throw std::runtime_error(fmt::format("could not open path {}\n", path));
+        return lines;
     }
+    throw std::runtime_error(fmt::format("could not open path {}\n", path));
+}
 } // namespace util
 
-template<typename T>
-using point = std::array<T, 2>;
+inline auto contains(std::string const& s, std::string const& q) {
+    return s.find(q) != std::string::npos;
+}
+
+template<typename T, std::size_t S=2>
+using point = std::array<T, S>;
 
 template<char... C>
 auto equals(char c) {
