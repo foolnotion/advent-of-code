@@ -36,7 +36,7 @@ struct reindeer {
 };
 
 template<>
-auto advent<2015>::day14() const -> void {
+auto advent2015::day14() const -> void {
     std::vector<std::string> input {
         "Dancer can fly 27 km/s for 5 seconds, but then must rest for 132 seconds",
         "Cupid can fly 22 km/s for 2 seconds, but then must rest for 41 seconds",

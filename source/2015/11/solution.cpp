@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent<2015>::day11() const -> void {
+auto advent2015::day11() const -> void {
 
     std::string input{"vzbxkghb"};
 

@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template <>
-auto advent<2015>::day08() const -> void
+auto advent2015::day08() const -> void
 {
     std::ifstream f("./source/2015/08/input.txt");
 

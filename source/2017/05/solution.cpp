@@ -2,7 +2,7 @@
 #include <scn/detail/file.h>
 
 template<>
-auto advent<2017>::day05() const -> void {
+auto advent2017::day05() const -> void {
 
     scn::owning_file f("./source/2017/05/input.txt", "r");
     std::vector<i64> vec;

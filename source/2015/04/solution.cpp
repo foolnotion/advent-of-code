@@ -2,7 +2,7 @@
 #include <util/md5.h>
 
 template <>
-auto advent<2015>::day04() const -> void
+auto advent2015::day04() const -> void
 {
     constexpr auto input { "iwrupvqb" };
     std::array<u8, 16> buf{};

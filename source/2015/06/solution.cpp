@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template <>
-auto advent<2015>::day06() const -> void
+auto advent2015::day06() const -> void
 {
     constexpr i64 width { 1000 };
     constexpr i64 height { 1000 };

@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent<2017>::day01() const -> void {
+auto advent2017::day01() const -> void {
     std::fstream f("./source/2017/01/input.txt");
     if (!f.is_open()) {
         fmt::print(stderr, "failed to open filename\n");

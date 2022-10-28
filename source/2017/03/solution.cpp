@@ -4,7 +4,7 @@ using std::abs;
 using std::optional;
 
 template<>
-auto advent<2017>::day03() const -> void {
+auto advent2017::day03() const -> void {
 
     constexpr i64 input{361527};
 

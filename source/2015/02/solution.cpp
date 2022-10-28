@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent<2015>::day02() const -> void {
+auto advent2015::day02() const -> void {
     std::fstream f("./source/2015/02/input.txt");
 
     u64 paper{0};
