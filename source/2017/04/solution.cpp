@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2017::day04() const -> void {
+auto advent2017::day04() -> void {
 
     std::fstream f("./source/2017/04/input.txt");
     std::vector<std::vector<u64>> words;

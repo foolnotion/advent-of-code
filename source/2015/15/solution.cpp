@@ -27,7 +27,7 @@ struct ingredient {
 };
 
 template <>
-auto advent2015::day15() const -> void
+auto advent2015::day15() -> void
 {
     vector<string> const input {
         "Sprinkles: capacity 5, durability -1, flavor 0, texture 0, calories 5",
