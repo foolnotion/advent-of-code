@@ -2,19 +2,19 @@
 
 namespace rg = std::ranges;
 
-struct stats {
+struct reindeer_stats {
     u32 speed;
     u32 duration;
     u32 rest;
 };
 
 struct reindeer {
-    stats stats;
+    reindeer_stats stats;
     u32 cooldown;
     u32 distance{0};
     bool resting{false};
 
-    explicit reindeer(struct stats s)
+    explicit reindeer(reindeer_stats s)
         : stats(s)
         , cooldown(s.duration) { }
 
@@ -53,7 +53,7 @@ auto advent2015::day14() const -> void {
 
     for (auto const& s : input) {
         std::string name;
-        stats stats{};
+        reindeer_stats stats{};
         (void)scn::scan(s, "{} can fly {} km/s for {} seconds, but then must rest for {} seconds",
                 name, stats.speed, stats.duration, stats.rest);
         vec.emplace_back(stats);
