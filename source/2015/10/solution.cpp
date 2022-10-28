@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent<2015>::day10() const -> void {
+auto advent2015::day10() const -> void {
     std::string const input{"1113222113"};
 
     auto compute_length = [](std::string const& input, int times) {

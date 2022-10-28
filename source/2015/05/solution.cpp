@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent<2015>::day05() const -> void {
+auto advent2015::day05() const -> void {
     std::fstream f("./source/2015/05/input.txt");
 
     auto is_nice_part1 = [&](auto const& str) {

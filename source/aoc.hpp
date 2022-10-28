@@ -84,7 +84,7 @@ struct advent {
     auto day25() const -> void;
 
     private:
-    std::array<void(advent::*)() const, 14> days = { // NOLINT
+    std::array<void(advent::*)() const, 15> days = { // NOLINT
         &advent<year>::day01,
         &advent<year>::day02,
         &advent<year>::day03,
@@ -99,8 +99,18 @@ struct advent {
         &advent<year>::day12,
         &advent<year>::day13,
         &advent<year>::day14,
+        &advent<year>::day15,
     };
 };
+
+using advent2015 = advent<2015>; // NOLINT
+using advent2016 = advent<2016>; // NOLINT
+using advent2017 = advent<2017>; // NOLINT
+using advent2018 = advent<2018>; // NOLINT
+using advent2019 = advent<2019>; // NOLINT
+using advent2020 = advent<2020>; // NOLINT
+using advent2021 = advent<2021>; // NOLINT
+using advent2022 = advent<2022>; // NOLINT
 
 namespace aoc {
 // useful for hashing most things
