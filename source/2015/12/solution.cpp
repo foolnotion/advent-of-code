@@ -4,7 +4,7 @@
 using json = nlohmann::json;
 
 template<>
-auto advent2015::day12() const -> void {
+auto advent2015::day12() -> void {
     std::ifstream f("./source/2015/12/input.txt");
     json data = json::parse(f);
 

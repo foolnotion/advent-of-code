@@ -17,7 +17,7 @@ struct node {
 };
 
 template <>
-auto advent2015::day07() const -> void
+auto advent2015::day07() -> void
 {
     std::fstream f("./source/2015/07/input.txt");
     constexpr auto npos = std::string::npos;

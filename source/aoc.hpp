@@ -54,37 +54,37 @@ struct advent {
     auto operator()(int day) const -> void
     {
         assert(day >= 1 && day <= 25);
-        (this->* days[day-1])();
+        days[day-1]();
     }
 
-    auto day01() const -> void;
-    auto day02() const -> void;
-    auto day03() const -> void;
-    auto day04() const -> void;
-    auto day05() const -> void;
-    auto day06() const -> void;
-    auto day07() const -> void;
-    auto day08() const -> void;
-    auto day09() const -> void;
-    auto day10() const -> void;
-    auto day11() const -> void;
-    auto day12() const -> void;
-    auto day13() const -> void;
-    auto day14() const -> void;
-    auto day15() const -> void;
-    auto day16() const -> void;
-    auto day17() const -> void;
-    auto day18() const -> void;
-    auto day19() const -> void;
-    auto day20() const -> void;
-    auto day21() const -> void;
-    auto day22() const -> void;
-    auto day23() const -> void;
-    auto day24() const -> void;
-    auto day25() const -> void;
+    static auto day01() -> void;
+    static auto day02() -> void;
+    static auto day03() -> void;
+    static auto day04() -> void;
+    static auto day05() -> void;
+    static auto day06() -> void;
+    static auto day07() -> void;
+    static auto day08() -> void;
+    static auto day09() -> void;
+    static auto day10() -> void;
+    static auto day11() -> void;
+    static auto day12() -> void;
+    static auto day13() -> void;
+    static auto day14() -> void;
+    static auto day15() -> void;
+    static auto day16() -> void;
+    static auto day17() -> void;
+    static auto day18() -> void;
+    static auto day19() -> void;
+    static auto day20() -> void;
+    static auto day21() -> void;
+    static auto day22() -> void;
+    static auto day23() -> void;
+    static auto day24() -> void;
+    static auto day25() -> void;
 
     private:
-    std::array<void(advent::*)() const, 15> days = { // NOLINT
+    static constexpr std::array<void(*)(), 25> days = { // NOLINT
         &advent<year>::day01,
         &advent<year>::day02,
         &advent<year>::day03,
@@ -100,6 +100,16 @@ struct advent {
         &advent<year>::day13,
         &advent<year>::day14,
         &advent<year>::day15,
+        &advent<year>::day16,
+        &advent<year>::day17,
+        &advent<year>::day18,
+        &advent<year>::day19,
+        &advent<year>::day20,
+        &advent<year>::day21,
+        &advent<year>::day22,
+        &advent<year>::day23,
+        &advent<year>::day24,
+        &advent<year>::day25,
     };
 };
 
@@ -118,7 +128,7 @@ namespace util {
 struct hash {
     template<std::ranges::sized_range R>
         inline auto operator()(R&& r) const -> u64 {
-            using T = decltype(std::declval<R>()[0]);
+            using T = decltype(std::declval<R>()[0]); // NOLINT
             return XXH_INLINE_XXH3_64bits(r.data(), r.size() * sizeof(T));
         }
 
@@ -139,6 +149,21 @@ inline auto readlines(std::string const& path) {
         return lines;
     }
     throw std::runtime_error(fmt::format("could not open path {}\n", path));
+}
+
+inline auto replace_all(std::string& inout, std::string_view what, std::string_view with) -> std::size_t
+{
+    std::size_t count{};
+    for (std::string::size_type pos{};
+         std::string::npos != (pos = inout.find(what.data(), pos, what.length()));
+         pos += with.length(), ++count) {
+        inout.replace(pos, what.length(), with.data(), with.length());
+    }
+    return count;
+}
+ 
+inline auto remove_all(std::string& inout, std::string_view what) -> std::size_t {
+    return replace_all(inout, what, "");
 }
 } // namespace util
 

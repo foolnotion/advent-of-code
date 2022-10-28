@@ -43,14 +43,6 @@ add_library(
     source/2017/05/solution.cpp
     source/2017/06/solution.cpp
     source/2017/07/solution.cpp
-    source/2017/08/solution.cpp
-    source/2017/09/solution.cpp
-    source/2017/10/solution.cpp
-    source/2017/11/solution.cpp
-    source/2017/12/solution.cpp
-    source/2017/13/solution.cpp
-    source/2017/14/solution.cpp
-    source/2017/15/solution.cpp
 )
 
 target_include_directories(

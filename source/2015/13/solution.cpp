@@ -8,7 +8,7 @@ using std::vector;
 namespace ex = std::experimental;
 
 template<>
-auto advent2015::day13() const -> void {
+auto advent2015::day13() -> void {
     // note that ending periods have been removed from each sentence (due to a scn scan issue)
     auto input = aoc::util::readlines("./source/2015/13/input.txt");
 

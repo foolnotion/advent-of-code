@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2017::day06() const -> void {
+auto advent2017::day06() -> void {
     constexpr std::array input{ 4UL, 1UL, 15UL, 12UL, 0UL, 9UL, 9UL, 5UL, 5UL, 8UL, 7UL, 3UL, 14UL, 5UL, 12UL, 3UL };
     constexpr int nb{input.size()};
 

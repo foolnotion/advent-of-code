@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2017::day02() const -> void {
+auto advent2017::day02() -> void {
     std::fstream f("./source/2017/02/input.txt");
 
     std::vector<std::vector<i64>> values;

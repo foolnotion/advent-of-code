@@ -4,7 +4,7 @@
 using point = aoc::point<u64>;
 
 template <>
-auto advent2015::day09() const -> void // NOLINT
+auto advent2015::day09() -> void // NOLINT
 {
     auto input = aoc::util::readlines("./source/2015/09/input.txt");
     robin_hood::unordered_flat_map<u64, std::string> names;
