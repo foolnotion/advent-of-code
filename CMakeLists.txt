@@ -37,6 +37,7 @@ add_library(
     source/2015/15/solution.cpp
     source/2015/16/solution.cpp
     source/2015/17/solution.cpp
+    source/2015/18/solution.cpp
     # 2017
     source/2017/01/solution.cpp
     source/2017/02/solution.cpp
