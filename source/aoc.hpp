@@ -30,7 +30,6 @@
 #include <ankerl/unordered_dense.h>
 
 #include <Eigen/Core>
-
 #include <Lz/Lz.hpp>
 
 #define XXH_INLINE_ALL
@@ -123,6 +122,9 @@ using advent2021 = advent<2021>; // NOLINT
 using advent2022 = advent<2022>; // NOLINT
 
 namespace aoc {
+// convenience
+namespace dense = ankerl::unordered_dense;
+
 // useful for hashing most things
 namespace util {
 struct hash {
@@ -167,7 +169,7 @@ inline auto remove_all(std::string& inout, std::string_view what) -> std::size_t
 }
 } // namespace util
 
-inline auto contains(std::string const& s, std::string const& q) {
+inline auto contains(std::string_view s, std::string_view q) {
     return s.find(q) != std::string::npos;
 }
 
