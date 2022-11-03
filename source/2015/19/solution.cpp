@@ -6,7 +6,6 @@ auto advent2015::day19() -> void {
     auto input = aoc::util::readlines("./source/2015/19/input.txt");
 
     std::string molecule;
-    std::vector<std::string> vec(1000); // NOLINT
     aoc::dense::map<std::string, std::vector<std::string>> map;
 
     auto maxlen{0L};
@@ -51,7 +50,7 @@ auto advent2015::day19() -> void {
     // 4) overall, Rn, Y, Ar have the meaning of (,)
     // 5) taking the productions in reverse for part 2, we realize that:
     //    - every standard rule reduces the length of the expression by 1
-    //    - every rule including ( ) reduces the length of the expression by 2
+    //    - every pair of  () reduces the length of the expression by 2
     //    - every additional comma also reduces the length of the expression by 2
     // 6) therefore, the total length reduction will be: #total = #symbols - #Rn - #Ar - 2 * #Y
     // 7) since we want to get to a length of 1 (the expression "e"), we will get there in #total - 1
@@ -66,4 +65,40 @@ auto advent2015::day19() -> void {
         else if (map.contains({&molecule[i], 2})) { steps += 1; ++i; }
     }
     fmt::print("part 2: {}\n", steps);
+
+    // for completeness, here's a version that does a search
+    aoc::dense::map<std::string, std::string> rmap;
+    std::vector<std::string> keys;
+    for (auto const& [k, v] : map) {
+        for (auto const& u : v) {
+            rmap[u] = k;
+            keys.push_back(u);
+        }
+    }
+    std::ranges::sort(keys, std::greater{}, &std::string::size);
+
+    auto minsteps{std::numeric_limits<int>::max()};
+    aoc::dense::map<u64, int> seen;
+    bool found{false};
+    auto search = [&](auto mol, auto depth, auto&& search) {
+        if (found) { return; }
+        if (mol == "e") {
+            found = true;
+            minsteps = std::min(minsteps, depth);
+            return;
+        }
+        if (depth+1 >= minsteps) { return; }
+        if (auto [it, ok] = seen.insert({hasher(mol), depth}); !ok) {
+            return;
+        }
+        for (auto const& k : keys) {
+            if (auto i = mol.find(k); i != std::string::npos) {
+                auto tmp = mol;
+                tmp.replace(i, k.size(), rmap[k]);
+                search(std::move(tmp), depth+1, search);
+            }
+        }
+    };
+    search(molecule, 0, search);
+    fmt::print("part 2: {}\n", minsteps);
 }
