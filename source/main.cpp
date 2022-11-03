@@ -2,6 +2,6 @@
 
 auto main() -> int
 {
-    advent2015::day20();
+    advent2015::day21();
     return 0;
 }
