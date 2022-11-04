@@ -1,7 +1,6 @@
 #include <aoc.hpp>
 
-auto main() -> int
-{
-    advent2015::day21();
+auto main() -> int {
+    advent2015::day22();
     return 0;
 }
