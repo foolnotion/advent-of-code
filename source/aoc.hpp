@@ -7,6 +7,7 @@
 
 #include <array>
 #include <deque>
+#include <iterator>
 #include <vector>
 #include <queue>
 #include <stack>
@@ -34,6 +35,7 @@
 
 #define XXH_INLINE_ALL
 #include <xxh3.h>
+#include <util/constexpr-xxh3.h>
 
 // convenience aliases
 using i8 = std::int8_t;
@@ -123,22 +125,24 @@ using advent2022 = advent<2022>; // NOLINT
 
 namespace aoc {
 // convenience
-namespace dense = ankerl::unordered_dense;
+namespace dense = ankerl::unordered_dense; // NOLINT
 
 // useful for hashing most things
 namespace util {
 struct hash {
-    template<std::ranges::sized_range R>
-        inline auto operator()(R&& r) const -> u64 {
-            using T = decltype(std::declval<R>()[0]); // NOLINT
-            return XXH_INLINE_XXH3_64bits(r.data(), r.size() * sizeof(T));
-        }
+    consteval inline auto operator()(constexpr_xxh3::BytesType auto const& array) const -> u64 {
+        return constexpr_xxh3::XXH3_64bits_const(array);
+    }
 
-    template<typename... Args>
-        inline auto operator()(Args... args) const -> u64 {
-            std::array arr = { args... };
-            return (*this)(arr);
-        }
+    constexpr inline auto operator()(std::ranges::sized_range auto&& r) const -> u64 {
+        using value_t = std::iter_value_t<std::ranges::iterator_t<decltype(r)>>;
+        return XXH_INLINE_XXH3_64bits(r.data(), r.size() * sizeof(value_t));
+    }
+
+    constexpr inline auto operator()(auto... args) const -> u64 {
+        std::array arr = { args... };
+        return (*this)(arr);
+    }
 };
 
 inline auto readlines(std::string const& path) {
@@ -184,7 +188,7 @@ auto equals(char c) {
 
 template<typename T>
 struct std::hash<aoc::point<T>> {
-    auto operator()(aoc::point<T> p) const noexcept -> std::size_t {
+    constexpr auto operator()(aoc::point<T> p) const noexcept -> std::size_t {
         return aoc::util::hash{}(p);
     }
 };
