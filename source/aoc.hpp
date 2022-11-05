@@ -173,8 +173,46 @@ inline auto remove_all(std::string& inout, std::string_view what) -> std::size_t
 }
 } // namespace util
 
+namespace math {
+template<typename T>
+requires std::is_integral_v<T>
+inline auto mul_mod(T a, T b, T m) -> T
+{
+    if (m == 0) { return a * b; }
+    T r{0};
+    while (a > 0) {
+        if (a & 1) {
+            if ((r += b) > m) {
+                r %= m;
+            }
+        }
+        a >>= 1;
+        if ((b <<= 1) > m) {
+            b %= m;
+        }
+    }
+    return r;
+}
+
+// modular exponentiation function
+template<typename T>
+requires std::is_integral_v<T>
+inline auto pow_mod(T a, T n, T m) -> T // NOLINT
+{
+    T r{1};
+    while (n > 0) {
+        if (n & 1) {
+            r = mul_mod(r, a, m);
+        }
+        a = mul_mod(a, a, m);
+        n >>= 1;
+    }
+    return r;
+}
+} // namespace math
+
 inline auto contains(std::string_view s, std::string_view q) {
-    return s.find(q) != std::string::npos;
+    return s.find(q) != std::string::npos; // NOLINT
 }
 
 template<typename T, std::size_t S=2>
