@@ -3,7 +3,6 @@
 
 template<>
 auto advent2017::day05() -> void {
-
     scn::owning_file f("./source/2017/05/input.txt", "r");
     std::vector<i64> vec;
     auto result = scn::scan_list(f, vec);

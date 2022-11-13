@@ -1,5 +1,6 @@
 #include <aoc.hpp>
 
+namespace detail {
 struct computer {
     std::array<u32, 2> reg;
 
@@ -61,11 +62,11 @@ struct computer {
         return reg;
     }
 };
-
+} // namespace detail
 
 template<>
 auto advent2015::day23() -> void {
     auto input = aoc::util::readlines("./source/2015/23/input.txt");
-    fmt::print("part 1: {}\n", computer{{0,0}}.run(input)[1]);
-    fmt::print("part 2: {}\n", computer{{1,0}}.run(input)[1]);
+    fmt::print("part 1: {}\n", detail::computer{{0,0}}.run(input)[1]);
+    fmt::print("part 2: {}\n", detail::computer{{1,0}}.run(input)[1]);
 }

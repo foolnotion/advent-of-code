@@ -1,10 +1,10 @@
 #include <aoc.hpp>
 #include <nlohmann/json.hpp>
 
-using json = nlohmann::json;
-
 template<>
 auto advent2015::day12() -> void {
+    using json = nlohmann::json;
+
     std::ifstream f("./source/2015/12/input.txt");
     json data = json::parse(f);
 

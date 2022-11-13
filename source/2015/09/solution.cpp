@@ -1,7 +1,6 @@
 #include <aoc.hpp>
 #include <util/dynamic_bitset.hpp>
 
-using point = aoc::point<u64>;
 
 template <>
 auto advent2015::day09() -> void // NOLINT
