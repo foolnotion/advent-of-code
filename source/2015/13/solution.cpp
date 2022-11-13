@@ -2,9 +2,6 @@
 #include <iostream>
 #include <experimental/mdspan>
 
-using std::ssize;
-using std::vector;
-
 namespace ex = std::experimental;
 
 template<>

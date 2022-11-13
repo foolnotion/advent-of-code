@@ -11,7 +11,7 @@ auto advent2017::day04() -> void {
         std::vector<u64> word;
         std::vector<u64> anagram;
         for (auto s : lz::split(line, ' ')) {
-            auto h = XXH_INLINE_XXH3_64bits(s.data(), s.size());
+            auto h = aoc::util::hash{}(s);
             word.push_back(h);
 
             std::string str(s.begin(), s.end());

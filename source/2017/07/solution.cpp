@@ -1,5 +1,6 @@
 #include <aoc.hpp>
 
+namespace detail {
 struct program {
     u64 weight;
     u64 wtotal; // total weight (including children)
@@ -15,10 +16,12 @@ struct program {
         }
     }
 };
+} // namespace detail
 
 template <>
-auto advent2017::day07() -> void
-{
+auto advent2017::day07() -> void {
+    using detail::program;
+
     std::fstream f("./source/2017/07/input.txt");
 
     // parse the input

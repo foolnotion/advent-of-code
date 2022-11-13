@@ -66,6 +66,7 @@ auto advent2015::day19() -> void {
     }
     fmt::print("part 2: {}\n", steps);
 
+    return;
     // for completeness, here's a version that does a search
     aoc::dense::map<std::string, std::string> rmap;
     std::vector<std::string> keys;

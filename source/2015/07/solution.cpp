@@ -1,6 +1,7 @@
 #include <aoc.hpp>
 #include <functional>
 
+namespace detail {
 struct node {
     std::string id;
     std::function<u16(u16, u16)> op{nullptr}; // NONE means that the node is a leaf node
@@ -15,10 +16,13 @@ struct node {
         return signal.value();
     }
 };
+} // namespace detail
 
 template <>
 auto advent2015::day07() -> void
 {
+    using detail::node;
+
     std::fstream f("./source/2015/07/input.txt");
     constexpr auto npos = std::string::npos;
     std::vector<node> nodes;
