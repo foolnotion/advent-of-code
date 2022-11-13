@@ -2,10 +2,12 @@
 # Enable ALL the things! Except not really
 # misc-non-private-member-variables-in-classes: the options don't do anything
 Checks: "*,\
+  -bugprone-easily-swappable-parameters,\
   -cppcoreguidelines-pro-bounds-constant-array-index,\
   -readability-implicit-bool-conversion,\
   -readability-identifier-length,\
   -google-readability-todo,\
+  -abseil-*,\
   -altera-*,\
   -fuchsia-*,\
   fuchsia-multiple-inheritance,\

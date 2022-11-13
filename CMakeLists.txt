@@ -53,6 +53,32 @@ add_library(
     source/2017/05/solution.cpp
     source/2017/06/solution.cpp
     source/2017/07/solution.cpp
+    # 2020
+    source/2020/01/solution.cpp
+    source/2020/02/solution.cpp
+    source/2020/03/solution.cpp
+    source/2020/04/solution.cpp
+    source/2020/05/solution.cpp
+    source/2020/06/solution.cpp
+    source/2020/07/solution.cpp
+    source/2020/08/solution.cpp
+    source/2020/09/solution.cpp
+    source/2020/10/solution.cpp
+    source/2020/11/solution.cpp
+    source/2020/12/solution.cpp
+    source/2020/13/solution.cpp
+    source/2020/14/solution.cpp
+    source/2020/15/solution.cpp
+    source/2020/16/solution.cpp
+    source/2020/17/solution.cpp
+    source/2020/18/solution.cpp
+    source/2020/19/solution.cpp
+    source/2020/20/solution.cpp
+    source/2020/21/solution.cpp
+    source/2020/22/solution.cpp
+    source/2020/23/solution.cpp
+    source/2020/24/solution.cpp
+    source/2020/25/solution.cpp
 )
 
 target_include_directories(
@@ -73,8 +99,11 @@ find_package(xxHash REQUIRED)
 find_package(mdspan REQUIRED)
 find_package(nlohmann_json REQUIRED)
 find_package(unordered_dense REQUIRED)
+find_package(pratt-parser REQUIRED)
 
-target_link_libraries(aoc_lib PUBLIC Eigen3::Eigen cpp-lazy::cpp-lazy fmt::fmt scn::scn xxHash::xxhash nlohmann_json::nlohmann_json unordered_dense::unordered_dense)
+target_link_libraries(aoc_lib PUBLIC Eigen3::Eigen cpp-lazy::cpp-lazy fmt::fmt
+    scn::scn xxHash::xxhash nlohmann_json::nlohmann_json
+    unordered_dense::unordered_dense pratt-parser::pratt-parser)
 
 # ---- Declare executable ----
 
