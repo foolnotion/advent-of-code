@@ -29,6 +29,7 @@
                 cpp-lazy
                 doctest
                 eigen
+                fast_float
                 fmt_9
                 gcc12
                 gdb
@@ -39,6 +40,7 @@
                 nlohmann_json
                 openlibm
                 pkg-config
+                pratt-parser
                 robin-hood-hashing
                 scnlib
                 seer

@@ -33,9 +33,8 @@
 #include <Eigen/Core>
 #include <Lz/Lz.hpp>
 
-#define XXH_INLINE_ALL
-#include <xxh3.h>
 #include <util/constexpr-xxh3.h>
+#include <util/xxhash.hpp>
 
 // convenience aliases
 using i8 = std::int8_t;
@@ -124,19 +123,22 @@ using advent2021 = advent<2021>; // NOLINT
 using advent2022 = advent<2022>; // NOLINT
 
 namespace aoc {
+template<typename T, std::size_t S=2>
+using point = std::array<T, S>;
+
 // convenience
 namespace dense = ankerl::unordered_dense; // NOLINT
 
 // useful for hashing most things
 namespace util {
 struct hash {
+    static constexpr auto hash_bits{64UL};
     consteval inline auto operator()(constexpr_xxh3::BytesType auto const& array) const -> u64 {
         return constexpr_xxh3::XXH3_64bits_const(array);
     }
 
-    constexpr inline auto operator()(std::ranges::sized_range auto&& r) const -> u64 {
-        using value_t = std::iter_value_t<std::ranges::iterator_t<decltype(r)>>;
-        return XXH_INLINE_XXH3_64bits(r.data(), r.size() * sizeof(value_t));
+    constexpr inline auto operator()(std::ranges::range auto&& r) const -> u64 {
+        return xxh::xxhash3<hash_bits>(r.begin(), r.end());
     }
 
     constexpr inline auto operator()(auto... args) const -> u64 {
@@ -172,6 +174,19 @@ inline auto remove_all(std::string& inout, std::string_view what) -> std::size_t
     return replace_all(inout, what, "");
 }
 } // namespace util
+
+namespace eigen {
+    // utilities to enhance working with eigen
+    auto block(auto const& mat, aoc::point<i64> x, aoc::point<i64> y) { // NOLINT
+        auto [xmin, ymin] = x;
+        auto [xmax, ymax] = y;
+        xmin = std::clamp(xmin, i64{0}, mat.rows()-1);
+        xmax = std::clamp(xmax, i64{0}, mat.rows()-1);
+        ymin = std::clamp(ymin, i64{0}, mat.cols()-1);
+        ymax = std::clamp(ymax, i64{0}, mat.cols()-1);
+        return mat.block(xmin, ymin, xmax-xmin+1, ymax-ymin+1);
+    }
+} // namespace eigen
 
 namespace math {
 template<typename T>
@@ -214,9 +229,6 @@ inline auto pow_mod(T a, T n, T m) -> T // NOLINT
 inline auto contains(std::string_view s, std::string_view q) {
     return s.find(q) != std::string::npos; // NOLINT
 }
-
-template<typename T, std::size_t S=2>
-using point = std::array<T, S>;
 
 template<char... C>
 auto equals(char c) {
