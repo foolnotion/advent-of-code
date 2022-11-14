@@ -35,8 +35,11 @@ namespace detail {
     };
 
     struct tile {
-        point coord;
-        u32 count;
+        point coord{};
+        bool state{};
+
+        auto flip() { state = !state; }
+        [[nodiscard]] auto black() const { return state; }
     };
 
     auto parse(std::vector<std::string> const& input) {
@@ -63,7 +66,7 @@ namespace detail {
             point p{0,0,0};
             for (auto dir : directions) { p = add(p, moves[dir]); }
             auto [it, _] = flipped.insert({aoc::util::hash{}(p), tile{p, 0}});
-            it->second.count++;
+            it->second.flip();
         }
         return flipped;
     }
@@ -80,7 +83,7 @@ auto advent2020::day24() -> result {
     using detail::tile;
     using detail::add;
 
-    auto p1 = count_if(flipped, [](auto it) { return it.second.count % 2; });
+    auto p1 = count_if(flipped, [](auto it) { return it.second.black(); });
 
     std::vector<std::tuple<u64, point>> neighbours;
     std::vector<u64> tiles;
@@ -92,13 +95,13 @@ auto advent2020::day24() -> result {
         neighbours.clear();
         tiles.clear();
         for (auto [h, tile] : flipped) {
-            bool b = tile.count % 2;
+            bool b = tile.black();
             auto count{0U};
             for (auto&& p : detail::generate_neighbours(tile.coord)) {
                 auto h = hash(p);
                 auto it = flipped.find(h);
                 if (it != flipped.end()) {
-                    count += it->second.count % 2;
+                    count += it->second.black();
                 } else {
                     neighbours.emplace_back(h, p);
                 }
@@ -111,20 +114,20 @@ auto advent2020::day24() -> result {
         for (auto [h, n] : neighbours) { flipped.try_emplace(h, tile{n, 0}); }
         for (auto it = flipped.begin() + sz; it != flipped.end(); ++it) {
             auto const tile = it->second;
-            bool b = tile.count % 2;
+            bool b = tile.black();
             auto count{0U};
 
             for (auto&& p : detail::generate_neighbours(tile.coord)) {
                 auto it = flipped.find(hash(p));
                 if (it == flipped.end()) { continue; }
-                count += it->second.count % 2;
+                count += it->second.black();
             }
             if ((b && (count == 0 || count > 2)) || (!b && count == 2) ) {
                 tiles.push_back(it->first);
             }
         }
-        for (auto h : tiles) { flipped[h].count++; }
-        p2 = count_if(flipped, [](auto it) { return it.second.count % 2; });
+        for (auto h : tiles) { flipped[h].flip(); }
+        p2 = count_if(flipped, [](auto it) { return it.second.black(); });
     }
     return aoc::result(p1, p2);
 }
