@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2015::day11() -> void {
+auto advent2015::day11() -> result {
 
     std::string input{"vzbxkghb"};
 
@@ -50,7 +50,8 @@ auto advent2015::day11() -> void {
 
     auto s = input;
     do { increment(s); } while (!isvalid(s));
-    fmt::print("part1: {}\n", s);
+    auto p1 = s;
     do { increment(s); } while (!isvalid(s));
-    fmt::print("part2: {}\n", s);
+    auto p2 = s;
+    return aoc::result(p1, p2);
 }

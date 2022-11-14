@@ -2,7 +2,7 @@
 #include <bitset>
 
 template<>
-auto advent2020::day14() -> void {
+auto advent2020::day14() -> result {
     auto input = aoc::util::readlines("./source/2020/14/input.txt");
     aoc::dense::map<u64, u64> mem;
     std::string mask;
@@ -33,7 +33,7 @@ auto advent2020::day14() -> void {
 
     auto get = [](auto p) { return p.second; };
     auto const map1 = lz::map(mem, get);
-    fmt::print("part 1: {}\n", std::reduce(map1.begin(), map1.end()));
+    auto p1 = std::reduce(map1.begin(), map1.end());
 
     // part 2
     std::bitset<nbits> bits;
@@ -81,5 +81,6 @@ auto advent2020::day14() -> void {
         }
     }
     auto const map2 = lz::map(mem, get);
-    fmt::print("part 2: {}\n", std::reduce(map2.begin(), map2.end()));
+    auto p2 = std::reduce(map2.begin(), map2.end());
+    return aoc::result(p1, p2);
 }

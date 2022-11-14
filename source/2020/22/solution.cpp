@@ -2,7 +2,7 @@
 #include <iostream>
 
 template<>
-auto advent2020::day22() -> void {
+auto advent2020::day22() -> result {
     auto input = aoc::util::readlines("./source/2020/22/input.txt");
 
     using deck = std::deque<u32>;
@@ -68,6 +68,7 @@ auto advent2020::day22() -> void {
         };
         return rec(p1, p2, rec).first;
     };
-    fmt::print("part 1: {}\n", combat(d1, d2));
-    fmt::print("part 2: {}\n", recursive_combat(d1, d2));
+    auto p1 = combat(d1, d2);
+    auto p2 = recursive_combat(d1, d2);
+    return aoc::result(p1, p2);
 }

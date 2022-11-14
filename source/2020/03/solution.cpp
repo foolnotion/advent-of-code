@@ -4,7 +4,7 @@ using Eigen::Map;
 using Eigen::Array;
 
 template<>
-auto advent2020::day03() -> void {
+auto advent2020::day03() -> result {
     auto input = aoc::util::readlines("./source/2020/03/input.txt");
     auto const nrow{std::ssize(input)};
     auto const ncol = std::ssize(input.front());
@@ -23,7 +23,7 @@ auto advent2020::day03() -> void {
         }
         return n;
     };
-
-    fmt::print("part 1: {}\n", n(3, 1));
-    fmt::print("part 2: {}\n", n(1, 1) * n(3, 1) * n(5, 1) * n(7, 1) * n(1, 2));
+    auto p1 = n(3, 1);
+    auto p2 = n(1, 1) * n(3, 1) * n(5, 1) * n(7, 1) * n(1, 2);
+    return aoc::result(p1, p2);
 }

@@ -16,7 +16,7 @@ struct state {
 } // namespace detail
 
 template<>
-auto advent2015::day24() -> void {
+auto advent2015::day24() -> result {
     auto input = aoc::util::readlines("./source/2015/24/input.txt");
     auto pkgs = lz::map(input, [](auto const& s) { return scn::scan_value<u64>(s).value(); }).toVector();
     std::reverse(pkgs.begin(), pkgs.end());
@@ -46,12 +46,13 @@ auto advent2015::day24() -> void {
 
     auto const s = std::reduce(pkgs.begin(), pkgs.end());
     find_sum(0, s/3, {0, 0, 1}, find_sum);
-    fmt::print("part 1: {}\n", minp);
+    auto p1 = minp;
 
     seen.clear();
     used.bits = 0;
     minc = std::numeric_limits<u64>::max();
     minp = std::numeric_limits<u64>::max();
     find_sum(0, s/4, {0, 0, 1}, find_sum);
-    fmt::print("part 2: {}\n", minp);
+    auto p2 = minp;
+    return aoc::result(p1, p2);
 }

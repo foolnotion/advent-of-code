@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2015::day02() -> void {
+auto advent2015::day02() -> result {
     std::fstream f("./source/2015/02/input.txt");
 
     u64 paper{0};
@@ -17,6 +17,5 @@ auto advent2015::day02() -> void {
         paper += 2 * (a+b+c) + std::min({a, b, c});
         ribbon += 2 * std::min({l+w, w+h, h+l}) + l*w*h;
     }
-    fmt::print("part 1: {}\n", paper);
-    fmt::print("part 2: {}\n", ribbon);
+    return aoc::result(paper, ribbon);
 }

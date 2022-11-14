@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2015::day01() -> void {
+auto advent2015::day01() -> result {
 
     std::fstream f("./source/2015/01/input.txt");
     std::string line;
@@ -18,6 +18,7 @@ auto advent2015::day01() -> void {
             pos = i+1;
         }
     }
-    fmt::print("part 1: {}\n", floor);
-    fmt::print("part 2: {}\n", pos);
+
+    using fmt::format;
+    return aoc::result(floor, pos);
 }

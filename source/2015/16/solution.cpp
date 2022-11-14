@@ -19,14 +19,14 @@ struct record {
 } // namespace detail
 
 template <>
-auto advent2015::day16() -> void
+auto advent2015::day16() -> result
 {
     using detail::record;
 
     auto input = aoc::util::readlines("./source/2015/16/input.txt");
 
     // this is horrible but it's a cheap way to deal with AoC "parsing hell"
-    ankerl::unordered_dense::map<std::string_view, std::tuple<std::add_pointer_t<void(record&, int)>, std::add_pointer_t<optional<int>(record const&)>>> tab {
+    aoc::dense::map<std::string_view, std::tuple<std::add_pointer_t<void(record&, int)>, std::add_pointer_t<optional<int>(record const&)>>> tab {
         { "children",    std::make_tuple([](record& r, int v) { r.children = v; },    [](record const& r) { return r.children; })     },
         { "cats",        std::make_tuple([](record& r, int v) { r.cats = v; },        [](record const& r) { return r.cats; })         },
         { "samoyeds",    std::make_tuple([](record& r, int v) { r.samoyeds = v; },    [](record const& r) { return r.samoyeds; })     },
@@ -73,6 +73,5 @@ auto advent2015::day16() -> void
         if (check_part1(rec, target)) { sue1 = i+1; }
         if (check_part2(rec, target)) { sue2 = i+1; }
     }
-    print("part 1: {}\n", sue1);
-    print("part 2: {}\n", sue2);
+    return aoc::result(sue1, sue2);
 }

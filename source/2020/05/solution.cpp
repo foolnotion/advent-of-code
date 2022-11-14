@@ -2,7 +2,7 @@
 #include <bitset>
 
 template<>
-auto advent2020::day05() -> void {
+auto advent2020::day05() -> result {
     auto input = aoc::util::readlines("./source/2020/05/input.txt");
 
     u32 max_id = 0;
@@ -17,7 +17,6 @@ auto advent2020::day05() -> void {
         max_id = std::max(id, max_id);
         ids.push_back(id);
     }
-    fmt::print("part 1: {}\n", max_id);
     std::sort(ids.begin(), ids.end());
     u32 seat_id = 0;
     for (size_t i = 1; i < ids.size(); ++i) {
@@ -26,5 +25,5 @@ auto advent2020::day05() -> void {
             break;
         }
     }
-    fmt::print("part 2: {}\n", seat_id);
+    return aoc::result(max_id, seat_id);
 }

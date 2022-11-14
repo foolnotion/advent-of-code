@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2020::day13() -> void {
+auto advent2020::day13() -> result {
     auto input = aoc::util::readlines("./source/2020/13/input.txt");
     auto s = scn::scan_value<u64>(input.front()).value();
 
@@ -25,7 +25,7 @@ auto advent2020::day13() -> void {
             id = time;
         }
     }
-    fmt::print("part 1: {}\n", ans * id);
+    auto p1 = ans * id;
 
     // part 2
     u64 a{0};
@@ -40,5 +40,6 @@ auto advent2020::day13() -> void {
             }
         }
     }
-    fmt::print("part 2: {}\n", a);
+    auto p2 = a;
+    return aoc::result(p1, p2);
 }

@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2020::day10() -> void {
+auto advent2020::day10() -> result {
     auto input = aoc::util::readlines("./source/2020/10/input.txt");
     auto v = lz::map(input, [](auto x) { return scn::scan_value<i64>(x).value(); }).toVector();
     std::ranges::sort(v);
@@ -13,7 +13,7 @@ auto advent2020::day10() -> void {
         b += diff == 3;
     }
     a += v.front() == 1;
-    fmt::print("part 1: {}\n", a * b);
+    auto p1 = a * b;
 
     std::vector<i64> counts;
     std::vector<i64> u {0};
@@ -52,7 +52,8 @@ auto advent2020::day10() -> void {
         }
         return counts.front();
     };
-    fmt::print("part 2: {}\n", part2(u));
+    auto p2 = part2(u);
+    return aoc::result(p1, p2);
 }
 
 

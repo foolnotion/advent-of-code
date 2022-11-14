@@ -38,7 +38,7 @@ struct reindeer {
 } // namespace detail
 
 template<>
-auto advent2015::day14() -> void {
+auto advent2015::day14() -> result {
     using detail::reindeer;
     using detail::reindeer_stats;
 
@@ -77,7 +77,5 @@ auto advent2015::day14() -> void {
             points[j] += vec[j].distance == best;
         }
     }
-
-    fmt::print("part 1: {}\n", distance);
-    fmt::print("part 2: {}\n", *rg::max_element(points));
+    return aoc::result(distance, *rg::max_element(points));
 }

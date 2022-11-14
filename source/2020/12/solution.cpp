@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2020::day12() -> void {
+auto advent2020::day12() -> result {
     auto input = aoc::util::readlines("./source/2020/12/input.txt");
     std::vector<std::pair<char, int>> vec;
 
@@ -51,7 +51,7 @@ auto advent2020::day12() -> void {
         }
         }
     }
-    fmt::print("part 1: {}\n", std::abs(ship[1]-ship[3]) + std::abs(ship[0]-ship[2]));
+    auto p1 = std::abs(ship[1]-ship[3]) + std::abs(ship[0]-ship[2]);
 
     // part 2
     std::array waypoint { 10, 0, 0, 1 };
@@ -97,5 +97,6 @@ auto advent2020::day12() -> void {
         }
         }
     }
-    fmt::print("part 2: {}\n", std::abs(ship[1]-ship[3]) + std::abs(ship[0]-ship[2]));
+    auto p2 = std::abs(ship[1]-ship[3]) + std::abs(ship[0]-ship[2]);
+    return aoc::result(p1, p2);
 }

@@ -12,7 +12,7 @@ struct instr {
 } // namespace detail
 
 template<>
-auto advent2020::day08() -> void {
+auto advent2020::day08() -> result {
     auto input = aoc::util::readlines("./source/2020/08/input.txt");
     aoc::util::hash h;
 
@@ -52,19 +52,19 @@ auto advent2020::day08() -> void {
         }
         return { acc, code.size() == i };
     };
-    fmt::print("part 1: {}\n", run(code).first);
+    auto p1 = run(code).first;
 
-    i64 part2{};
+    i64 p2{};
     for (auto& [op, val] : code) {
         if (op == instr::JMP || op == instr::NOP) {
             auto opp = op;
             op = op == instr::JMP ? instr::NOP : instr::JMP;
             if (auto [acc, ok] = run(code); ok) {
-                part2 = acc;
+                p2 = acc;
                 break;
             }
             op = opp;
         }
     }
-    fmt::print("part 2: {}\n", part2);
+    return aoc::result(p1, p2);
 }

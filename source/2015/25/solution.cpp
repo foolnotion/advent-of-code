@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2015::day25() -> void {
+auto advent2015::day25() -> result {
     // puzzle input
     constexpr auto row{2981};
     constexpr auto col{3075};
@@ -11,5 +11,6 @@ auto advent2015::day25() -> void {
 
     // worked out the indexing using pen & paper:
     auto index = [](u32 a, u32 b) -> u64 { return b + (a+b-1) * (a+b-2) / 2; };
-    fmt::print("part 1: {}\n", first * aoc::math::pow_mod(multiplier, index(row,col)-1, divisor) % divisor);
+    auto p1 = first * aoc::math::pow_mod(multiplier, index(row,col)-1, divisor) % divisor;
+    return aoc::result(p1, "");
 }

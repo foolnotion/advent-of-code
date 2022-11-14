@@ -28,7 +28,7 @@ struct food {
 } // namespace detail
 
 template<>
-auto advent2020::day21() -> void {
+auto advent2020::day21() -> result {
     auto input = aoc::util::readlines("./source/2020/21/input.txt");
 
     using detail::food;
@@ -103,10 +103,12 @@ auto advent2020::day21() -> void {
     for (auto const& ingredient : ingredients) {
         count += std::count_if(recipes.begin(), recipes.end(), [&](auto const& recipe) { return recipe.contains_ingredient(ingredient); });
     }
-    fmt::print("part 1: {}\n", count);
+    auto p1 = count;
 
     std::sort(list.begin(), list.end(), [&](auto const& x, auto const& y) { return names[x.second] < names[y.second]; });
+    std::string p2;
     for (auto const& [ingredient, allergen] : list) {
-        fmt::print("{},", names[ingredient]);
+        fmt::format_to(std::back_inserter(p2), "{},", names[ingredient]);
     }
+    return aoc::result(p1, p2);
 }

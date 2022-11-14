@@ -138,7 +138,7 @@ struct count_occupied_p2 {
 
 
 template<>
-auto advent2020::day11() -> void {
+auto advent2020::day11() -> result {
     auto input = aoc::util::readlines("./source/2020/11/input.txt");
     auto const nrow{std::ssize(input)};
     auto const ncol{std::ssize(input.front())};
@@ -147,8 +147,8 @@ auto advent2020::day11() -> void {
     for(auto&& [i, s] : lz::enumerate(input)) {
         a.row(i) = Map<Array<char, -1, 1>>(s.data(), ncol);
     }
-    constexpr int p1{4};
-    constexpr int p2{5};
+    constexpr int s1{4};
+    constexpr int s2{5};
 
     auto simulate = [](auto mat, auto&& count_occupied, int p) {
         auto changed{false};
@@ -175,6 +175,7 @@ auto advent2020::day11() -> void {
         return (mat == '#').count();
     };
 
-    fmt::print("part 1: {}\n", simulate(a, detail::count_occupied_p1{}, p1));
-    fmt::print("part 2: {}\n", simulate(a, detail::count_occupied_p2{}, p2));
+    auto p1 = simulate(a, detail::count_occupied_p1{}, s1);
+    auto p2 = simulate(a, detail::count_occupied_p2{}, s2);
+    return aoc::result(p1, p2);
 }

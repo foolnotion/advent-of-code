@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2017::day06() -> void {
+auto advent2017::day06() -> result {
     constexpr std::array input{ 4UL, 1UL, 15UL, 12UL, 0UL, 9UL, 9UL, 5UL, 5UL, 8UL, 7UL, 3UL, 14UL, 5UL, 12UL, 3UL };
     constexpr int nb{input.size()};
 
@@ -22,6 +22,5 @@ auto advent2017::day06() -> void {
             cycles_part2 = cycles_part1 - it->second;
         }
     }
-    fmt::print("part 1: {}\n", cycles_part1);
-    fmt::print("part 2: {}\n", cycles_part2);
+    return aoc::result(cycles_part1, cycles_part2);
 };

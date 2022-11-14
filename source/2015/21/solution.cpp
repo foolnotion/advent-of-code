@@ -41,7 +41,7 @@ auto battle(hero h, boss b) {
 } // namespace detail
 
 template<>
-auto advent2015::day21() -> void {
+auto advent2015::day21() -> result {
     using detail::item;
     using detail::hero;
     using detail::boss;
@@ -88,6 +88,5 @@ auto advent2015::day21() -> void {
             maxcost = std::max(maxcost, h.cost());
         }
     }
-    fmt::print("part 1: {}\n", mincost);
-    fmt::print("part 2: {}\n", maxcost);
+    return aoc::result(mincost, maxcost);
 }

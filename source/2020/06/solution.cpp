@@ -2,7 +2,7 @@
 #include <bitset>
 
 template<>
-auto advent2020::day06() -> void {
+auto advent2020::day06() -> result {
     auto input = aoc::util::readlines("./source/2020/06/input.txt");
     constexpr auto nletter{26};
     std::bitset<nletter> bits; bits.reset();
@@ -27,7 +27,6 @@ auto advent2020::day06() -> void {
         }
         all &= tmp;
     }
-    fmt::print("part 1: {}\n", count1);
-    fmt::print("part 2: {}\n", count2);
+    return aoc::result(count1, count2);
 }
 

@@ -4,7 +4,7 @@ using std::abs;
 using std::optional;
 
 template<>
-auto advent2017::day03() -> void {
+auto advent2017::day03() -> result {
 
     constexpr i64 input{361527};
 
@@ -18,11 +18,11 @@ auto advent2017::day03() -> void {
         return s + (it == a.end() ? s : abs(*it - n - s));
     };
 
-    fmt::print("part 1: {}\n", distance(input));
+    auto p1 = distance(input);
 
     // part 2
     using point = std::array<i64, 2>;
-    robin_hood::unordered_map<point, u64, aoc::util::hash> map;
+    aoc::dense::map<point, u64, aoc::util::hash> map;
 
     auto get = [&](point p) {
         auto it = map.find(p);
@@ -75,10 +75,7 @@ auto advent2017::day03() -> void {
         }
         return {};
     };
-
-    if (auto res = find_greater(input); res) {
-        fmt::print("part 2: {}\n", res.value());
-    } else {
-        fmt::print("no solution found\n");
-    }
+    auto p2 = find_greater(input);
+    if (!p2) { throw std::logic_error("no solution found"); }
+    return aoc::result(p1, p2.value());
 }

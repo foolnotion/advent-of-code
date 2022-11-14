@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template <>
-auto advent2015::day03() -> void
+auto advent2015::day03() -> result
 {
     std::fstream f("./source/2015/03/input.txt");
     std::string s;
@@ -36,6 +36,5 @@ auto advent2015::day03() -> void
         map[q]++;
         return map.size();
     };
-    fmt::print("part 1: {}\n", count_houses(s, false));
-    fmt::print("part 2: {}\n", count_houses(s, true));
+    return aoc::result(count_houses(s, false), count_houses(s,  true));
 }

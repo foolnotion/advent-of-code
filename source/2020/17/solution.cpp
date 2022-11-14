@@ -86,9 +86,10 @@ struct pocket_universe {
 };
 
 template<>
-auto advent2020::day17() -> void {
+auto advent2020::day17() -> result {
     auto input = aoc::util::readlines("./source/2020/17/input.txt");
     constexpr auto steps{6};
-    fmt::print("part 1: {}\n", pocket_universe<u8, 3>{}.simulate(input, steps));
-    fmt::print("part 2: {}\n", pocket_universe<u8, 4>{}.simulate(input, steps));
+    auto p1 = pocket_universe<u8, 3>{}.simulate(input, steps);
+    auto p2 = pocket_universe<u8, 4>{}.simulate(input, steps);
+    return aoc::result(p1, p2);
 }

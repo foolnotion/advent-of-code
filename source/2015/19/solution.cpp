@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2015::day19() -> void {
+auto advent2015::day19() -> result {
 
     auto input = aoc::util::readlines("./source/2015/19/input.txt");
 
@@ -40,7 +40,6 @@ auto advent2015::day19() -> void {
             }
         }
     }
-    fmt::print("part 1: {}\n", uniq.size());
 
     // for part two, the rules can actually be worked out by hand, as follows:
     // 1) the productions of this grammar contain a number of symbols, some of which never appear on the left hand side
@@ -50,7 +49,7 @@ auto advent2015::day19() -> void {
     // 4) overall, Rn, Y, Ar have the meaning of (,)
     // 5) taking the productions in reverse for part 2, we realize that:
     //    - every standard rule reduces the length of the expression by 1
-    //    - every pair of  () reduces the length of the expression by 2
+    //    - every pair of () reduces the length of the expression by 2
     //    - every additional comma also reduces the length of the expression by 2
     // 6) therefore, the total length reduction will be: #total = #symbols - #Rn - #Ar - 2 * #Y
     // 7) since we want to get to a length of 1 (the expression "e"), we will get there in #total - 1
@@ -64,9 +63,9 @@ auto advent2015::day19() -> void {
         if (map.contains({&molecule[i], 1})) { steps += 1; }
         else if (map.contains({&molecule[i], 2})) { steps += 1; ++i; }
     }
-    fmt::print("part 2: {}\n", steps);
 
-    return;
+    return aoc::result(uniq.size(), steps);
+
     // for completeness, here's a version that does a search
     aoc::dense::map<std::string, std::string> rmap;
     std::vector<std::string> keys;
@@ -101,5 +100,4 @@ auto advent2015::day19() -> void {
         }
     };
     search(molecule, 0, search);
-    fmt::print("part 2: {}\n", minsteps);
 }

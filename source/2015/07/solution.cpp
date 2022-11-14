@@ -19,7 +19,7 @@ struct node {
 } // namespace detail
 
 template <>
-auto advent2015::day07() -> void
+auto advent2015::day07() -> result
 {
     using detail::node;
 
@@ -93,12 +93,12 @@ auto advent2015::day07() -> void
 
     std::ranges::for_each(lz::filter(nodes, isroot), &node::eval);
     auto a = std::ranges::find_if(nodes, [](auto const& n) { return n.id == "a"; });
-    auto s = *a->signal;
-    fmt::print("part 1: {}\n", *a->signal);
+    auto p1 = *a->signal;
 
     auto b = std::ranges::find_if(nodes, [](auto const& n) { return n.id == "b"; });
     std::ranges::for_each(lz::filter(nodes, isfunc), &node::reset);
-    b->signal = s;
+    b->signal = p1;
     std::ranges::for_each(lz::filter(nodes, isroot), &node::eval);
-    fmt::print("part 2: {}\n", *a->signal);
+    auto p2 = *a->signal;
+    return aoc::result(p1, p2);
 }
