@@ -64,7 +64,7 @@ struct led {
 } // namespace detail
 
 template <>
-auto advent2020::day18() -> void
+auto advent2020::day18() -> result
 {
     using token = detail::nud::token_t;
     using op = detail::op;
@@ -83,8 +83,9 @@ auto advent2020::day18() -> void
     using parser = pratt::parser<detail::nud, detail::led, std::identity, decltype(tokens)>;
     auto input = aoc::util::readlines("./source/2020/18/input.txt");
     auto evaluate = [&tokens](auto const& expr) { return parser(expr, tokens, {}).parse(); };
-    fmt::print("part 1: {}\n", std::transform_reduce(input.begin(), input.end(), 0UL, std::plus{}, evaluate));
+    auto p1 = std::transform_reduce(input.begin(), input.end(), 0UL, std::plus{}, evaluate);
 
     tokens["+"] = token(ki::dynamic, "+", op::add, 2, as::left);
-    fmt::print("part 2: {}\n", std::transform_reduce(input.begin(), input.end(), 0UL, std::plus{}, evaluate));
+    auto p2 = std::transform_reduce(input.begin(), input.end(), 0UL, std::plus{}, evaluate);
+    return aoc::result(p1, p2);
 }

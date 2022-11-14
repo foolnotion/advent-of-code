@@ -2,7 +2,7 @@
 #include <nlohmann/json.hpp>
 
 template<>
-auto advent2015::day12() -> void {
+auto advent2015::day12() -> result {
     using json = nlohmann::json;
 
     std::ifstream f("./source/2015/12/input.txt");
@@ -18,7 +18,7 @@ auto advent2015::day12() -> void {
         if (f(obj)) { return 0; }
         return std::transform_reduce(obj.begin(), obj.end(), 0L, std::plus{}, [&](auto const& v) { return sum(v, f, sum); });
     };
-
-    fmt::print("part 1: {}\n", sum(data, [](auto const&) { return false; }, sum));
-    fmt::print("part 2: {}\n", sum(data, contains_red, sum));
+    auto p1 = sum(data, [](auto const&) { return false; }, sum);
+    auto p2 = sum(data, contains_red, sum);
+    return aoc::result(p1, p2);
 }

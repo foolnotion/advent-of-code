@@ -3,7 +3,7 @@
 
 
 template <>
-auto advent2015::day09() -> void // NOLINT
+auto advent2015::day09() -> result // NOLINT
 {
     auto input = aoc::util::readlines("./source/2015/09/input.txt");
     robin_hood::unordered_flat_map<u64, std::string> names;
@@ -49,12 +49,13 @@ auto advent2015::day09() -> void // NOLINT
         visited.clear();
         search(c, 1, 0, std::less{}, std::greater{}, search);
     }
-    fmt::print("part 1: {}\n", goal);
+    auto p1 = goal;
 
     goal = std::numeric_limits<i64>::min();
     for (auto c : cities) {
         visited.clear();
         search(c, 1, 0, std::greater{}, [](i64, i64) { return false; }, search);
     }
-    fmt::print("part 2: {}\n", goal);
+    auto p2 = goal;
+    return aoc::result(p1, p2);
 }

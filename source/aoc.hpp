@@ -50,41 +50,41 @@ using u64 = std::uint64_t;
 template<int YEAR>
 struct advent {
     static constexpr int year = YEAR;
+    using result = std::tuple<std::string, std::string>;
 
-    auto operator()(int day) const -> void
-    {
+    auto operator()(int day) const -> result {
         assert(day >= 1 && day <= 25);
-        days[day-1]();
+        return days[day-1]();
     }
 
-    static auto day01() -> void;
-    static auto day02() -> void;
-    static auto day03() -> void;
-    static auto day04() -> void;
-    static auto day05() -> void;
-    static auto day06() -> void;
-    static auto day07() -> void;
-    static auto day08() -> void;
-    static auto day09() -> void;
-    static auto day10() -> void;
-    static auto day11() -> void;
-    static auto day12() -> void;
-    static auto day13() -> void;
-    static auto day14() -> void;
-    static auto day15() -> void;
-    static auto day16() -> void;
-    static auto day17() -> void;
-    static auto day18() -> void;
-    static auto day19() -> void;
-    static auto day20() -> void;
-    static auto day21() -> void;
-    static auto day22() -> void;
-    static auto day23() -> void;
-    static auto day24() -> void;
-    static auto day25() -> void;
+    static auto day01() -> result;
+    static auto day02() -> result;
+    static auto day03() -> result;
+    static auto day04() -> result;
+    static auto day05() -> result;
+    static auto day06() -> result;
+    static auto day07() -> result;
+    static auto day08() -> result;
+    static auto day09() -> result;
+    static auto day10() -> result;
+    static auto day11() -> result;
+    static auto day12() -> result;
+    static auto day13() -> result;
+    static auto day14() -> result;
+    static auto day15() -> result;
+    static auto day16() -> result;
+    static auto day17() -> result;
+    static auto day18() -> result;
+    static auto day19() -> result;
+    static auto day20() -> result;
+    static auto day21() -> result;
+    static auto day22() -> result;
+    static auto day23() -> result;
+    static auto day24() -> result;
+    static auto day25() -> result;
 
     private:
-    static constexpr std::array<void(*)(), 25> days = { // NOLINT
+    static constexpr std::array<result(*)(), 25> days = { // NOLINT
         &advent<year>::day01,
         &advent<year>::day02,
         &advent<year>::day03,
@@ -123,6 +123,11 @@ using advent2021 = advent<2021>; // NOLINT
 using advent2022 = advent<2022>; // NOLINT
 
 namespace aoc {
+template<typename T1, typename T2>
+auto result(T1 t1, T2 t2) -> std::tuple<std::string, std::string> {
+    return std::tuple{fmt::format("{}", t1), fmt::format("{}", t2)};
+}
+
 template<typename T, std::size_t S=2>
 using point = std::array<T, S>;
 

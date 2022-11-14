@@ -19,7 +19,7 @@ struct program {
 } // namespace detail
 
 template <>
-auto advent2017::day07() -> void {
+auto advent2017::day07() -> result {
     using detail::program;
 
     std::fstream f("./source/2017/07/input.txt");
@@ -56,7 +56,7 @@ auto advent2017::day07() -> void {
     }
     auto* root = programs.front().parent;
     while(root->parent) { root = root->parent; }
-    fmt::print("part 1: {}\n", root->name);
+    auto p1 = root->name;
 
     root->update();
     program* q{nullptr};
@@ -71,5 +71,6 @@ auto advent2017::day07() -> void {
         q->weight -= std::max(a,b)-c;
         break;
     }
-    fmt::print("part 2: {}\n", q->weight);
+    auto p2 = q->weight;
+    return aoc::result(p1, p2);
 }

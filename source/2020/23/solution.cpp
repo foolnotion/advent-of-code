@@ -9,7 +9,7 @@ struct node {
 } // namespace detail
 
 template <>
-auto advent2020::day23() -> void {
+auto advent2020::day23() -> result {
     std::vector<u8> input { 6, 2, 4, 3, 9, 7, 1, 5, 8 }; // NOLINT
     auto play = [&input](auto ncups, auto rounds, bool part2 = false) {
         std::vector<detail::node> nodes(ncups);
@@ -58,9 +58,10 @@ auto advent2020::day23() -> void {
         return s;
     };
     constexpr u32 p1cups { 9 };
-    constexpr u32 p1rounds { 100 };
+    constexpr u32 p1rnds { 100 };
     constexpr u32 p2cups { 1'000'000 };
-    constexpr u32 p2rounds { 10'000'000 };
-    fmt::print("part 1: {}\n", play(p1cups, p1rounds, false));
-    fmt::print("part 2: {}\n", play(p2cups, p2rounds, true));
+    constexpr u32 p2rnds { 10'000'000 };
+    auto p1 = play(p1cups, p1rnds, false);
+    auto p2 = play(p2cups, p2rnds, true);
+    return aoc::result(p1, p2);
 }

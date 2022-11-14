@@ -2,7 +2,7 @@
 #include <util/md5.h>
 
 template <>
-auto advent2015::day04() -> void
+auto advent2015::day04() -> result
 {
     constexpr auto input { "iwrupvqb" };
     std::array<u8, 16> buf{};
@@ -21,7 +21,5 @@ auto advent2015::day04() -> void
         }
         return std::nullopt;
     };
-
-    fmt::print("part 1: {}\n", count(5).value()); // NOLINT
-    fmt::print("part 2: {}\n", count(6).value()); // NOLINT
+    return aoc::result(count(5).value(), count(6).value());
 }

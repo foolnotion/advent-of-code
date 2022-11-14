@@ -3,7 +3,7 @@
 using std::ranges::any_of;
 
 template<>
-auto advent2020::day09() -> void {
+auto advent2020::day09() -> result {
     auto input = aoc::util::readlines("./source/2020/09/input.txt");
     auto vec = lz::map(input, [](auto const& s) { return scn::scan_value<u64>(s).value(); }).toVector();
     constexpr auto n{25};
@@ -36,7 +36,5 @@ auto advent2020::day09() -> void {
 
     auto p1 = part1();
     auto p2 = part2(p1.value());
-
-    fmt::print("part 1: {}\n", p1.value());
-    fmt::print("part 2: {}\n", p2.value());
+    return aoc::result(p1.value(), p2.value());
 }

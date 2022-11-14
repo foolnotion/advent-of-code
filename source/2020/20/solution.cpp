@@ -144,7 +144,7 @@ auto assemble_image(std::vector<tile_t> const& all, i64 dim) {
 }
 
 template<>
-auto advent2020::day20() -> void {
+auto advent2020::day20() -> result {
     auto input = aoc::util::readlines("./source/2020/20/input.txt");
     auto tiles = day20::parse(input);
 
@@ -152,8 +152,7 @@ auto advent2020::day20() -> void {
     auto dim = static_cast<i64>(std::sqrt(tiles.size()));
     auto all = lz::flatten(lz::map(tiles, [](auto const& t) { return t.dihedral_group(); })).toVector();
     auto im = assemble_image(all, dim);
-    auto product = all[im(0,0)].id * all[im(0,dim-1)].id * all[im(dim-1,0)].id * all[im(dim-1,dim-1)].id;
-    fmt::print("part 1: {}\n", product);
+    auto p1 = all[im(0,0)].id * all[im(0,dim-1)].id * all[im(dim-1,0)].id * all[im(dim-1,dim-1)].id;
 
     auto const d = tile_t::dimension - 2;
     Eigen::Array<char, -1, -1> stitched(dim * d, dim * d);
@@ -186,6 +185,7 @@ auto advent2020::day20() -> void {
         });
     };
 
+    auto p2{0};
     for (auto&& g : img.dihedral_group()) {
         auto n = x;
         auto const prod = lz::cartesian(lz::range(g.m.rows()-mon.rows()), lz::range(g.m.cols()-mon.cols()));
@@ -196,8 +196,9 @@ auto advent2020::day20() -> void {
             }
         }
         if (n < x) {
-            fmt::print("part 2: {}\n", n);
+            p2 = n;
             break;
         }
     }
+    return aoc::result(p1, p2);
 }

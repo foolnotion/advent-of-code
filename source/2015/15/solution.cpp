@@ -25,7 +25,7 @@ struct ingredient {
 } // namespace detail
 
 template <>
-auto advent2015::day15() -> void {
+auto advent2015::day15() -> result {
     using detail::ingredient;
 
     std::vector<std::string> const input {
@@ -84,6 +84,5 @@ auto advent2015::day15() -> void {
     };
 
     permute(amounts, {0, 0, total, calorie_goal}, permute);
-    fmt::print("part 1: {}\n", bestscore);
-    fmt::print("part 2: {}\n", bestscore_with_calories);
+    return aoc::result(bestscore, bestscore_with_calories);
 }

@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2015::day17() -> void {
+auto advent2015::day17() -> result {
     std::array cap = { 7, 10, 11, 18, 18, 21, 22, 24, 26, 32, 36, 40, 40, 42, 43, 44, 46, 47, 49, 50 }; // NOLINT
     constexpr int sz{std::ssize(cap)};
     std::array<int, sz> used = {0};
@@ -29,6 +29,7 @@ auto advent2015::day17() -> void {
     };
 
     fill(0, 0, volume, fill);
-    fmt::print("part 1: {}\n", count);
-    fmt::print("part 2: {}\n", std::ranges::min_element(ways, [](auto a, auto b) { return a.first < b.first; })->second);
+    auto p1 = count;
+    auto p2 = std::ranges::min_element(ways, [](auto a, auto b) { return a.first < b.first; })->second;
+    return aoc::result(p1, p2);
 }

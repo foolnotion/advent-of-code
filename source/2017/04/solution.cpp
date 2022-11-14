@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2017::day04() -> void {
+auto advent2017::day04() -> result {
 
     std::fstream f("./source/2017/04/input.txt");
     std::vector<std::vector<u64>> words;
@@ -31,6 +31,7 @@ auto advent2017::day04() -> void {
         }
         return true;
     };
-    fmt::print("part 1: {}\n", std::ranges::count_if(words, is_valid));
-    fmt::print("part 2: {}\n", std::ranges::count_if(anagrams, is_valid));
+    auto p1 = std::ranges::count_if(words, is_valid);
+    auto p2 = std::ranges::count_if(anagrams, is_valid);
+    return aoc::result(p1, p2);
 }

@@ -70,7 +70,7 @@ namespace detail {
 } // namespace detail
 
 template<>
-auto advent2015::day20() -> void {
+auto advent2015::day20() -> result {
     constexpr u64 input{33100000};
     constexpr u64 m1{10};
     constexpr u64 m2{11};
@@ -86,12 +86,13 @@ auto advent2015::day20() -> void {
         for (auto d : div) { count[d]++; s += d; }
         if (m1 * s >= input) { break; }
     }
-    fmt::print("part 1: {}\n", i);
+    auto p1 = i;
 
     for(; ; ++i) {
         auto div = calc.divisors(i);
         auto fil = lz::filter(div, [&count](auto d) { return count[d] <= maxvisit; });
         if (m2 * std::reduce(fil.begin(), fil.end()) >= input) { break; }
     }
-    fmt::print("part 2: {}\n", i);
+    auto p2 = i;
+    return aoc::result(p1, p2);
 }

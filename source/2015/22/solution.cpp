@@ -63,7 +63,7 @@ struct game {
     hero const game_hero{};
     boss const game_boss{};
 
-    auto apply_effects(hero& h, boss& b) const {
+    static auto apply_effects(hero& h, boss& b)  {
         auto& sp = h.active_spells;
         if (h.active_spells.empty()) { return; }
         // decrease duration
@@ -105,7 +105,7 @@ struct game {
         }
     };
 
-    auto fight(bool part2) const {
+    [[nodiscard]] auto fight(bool part2) const {
         auto mincost{std::numeric_limits<i32>::max()};
         fight(game_hero, game_boss, true, 0, mincost, part2);
         return mincost;
@@ -114,7 +114,7 @@ struct game {
 } // namespace detail
 
 template<>
-auto advent2015::day22() -> void {
+auto advent2015::day22() -> result {
     using detail::ARMOR;
     using detail::DAMAGE;
     using detail::HEALTH;
@@ -127,6 +127,7 @@ auto advent2015::day22() -> void {
     boss evilboss{HEALTH{71}, DAMAGE{10}}; // NOLINT
     game game{goodhero, evilboss};
 
-    fmt::print("part 1: {}\n", game.fight(/*part2=*/false));
-    fmt::print("part 2: {}\n", game.fight(/*part2=*/true));
+    auto p1 = game.fight(/*part2=*/false);
+    auto p2 = game.fight(/*part2=*/true);
+    return aoc::result(p1, p2);
 }

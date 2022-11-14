@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2015::day05() -> void {
+auto advent2015::day05() -> result {
     std::fstream f("./source/2015/05/input.txt");
 
     auto is_nice_part1 = [&](auto const& str) {
@@ -53,6 +53,5 @@ auto advent2015::day05() -> void {
         nice1 += is_nice_part1(s);
         nice2 += is_nice_part2(s);
     }
-    fmt::print("part 1: {}\n", nice1);
-    fmt::print("part 2: {}\n", nice2);
+    return aoc::result(nice1, nice2);
 }

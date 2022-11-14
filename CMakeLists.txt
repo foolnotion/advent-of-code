@@ -53,6 +53,24 @@ add_library(
     source/2017/05/solution.cpp
     source/2017/06/solution.cpp
     source/2017/07/solution.cpp
+    source/2017/08/solution.cpp
+    source/2017/09/solution.cpp
+    source/2017/10/solution.cpp
+    source/2017/11/solution.cpp
+    source/2017/12/solution.cpp
+    source/2017/13/solution.cpp
+    source/2017/14/solution.cpp
+    source/2017/15/solution.cpp
+    source/2017/16/solution.cpp
+    source/2017/17/solution.cpp
+    source/2017/18/solution.cpp
+    source/2017/19/solution.cpp
+    source/2017/20/solution.cpp
+    source/2017/21/solution.cpp
+    source/2017/22/solution.cpp
+    source/2017/23/solution.cpp
+    source/2017/24/solution.cpp
+    source/2017/25/solution.cpp
     # 2020
     source/2020/01/solution.cpp
     source/2020/02/solution.cpp

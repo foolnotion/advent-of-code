@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2020::day07() -> void {
+auto advent2020::day07() -> result {
     auto input = aoc::util::readlines("./source/2020/07/input.txt");
     using item = std::tuple<int, std::string>;
     aoc::dense::map<std::string, std::vector<item>> contains;
@@ -36,7 +36,7 @@ auto advent2020::day07() -> void {
         }
     };
     get_count("shinygold", get_count);
-    fmt::print("part 1: {}\n", counted.size()-1);
+    auto p1 = counted.size()-1;
 
     auto get_content_count = [&](std::string const& color, auto&& rec) {
         int c = 1;
@@ -48,5 +48,6 @@ auto advent2020::day07() -> void {
             });
         return c;
     };
-    fmt::print("part 2: {}\n", get_content_count("shinygold", get_content_count) - 1);
+    auto p2 = get_content_count("shinygold", get_content_count) - 1;
+    return aoc::result(p1, p2);
 }

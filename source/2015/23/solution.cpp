@@ -65,8 +65,9 @@ struct computer {
 } // namespace detail
 
 template<>
-auto advent2015::day23() -> void {
+auto advent2015::day23() -> result {
     auto input = aoc::util::readlines("./source/2015/23/input.txt");
-    fmt::print("part 1: {}\n", detail::computer{{0,0}}.run(input)[1]);
-    fmt::print("part 2: {}\n", detail::computer{{1,0}}.run(input)[1]);
+    auto p1 = detail::computer{{0,0}}.run(input)[1];
+    auto p2 = detail::computer{{1,0}}.run(input)[1];
+    return aoc::result(p1, p2);
 }

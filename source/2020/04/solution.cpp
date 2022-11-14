@@ -4,8 +4,9 @@ using std::ranges::all_of;
 using std::ranges::binary_search;
 
 template<>
-auto advent2020::day04() -> void {
-    std::string required_fields[] = { "byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid" };
+auto advent2020::day04() -> result {
+    constexpr int nfield{7};
+    std::array<std::string, nfield> required_fields = { "byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid" };
 
     aoc::dense::map<std::string_view, bool(*)(std::string_view)> validation_rules {
         {
@@ -80,12 +81,12 @@ auto advent2020::day04() -> void {
     auto validate_entry = [&](std::string_view entry) {
         // validate passport entry
         fields.clear();
-        int pos = 0;
+        auto pos = 0L;
         while (pos < entry.size()) {
             if (pos = entry.find(':', pos+1); pos != -1) {
                 auto field = std::string_view(entry.data() + pos - 3, 3);
                 auto pos1 = entry.find(' ', pos+1);
-                if (pos1 == -1) pos1 = entry.size();
+                if (pos1 == -1) { pos1 = entry.size(); }
                 auto value = std::string_view(entry.data() + pos + 1, pos1 - pos - 1);
                 auto it = validation_rules.find(field);
 
@@ -124,6 +125,6 @@ auto advent2020::day04() -> void {
             fmt::format_to(std::back_inserter(buf), "{}", c);
         }
     }
-
-    fmt::print("part 2: {}\n", valid_entries);
+    auto p2 = valid_entries;
+    return aoc::result("242", p2); // for part 1 just change the required fields, all rules are there
 }

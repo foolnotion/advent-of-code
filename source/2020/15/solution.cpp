@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2020::day15() -> void {
+auto advent2020::day15() -> result {
     auto input = aoc::util::readlines("./source/2020/15/input.txt");
     auto tokens = lz::split(input.front(), ',');
     auto nums = lz::map(tokens, [](auto v) { return scn::scan_value<u32>(v).value(); }).toVector();
@@ -25,7 +25,6 @@ auto advent2020::day15() -> void {
         if (t == p1-1) { a1 = n; }
     }
     a2 = n;
-    fmt::print("part 1: {}\n", a1);
-    fmt::print("part 2: {}\n", a2);
+    return aoc::result(a1, a2);
 }
 

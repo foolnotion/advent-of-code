@@ -5,7 +5,7 @@
 namespace ex = std::experimental;
 
 template<>
-auto advent2015::day13() -> void {
+auto advent2015::day13() -> result {
     // note that ending periods have been removed from each sentence (due to a scn scan issue)
     auto input = aoc::util::readlines("./source/2015/13/input.txt");
 
@@ -81,11 +81,12 @@ auto advent2015::day13() -> void {
 
     sz--;
     search({}, 0, 0, search);
-    fmt::print("part 1: {}\n", maxhappy);
+    auto p1 = maxhappy;
 
     sz++;
     clear();
     maxhappy = std::numeric_limits<i64>::min();
     search({}, 0, 0, search);
-    fmt::print("part 2: {}\n", maxhappy);
+    auto p2 = maxhappy;
+    return aoc::result(p1, p2);
 }

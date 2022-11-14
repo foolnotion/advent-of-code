@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2020::day02() -> void {
+auto advent2020::day02() -> result {
     auto input = aoc::util::readlines("./source/2020/02/input.txt");
 
     auto n1{0UL};
@@ -24,6 +24,5 @@ auto advent2020::day02() -> void {
         char b = pass[hi-1];
         n2 += (a == let) != (b == let);
     }
-    fmt::print("part 1: {}\n", n1);
-    fmt::print("part 2: {}\n", n2);
+    return aoc::result(n1, n2);
 }

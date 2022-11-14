@@ -91,14 +91,15 @@ auto parse(std::vector<std::string> const& input) {
 } // namespace day19
 
 template <>
-auto advent2020::day19() -> void
+auto advent2020::day19() -> result
 {
     auto input = aoc::util::readlines("./source/2020/19/input.txt");
     auto [ rules, messages ] = day19::parse(input);
     auto const& match = rules[0];
-    fmt::print("part 1: {}\n", count_if(messages, match));
+    auto p1 = count_if(messages, match);
 
     rules[8].subrules.push_back({ &rules[42], &rules[8] }); // NOLINT
     rules[11].subrules.push_back({ &rules[42], &rules[11], &rules[31] }); // NOLINT
-    fmt::print("part 2: {}\n", count_if(messages, match));
+    auto p2 = count_if(messages, match);
+    return aoc::result(p1, p2);
 }

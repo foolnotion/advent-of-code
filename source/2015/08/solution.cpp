@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template <>
-auto advent2015::day08() -> void
+auto advent2015::day08() -> result
 {
     std::ifstream f("./source/2015/08/input.txt");
 
@@ -23,6 +23,5 @@ auto advent2015::day08() -> void
         p1 += std::ssize(s) - c1 + 2;
         p2 += c2 + 2 - std::ssize(s);
     }
-    fmt::print("part 1: {}\n", p1);
-    fmt::print("part 2: {}\n", p2);
+    return aoc::result(p1, p2);
 }

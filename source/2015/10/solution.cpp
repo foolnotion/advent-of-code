@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2015::day10() -> void {
+auto advent2015::day10() -> result {
     std::string const input{"1113222113"};
 
     auto compute_length = [](std::string const& input, int times) {
@@ -26,7 +26,7 @@ auto advent2015::day10() -> void {
 
         return s.size();
     };
-
-    fmt::print("part 1: {}\n", compute_length(input, 40)); // NOLINT
-    fmt::print("part 2: {}\n", compute_length(input, 50)); // NOLINT
+    auto p1 = compute_length(input, 40); // NOLINT
+    auto p2 = compute_length(input, 50); // NOLINT
+    return aoc::result(p1, p2);
 }

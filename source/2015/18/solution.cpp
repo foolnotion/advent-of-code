@@ -2,7 +2,7 @@
 #include <Eigen/Core>
 
 template<>
-auto advent2015::day18() -> void {
+auto advent2015::day18() -> result {
 
     auto input = aoc::util::readlines("./source/2015/18/input.txt");
     constexpr int dim{100};
@@ -46,7 +46,5 @@ auto advent2015::day18() -> void {
         }
         return (map == '#').count();
     };
-
-    fmt::print("part 1: {}\n", count(false));
-    fmt::print("part 2: {}\n", count(true));
+    return aoc::result(count(false), count(true));
 }

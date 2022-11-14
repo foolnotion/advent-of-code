@@ -70,7 +70,7 @@ namespace detail {
 } // namespace detail
 
 template<>
-auto advent2020::day24() -> void {
+auto advent2020::day24() -> result {
     auto input = aoc::util::readlines("./source/2020/24/input.txt");
     auto flipped = detail::parse(input);
 
@@ -80,13 +80,13 @@ auto advent2020::day24() -> void {
     using detail::tile;
     using detail::add;
 
-    auto black = count_if(flipped, [](auto it) { return it.second.count % 2; });
-    fmt::print("part 1: {}\n", black);
+    auto p1 = count_if(flipped, [](auto it) { return it.second.count % 2; });
 
     std::vector<std::tuple<u64, point>> neighbours;
     std::vector<u64> tiles;
     aoc::util::hash hash;
 
+    auto p2{0L};
     constexpr int days{100};
     for (int i = 0; i < days; ++i) {
         neighbours.clear();
@@ -124,7 +124,7 @@ auto advent2020::day24() -> void {
             }
         }
         for (auto h : tiles) { flipped[h].count++; }
-        black = count_if(flipped, [](auto it) { return it.second.count % 2; });
+        p2 = count_if(flipped, [](auto it) { return it.second.count % 2; });
     }
-    fmt::print("part 2: {}\n", black);
+    return aoc::result(p1, p2);
 }

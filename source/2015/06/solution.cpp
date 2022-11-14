@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 template <>
-auto advent2015::day06() -> void
+auto advent2015::day06() -> result
 {
     constexpr i64 width { 1000 };
     constexpr i64 height { 1000 };
@@ -41,8 +41,9 @@ auto advent2015::day06() -> void
     };
 
     setup_lights(true);
-    fmt::print("part 1: {}\n", (grid > 0).count());
+    auto p1 = grid.sum();
     grid.setConstant(0);
     setup_lights(false);
-    fmt::print("part 2: {}\n", grid.sum());
+    auto p2 = grid.sum();
+    return aoc::result(p1, p2);
 }

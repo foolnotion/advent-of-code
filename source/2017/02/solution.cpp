@@ -1,11 +1,9 @@
 #include <aoc.hpp>
 
 template<>
-auto advent2017::day02() -> void {
+auto advent2017::day02() -> result {
     std::fstream f("./source/2017/02/input.txt");
-
     std::vector<std::vector<i64>> values;
-
     for (std::string line; std::getline(f, line); ) {
         std::vector<i64> v;
         (void) scn::scan_list_ex(line, v, scn::list_separator('\t'));
@@ -24,8 +22,8 @@ auto advent2017::day02() -> void {
         }
         return 0L;
     };
-
     using std::transform_reduce;
-    fmt::print("part 1: {}\n", transform_reduce(values.begin(), values.end(), i64{0}, std::plus{}, minmax_diff));
-    fmt::print("part 2: {}\n", transform_reduce(values.begin(), values.end(), i64{0}, std::plus{}, even_div));
+    auto p1 = transform_reduce(values.begin(), values.end(), i64{0}, std::plus{}, minmax_diff);
+    auto p2 = transform_reduce(values.begin(), values.end(), i64{0}, std::plus{}, even_div);
+    return aoc::result(p1, p2);
 }

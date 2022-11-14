@@ -11,7 +11,7 @@ struct range {
 } // namespace detail
 
 template<>
-auto advent2020::day16() -> void {
+auto advent2020::day16() -> result {
     std::ifstream in("./source/2020/16/input.txt");
     std::string line;
 
@@ -78,7 +78,6 @@ auto advent2020::day16() -> void {
         auto [err, valid] = is_valid(t);
         p1 += err;
     }
-    fmt::print("part 1: {}\n", p1);
 
     std::vector<std::vector<u64>> valid_tickets;
     std::copy_if(nearby.begin(), nearby.end(), std::back_inserter(valid_tickets), [&](auto const& t) { return is_valid(t).second; });
@@ -117,5 +116,5 @@ auto advent2020::day16() -> void {
         return p;
     };
     auto p2 = part2();
-    fmt::print("part 2: {}\n", p2);
+    return aoc::result(p1, p2);
 }
