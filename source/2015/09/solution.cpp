@@ -1,6 +1,4 @@
 #include <aoc.hpp>
-#include <util/dynamic_bitset.hpp>
-
 
 template <>
 auto advent2015::day09() -> result // NOLINT
