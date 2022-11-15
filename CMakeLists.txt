@@ -45,6 +45,32 @@ add_library(
     source/2015/23/solution.cpp
     source/2015/24/solution.cpp
     source/2015/25/solution.cpp
+    # 2016
+    source/2016/01/solution.cpp
+    source/2016/02/solution.cpp
+    source/2016/03/solution.cpp
+    source/2016/04/solution.cpp
+    source/2016/05/solution.cpp
+    source/2016/06/solution.cpp
+    source/2016/07/solution.cpp
+    source/2016/08/solution.cpp
+    source/2016/09/solution.cpp
+    source/2016/10/solution.cpp
+    source/2016/11/solution.cpp
+    source/2016/12/solution.cpp
+    source/2016/13/solution.cpp
+    source/2016/14/solution.cpp
+    source/2016/15/solution.cpp
+    source/2016/16/solution.cpp
+    source/2016/17/solution.cpp
+    source/2016/18/solution.cpp
+    source/2016/19/solution.cpp
+    source/2016/20/solution.cpp
+    source/2016/21/solution.cpp
+    source/2016/22/solution.cpp
+    source/2016/23/solution.cpp
+    source/2016/24/solution.cpp
+    source/2016/25/solution.cpp
     # 2017
     source/2017/01/solution.cpp
     source/2017/02/solution.cpp
