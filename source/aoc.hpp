@@ -24,6 +24,7 @@
 #include <fstream>
 #include <ostream>
 
+#include <fmt/color.h>
 #include <fmt/core.h>
 #include <fmt/ranges.h>
 #include <robin_hood.h>
@@ -35,6 +36,22 @@
 
 #include <util/constexpr-xxh3.h>
 #include <util/xxhash.hpp>
+
+// NOLINTBEGIN(*)
+#define EXPECT(cond) \
+    if(!(cond)) \
+    { \
+        fmt::print("Precondition {} failed at {}: {}\n", fmt::format(fmt::fg(fmt::terminal_color::green), "{}", #cond), __FILE__, __LINE__); \
+        std::terminate(); \
+    }
+
+#define ENSURE(cond) \
+    if(!(cond)) \
+    { \
+        fmt::print("Postcondition {} failed at {}: {}\n", fmt::format(fmt::fg(fmt::terminal_color::green), "{}", #cond), __FILE__, __LINE__); \
+        std::terminate(); \
+    }
+// NOLINTEND(*)
 
 // convenience aliases
 using i8 = std::int8_t;
@@ -137,6 +154,8 @@ namespace dense = ankerl::unordered_dense; // NOLINT
 // useful for hashing most things
 namespace util {
 struct hash {
+    using is_transparent = void;
+
     static constexpr auto hash_bits{64UL};
     consteval inline auto operator()(constexpr_xxh3::BytesType auto const& array) const -> u64 {
         return constexpr_xxh3::XXH3_64bits_const(array);
@@ -192,6 +211,10 @@ namespace eigen {
         return mat.block(xmin, ymin, xmax-xmin+1, ymax-ymin+1);
     }
 } // namespace eigen
+
+namespace constants {
+    constexpr std::array alphabet{'a','b','c','d','e','f','g','h','i','j','k','l','m','n','o','p','q','r','s','t','u','v','w','x','y','z'};
+} // namespace constants
 
 namespace math {
 template<typename T>
