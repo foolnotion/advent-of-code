@@ -1,6 +1,4 @@
-#include <Lz/Enumerate.hpp>
 #include <aoc.hpp>
-#include <Eigen/Core>
 
 template<>
 auto advent2016::day06() -> result {
