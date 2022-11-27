@@ -139,15 +139,19 @@ find_package(fmt REQUIRED)
 find_package(robin_hood REQUIRED)
 find_package(scn REQUIRED)
 find_package(cpp-lazy REQUIRED)
-find_package(xxHash REQUIRED)
 find_package(mdspan REQUIRED)
 find_package(nlohmann_json REQUIRED)
 find_package(unordered_dense REQUIRED)
 find_package(pratt-parser REQUIRED)
 
-target_link_libraries(aoc_lib PUBLIC Eigen3::Eigen cpp-lazy::cpp-lazy fmt::fmt
-    scn::scn xxHash::xxhash nlohmann_json::nlohmann_json
-    unordered_dense::unordered_dense pratt-parser::pratt-parser)
+target_link_libraries(aoc_lib PUBLIC
+    Eigen3::Eigen
+    cpp-lazy::cpp-lazy
+    fmt::fmt
+    nlohmann_json::nlohmann_json
+    scn::scn
+    unordered_dense::unordered_dense pratt-parser::pratt-parser
+)
 
 # ---- Declare executable ----
 

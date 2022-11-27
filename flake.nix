@@ -46,7 +46,6 @@
                 seer
                 unordered_dense
                 valgrind
-                xxHash
               ];
 
               shellHook = ''
