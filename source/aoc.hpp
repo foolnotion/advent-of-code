@@ -33,6 +33,8 @@
 #include <ankerl/unordered_dense.h>
 
 #include <Eigen/Core>
+
+#undef LZ_STANDALONE
 #include <Lz/Lz.hpp>
 
 #include <util/constexpr-xxh3.h>
