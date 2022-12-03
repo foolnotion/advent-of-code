@@ -25,6 +25,8 @@
 #include <fstream>
 #include <ostream>
 
+#include <cpp-sort/sorters.h>
+#include <cpp-sort/fixed_sorters.h>
 #include <fmt/color.h>
 #include <fmt/core.h>
 #include <fmt/ranges.h>

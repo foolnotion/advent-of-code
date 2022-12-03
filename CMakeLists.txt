@@ -142,6 +142,7 @@ find_package(fmt REQUIRED)
 find_package(robin_hood REQUIRED)
 find_package(scn REQUIRED)
 find_package(cpp-lazy REQUIRED)
+find_package(cpp-sort REQUIRED)
 find_package(mdspan REQUIRED)
 find_package(nlohmann_json REQUIRED)
 find_package(unordered_dense REQUIRED)
@@ -150,6 +151,7 @@ find_package(pratt-parser REQUIRED)
 target_link_libraries(aoc_lib PUBLIC
     Eigen3::Eigen
     cpp-lazy::cpp-lazy
+    cpp-sort::cpp-sort
     fmt::fmt
     nlohmann_json::nlohmann_json
     scn::scn
