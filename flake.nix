@@ -27,6 +27,7 @@
             buildInputs = with pkgs; [
                 cmake-language-server
                 cpp-lazy
+                cpp-sort
                 doctest
                 eigen
                 fast_float
