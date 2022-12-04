@@ -127,6 +127,7 @@ add_library(
     source/2022/01/solution.cpp
     source/2022/02/solution.cpp
     source/2022/03/solution.cpp
+    source/2022/04/solution.cpp
 )
 
 target_include_directories(
