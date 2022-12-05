@@ -128,6 +128,7 @@ add_library(
     source/2022/02/solution.cpp
     source/2022/03/solution.cpp
     source/2022/04/solution.cpp
+    source/2022/05/solution.cpp
 )
 
 target_include_directories(
@@ -156,8 +157,9 @@ target_link_libraries(aoc_lib PUBLIC
     cpp-sort::cpp-sort
     fmt::fmt
     nlohmann_json::nlohmann_json
+    pratt-parser::pratt-parser
     scn::scn
-    unordered_dense::unordered_dense pratt-parser::pratt-parser
+    unordered_dense::unordered_dense
 )
 
 # ---- Declare executable ----
