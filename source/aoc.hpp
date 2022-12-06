@@ -166,6 +166,10 @@ struct hash {
         return constexpr_xxh3::XXH3_64bits_const(array);
     }
 
+    constexpr inline auto operator()(std::basic_string<char> const& s) const -> u64 {
+        return xxh::xxhash3<hash_bits>(s.begin(), s.end());
+    }
+
     constexpr inline auto operator()(std::ranges::range auto&& r) const -> u64 {
         return xxh::xxhash3<hash_bits>(r.begin(), r.end());
     }
