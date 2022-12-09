@@ -51,6 +51,5 @@ auto advent2022::day08() -> result {
     auto const prod = lz::cartesian(lz::range(nrow), lz::range(ncol));
     auto part2{0U};
     for (auto [x, y] : prod) { part2 = std::max(part2, scenic_score(x, y)); }
-
     return aoc::result(part1, part2);
 }
