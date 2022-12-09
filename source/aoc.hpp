@@ -206,6 +206,13 @@ inline auto replace_all(std::string& inout, std::string_view what, std::string_v
 inline auto remove_all(std::string& inout, std::string_view what) -> std::size_t {
     return replace_all(inout, what, "");
 }
+
+template<typename T>
+concept arithmetic = std::is_arithmetic_v<T>;
+
+inline auto sgn(arithmetic auto a) -> i32 {
+    auto z = a-a; return (z < a) - (a < z); // NOLINT
+}
 } // namespace util
 
 namespace eigen {
