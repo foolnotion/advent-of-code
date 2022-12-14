@@ -69,21 +69,16 @@ auto advent2022::day13() -> result
     auto input = aoc::util::readlines("./source/2022/13/input.txt");
     using detail::packet;
     using detail::parse;
-    std::vector<packet> packets;
     auto part1{0L};
-    for (auto i = 0; i < std::ssize(input); i += 3) {
-        auto a = parse(input[i]);
-        auto b = parse(input[i+1L]);
-        part1 += (i/3L + 1L) * (a < b);
-        packets.push_back(a);
-        packets.push_back(b);
-    }
-
-    std::ranges::sort(packets);
     auto p1{parse("[[2]]")};
     auto p2{parse("[[6]]")};
-    auto x1 = std::lower_bound(packets.begin(), packets.end(), p1);
-    auto x2 = std::lower_bound(x1, packets.end(), p2);
-    auto part2{ (std::distance(packets.begin(), x1)+1) * (std::distance(packets.begin(), x2)+2) };
-    return aoc::result(part1, part2);
+    auto i1{0}, i2{0}; // NOLINT
+    for (auto i = 0, j = 0; i < std::ssize(input); i += 3, ++j) {
+        auto a = parse(input[i]);
+        auto b = parse(input[i+1L]);
+        part1 += (j + 1L) * (a < b);
+        i1 += (a < p1) + (b < p1);
+        i2 += (a < p2) + (b < p2);
+    }
+    return aoc::result(part1, (i1+1) * (i2+2));
 }
