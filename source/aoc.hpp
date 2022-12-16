@@ -202,7 +202,7 @@ inline auto replace_all(std::string& inout, std::string_view what, std::string_v
     }
     return count;
 }
- 
+
 inline auto remove_all(std::string& inout, std::string_view what) -> std::size_t {
     return replace_all(inout, what, "");
 }
@@ -268,7 +268,37 @@ inline auto pow_mod(T a, T n, T m) -> T // NOLINT
     }
     return r;
 }
+
+template<typename T>
+struct interval {
+    T a;
+    T b;
+
+    static inline auto empty() { return interval{std::numeric_limits<i64>::max(), std::numeric_limits<i64>::min()}; }
+    [[nodiscard]] auto isempty() const { return a > b; }
+    [[nodiscard]] auto contains(i64 v) const { return a <= v && v <= b; }
+    [[nodiscard]] auto intersects(interval const& iv) const {
+        return !iv.isempty() && (contains(iv.a) || contains(iv.b) || iv.contains(a) || iv.contains(b));
+    }
+    [[nodiscard]] inline auto width() const { return isempty() ? 0 : b - a + 1; }
+
+    [[nodiscard]] inline auto operator&(interval const& iv) const {
+        if (isempty() || iv.isempty()) { return interval::empty(); }
+        if (!intersects(iv)) { return interval::empty(); }
+        return interval{ std::max(a, iv.a), std::min(b, iv.b) };
+    }
+
+    [[nodiscard]] inline auto operator|(interval const& iv) const {
+        if (isempty()) { return iv; }
+        if (iv.isempty()) { return *this; }
+        return interval{std::min(a, iv.a), std::max(b, iv.b)};
+    }
+
+    [[nodiscard]] inline auto as_tuple() const { return std::tuple{a, b}; }
+};
 } // namespace math
+
+
 
 inline auto contains(std::string_view s, std::string_view q) {
     return s.find(q) != std::string::npos; // NOLINT
