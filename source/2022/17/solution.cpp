@@ -104,7 +104,7 @@ auto advent2022::day17() -> result {
     constexpr auto height{10000};
     constexpr auto width{7};
 
-    std::vector<shape> shapes; // shape, height coordinate, is resting
+    std::vector<shape> shapes;
     using point = aoc::point<u32, 2>;
     Eigen::Array<u8, -1, -1, Eigen::RowMajor> chamber(height, width);
     chamber.setConstant(0);
