@@ -274,9 +274,9 @@ struct interval {
     T a;
     T b;
 
-    static inline auto empty() { return interval{std::numeric_limits<i64>::max(), std::numeric_limits<i64>::min()}; }
+    static inline auto empty() { return interval{std::numeric_limits<T>::max(), std::numeric_limits<T>::min()}; }
     [[nodiscard]] auto isempty() const { return a > b; }
-    [[nodiscard]] auto contains(i64 v) const { return a <= v && v <= b; }
+    [[nodiscard]] auto contains(T v) const { return a <= v && v <= b; }
     [[nodiscard]] auto intersects(interval const& iv) const {
         return !iv.isempty() && (contains(iv.a) || contains(iv.b) || iv.contains(a) || iv.contains(b));
     }
@@ -297,8 +297,6 @@ struct interval {
     [[nodiscard]] inline auto as_tuple() const { return std::tuple{a, b}; }
 };
 } // namespace math
-
-
 
 inline auto contains(std::string_view s, std::string_view q) {
     return s.find(q) != std::string::npos; // NOLINT
