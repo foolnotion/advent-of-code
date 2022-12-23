@@ -143,6 +143,12 @@ add_library(
     source/2022/17/solution.cpp
     source/2022/18/solution.cpp
     source/2022/19/solution.cpp
+    source/2022/20/solution.cpp
+    source/2022/21/solution.cpp
+    source/2022/22/solution.cpp
+    source/2022/23/solution.cpp
+    source/2022/24/solution.cpp
+    source/2022/25/solution.cpp
 )
 
 target_include_directories(
