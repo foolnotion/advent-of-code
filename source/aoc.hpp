@@ -269,6 +269,10 @@ inline auto pow_mod(T a, T n, T m) -> T // NOLINT
     return r;
 }
 
+inline auto mod_euclid(std::integral auto a, std::integral auto b) {
+    return a < 0 ? ((a % b) + b) % b : a % b;
+}
+
 template<typename T>
 struct interval {
     T a;
