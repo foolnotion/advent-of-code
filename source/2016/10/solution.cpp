@@ -3,15 +3,15 @@
 namespace detail {
     struct bot {
         u64 id{};
-        u64 count{};
-        std::array<u64, 2> values;
+        mutable u64 count{};
+        mutable std::array<u64, 2> values;
 
-        auto operator=(u64 v) -> bot& {
+        auto operator=(u64 v) const -> bot const& {
             values[count++] = v;
             return *this;
         }
 
-        auto operator*() {
+        auto operator*() const {
             count = 0;
             auto [a, b] = values;
             return std::tuple{std::min(a, b), std::max(a, b)};
@@ -34,7 +34,8 @@ auto advent2016::day10() -> result {
     for (auto const& s : std::span{input.begin(), pt}) {
         u64 v, b; // NOLINT
         (void)scn::scan(s, "value {} goes to bot {}", v, b);
-        *bots.insert({b}).first = v;
+        detail::bot bot{b};
+        *bots.insert(bot).first = v;
     }
 
     auto check_p1 = [](auto bot) {
