@@ -13,17 +13,14 @@
             inherit system;
             overlays = [ foolnotion.overlay ];
           };
-          llvm = pkgs.llvmPackages_14;
-          stdenv = pkgs.overrideCC llvm.stdenv (
-            llvm.clang.override { gccForLibs = pkgs.gcc12.cc; }
-          );
+          stdenv_ = pkgs.llvmPackages_16.stdenv;
         in rec
         {
-          devShells.default = stdenv.mkDerivation {
+          devShells.default = stdenv_.mkDerivation {
             name = "aoc";
             hardeningDisable = [ "all" ];
             impureUseNativeOptimizations = true;
-            nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools cppcheck ];
+            nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools_16 cppcheck ];
             buildInputs = with pkgs; [
                 cmake-language-server
                 cpp-lazy
@@ -31,8 +28,7 @@
                 doctest
                 eigen
                 fast_float
-                fmt_9
-                gcc12
+                fmt
                 gdb
                 hotspot
                 hyperfine
