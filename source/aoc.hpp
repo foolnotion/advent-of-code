@@ -180,6 +180,19 @@ struct hash {
     }
 };
 
+inline auto trim_extra_space(std::string const& s) {
+    std::string q; q.reserve(s.size());
+    for (auto i = 0; i < s.size(); ) {
+        q.push_back(s[i]);
+        if (std::isspace(s[i])) {
+            while(std::isspace(s[i])) { ++i; }
+        } else {
+            ++i;
+        }
+    }
+    return q;
+}
+
 inline auto readlines(std::string const& path) {
     std::ifstream f(path);
     if (f.is_open()) {
