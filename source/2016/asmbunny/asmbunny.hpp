@@ -12,6 +12,7 @@ namespace aoc::interpreters::asmbunny {
         static constexpr auto inc { hash{}("inc") };
         static constexpr auto dec { hash{}("dec") };
         static constexpr auto jnz { hash{}("jnz") };
+        static constexpr auto tgl { hash{}("tgl") };
     };
 
     using registers = std::array<i32, 4>;
@@ -29,19 +30,34 @@ namespace aoc::interpreters::asmbunny {
     };
 
     struct instruction {
-        u64 op; // opcode
+        u64 op{}; // opcode
         std::variant<char, i32> lhs;
         std::variant<char, i32> rhs;
+        i32 n{};  // arity
 
-        [[nodiscard]] auto name() const -> std::string {
+        auto toggle() {
+            instruction tmp;
             aoc::util::hash hash;
-            switch(op) {
-                case hash("cpy"): return "cpy";
-                case hash("inc"): return "inc";
-                case hash("dec"): return "dec";
-                case hash("jnz"): return "jnz";
-                default: return "unknown";
+
+            switch(n) {
+                case 1: {
+                    // inc becomes dec, all other unary instructions become inc
+                    op = op == opcode::inc ? opcode::dec : opcode::inc;
+                    break;
+                }
+                case 2: {
+                    // jnz becomes cpy, all other binary instructions become jnz
+                    op = op == opcode::jnz ? opcode::cpy : opcode::jnz;
+                    break;
+                }
             }
+        }
+
+        [[nodiscard]] inline auto valid() const {
+            return !( // NOLINT
+                (op == opcode::cpy && std::holds_alternative<i32>(rhs))
+            );
+
         }
     };
 
@@ -54,6 +70,7 @@ namespace aoc::interpreters::asmbunny {
 
                 instruction i{};
                 i.op = aoc::util::hash{}(tokens[0]);
+                i.n  = static_cast<int>(tokens.size()) - 1;
 
                 if (std::isalpha(tokens[1].front())) {
                     i.lhs = tokens[1].front();
@@ -74,10 +91,20 @@ namespace aoc::interpreters::asmbunny {
             aoc::util::hash h;
             get_value_visitor get{reg};
 
+            auto value = [&](auto var) { return std::visit(get, var); };
+
             for (auto i = 0; i < std::ssize(code_); ++i) {
+                if (!code_[i].valid()) { continue; }
                 auto instr = code_[i];
 
                 switch(instr.op) {
+                case opcode::tgl: {
+                    auto j = value(instr.lhs) + i;
+                    if (j >= 0 && j < code_.size()) {
+                        code_[j].toggle();
+                    }
+                    break;
+                }
                 case opcode::inc: {
                     auto c = std::get<char>(instr.lhs);
                     ++reg[c - 'a'];
@@ -90,14 +117,12 @@ namespace aoc::interpreters::asmbunny {
                 }
                 case opcode::cpy: {
                     auto c = std::get<char>(instr.rhs);
-                    auto v = std::visit(get, instr.lhs);
-                    reg[c - 'a'] = v;
+                    reg[c - 'a'] = value(instr.lhs);
                     break;
                 }
                 case opcode::jnz: {
-                    auto v = std::visit(get, instr.lhs);
-                    if (v != 0) {
-                        i += std::get<i32>(instr.rhs) - 1;
+                    if (value(instr.lhs) != 0) {
+                        i += value(instr.rhs) - 1;
                     }
                     break;
                 }
@@ -105,7 +130,7 @@ namespace aoc::interpreters::asmbunny {
             }
             return reg.front();
         }
-    
+
     private:
         std::vector<instruction> code_;
     };
