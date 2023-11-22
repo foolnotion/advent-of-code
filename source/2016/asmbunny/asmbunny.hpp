@@ -13,6 +13,7 @@ namespace aoc::interpreters::asmbunny {
         static constexpr auto dec { hash{}("dec") };
         static constexpr auto jnz { hash{}("jnz") };
         static constexpr auto tgl { hash{}("tgl") };
+        static constexpr auto out { hash{}("out") };
     };
 
     using registers = std::array<i32, 4>;
@@ -57,7 +58,6 @@ namespace aoc::interpreters::asmbunny {
             return !( // NOLINT
                 (op == opcode::cpy && std::holds_alternative<i32>(rhs))
             );
-
         }
     };
 
@@ -92,8 +92,18 @@ namespace aoc::interpreters::asmbunny {
             get_value_visitor get{reg};
 
             auto value = [&](auto var) { return std::visit(get, var); };
+            aoc::dense::set<u64> seen;
 
-            for (auto i = 0; i < std::ssize(code_); ++i) {
+            auto hash = [](auto i, auto s, auto r) {
+                return aoc::util::hash{}(i, s, r[0], r[1], r[2], r[3]);
+            };
+
+            for (auto i = 0; i < std::ssize(code_) && status; ++i) {
+                auto h = hash(i, signal_, reg);
+                if (auto [it, ok] = seen.insert(h); !ok) {
+                    break;
+                }
+
                 if (!code_[i].valid()) { continue; }
                 auto instr = code_[i];
 
@@ -126,12 +136,25 @@ namespace aoc::interpreters::asmbunny {
                     }
                     break;
                 }
+                case opcode::out: {
+                    // transmits the next value for the clock signal
+                    auto v = value(instr.lhs);
+                    if ((signal_ == -1 && v == 1) || (signal_ == v)) {
+                        status = false;
+                    } else {
+                        signal_ = v;
+                    }
+                    break;
+                }
                 }
             }
             return reg.front();
         }
 
+        bool status{true};
+
     private:
+        i32 signal_{-1};
         std::vector<instruction> code_;
     };
 } // namespace aoc::interpreters::asmbunny

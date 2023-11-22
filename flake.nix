@@ -13,14 +13,13 @@
             inherit system;
             overlays = [ foolnotion.overlay ];
           };
-          stdenv_ = pkgs.llvmPackages_16.stdenv;
         in rec
         {
-          devShells.default = stdenv_.mkDerivation {
+          devShells.default = pkgs.llvmPackages_16.stdenv.mkDerivation {
             name = "aoc";
             hardeningDisable = [ "all" ];
             impureUseNativeOptimizations = true;
-            nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools_16 cppcheck ];
+            nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools_16 cppcheck gcc13 ninja ];
             buildInputs = with pkgs; [
                 cmake-language-server
                 cpp-lazy
