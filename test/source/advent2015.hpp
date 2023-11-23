@@ -1,58 +1,58 @@
 #include <aoc.hpp>
-#include "ut.hpp"
+#include <doctest/doctest.h>
 #include "nanobench.h"
 
-namespace ut = boost::ut;
-
-ut::suite const advent2015_test_suite = [] {
-    using namespace ut; // NOLINT
-    using std::tuple;
-    namespace nb = ankerl::nanobench;
-
-    std::array results {
-        /* day 01 */ tuple{"232", "1783"},
-        /* day 02 */ tuple{"1606483", "3842356"},
-        /* day 03 */ tuple{"2565", "2639"},
-        /* day 04 */ tuple{"346386", "9958218"},
-        /* day 05 */ tuple{"236", "51"},
-        /* day 06 */ tuple{"377891", "14110788"},
-        /* day 07 */ tuple{"16076", "2797"},
-        /* day 08 */ tuple{"1350", "2085"},
-        /* day 09 */ tuple{"141", "736"},
-        /* day 10 */ tuple{"252594", "3579328"},
-        /* day 11 */ tuple{"vzbxxyzz", "vzcaabcc"},
-        /* day 12 */ tuple{"191164", "87842"},
-        /* day 13 */ tuple{"733", "725"},
-        /* day 14 */ tuple{"2640", "1102"},
-        /* day 15 */ tuple{"13882464", "11171160"},
-        /* day 16 */ tuple{"40", "241"},
-        /* day 17 */ tuple{"654", "57"},
-        /* day 18 */ tuple{"821", "886"},
-        /* day 19 */ tuple{"518", "200"},
-        /* day 20 */ tuple{"776160", "786240"},
-        /* day 21 */ tuple{"111", "188"},
-        /* day 22 */ tuple{"1824", "1937"},
-        /* day 23 */ tuple{"307", "160"},
-        /* day 24 */ tuple{"11846773891", "80393059"},
-        /* day 25 */ tuple{"9132360", ""},
-    };
-
-    advent2015 advent;
-
-    "correctness"_test = [&] {
-        for (auto [i, result] : lz::enumerate(results)) {
-            expect(advent(i+1) == result) << fmt::format("2015/{:02d}", i+1);
-        }
-    };
-
-    "performance"_test = [&] {
-        nb::Bench bench;
-        bench.output(nullptr);
-        for (auto i = 1; i <= 25; ++i) {
-            bench.run(fmt::format("2015/{:02d}", i), [&]() { return advent(i); });
-        }
-        bench.render(nb::templates::csv(), std::cout);
-    };
+std::array const advent2015_results {
+    /* day 01 */ std::tuple{"232", "1783"},
+    /* day 02 */ std::tuple{"1606483", "3842356"},
+    /* day 03 */ std::tuple{"2565", "2639"},
+    /* day 04 */ std::tuple{"346386", "9958218"},
+    /* day 05 */ std::tuple{"236", "51"},
+    /* day 06 */ std::tuple{"377891", "14110788"},
+    /* day 07 */ std::tuple{"16076", "2797"},
+    /* day 08 */ std::tuple{"1350", "2085"},
+    /* day 09 */ std::tuple{"141", "736"},
+    /* day 10 */ std::tuple{"252594", "3579328"},
+    /* day 11 */ std::tuple{"vzbxxyzz", "vzcaabcc"},
+    /* day 12 */ std::tuple{"191164", "87842"},
+    /* day 13 */ std::tuple{"733", "725"},
+    /* day 14 */ std::tuple{"2640", "1102"},
+    /* day 15 */ std::tuple{"13882464", "11171160"},
+    /* day 16 */ std::tuple{"40", "241"},
+    /* day 17 */ std::tuple{"654", "57"},
+    /* day 18 */ std::tuple{"821", "886"},
+    /* day 19 */ std::tuple{"518", "200"},
+    /* day 20 */ std::tuple{"776160", "786240"},
+    /* day 21 */ std::tuple{"111", "188"},
+    /* day 22 */ std::tuple{"1824", "1937"},
+    /* day 23 */ std::tuple{"307", "160"},
+    /* day 24 */ std::tuple{"11846773891", "80393059"},
+    /* day 25 */ std::tuple{"9132360", ""},
 };
 
+TEST_CASE("correctness" * doctest::test_suite("correctness")) {
+    for (auto [i, result] : lz::enumerate(advent2015_results)) {
+        auto label = fmt::format("2015/{}", i+1);
+        advent2015 advent;
+        SUBCASE(label.c_str()) {
+            CHECK_EQ(advent(i+1), result);
+        }
+    }
+};
 
+TEST_CASE("performance" * doctest::test_suite("performance")) {
+    namespace nb = ankerl::nanobench;
+    nb::Bench bench;
+    advent2015 advent;
+    // bench.output(nullptr);
+    aoc::util::hash hash;
+    auto h{0UL};
+    for (auto i = 1; i <= 25; ++i) {
+        bench.run(fmt::format("2015/{:02d}", i), [&](){
+            auto const& [p1, p2] = advent(i);
+            h += hash(p1) + hash(p2);
+        });
+    }
+    std::ofstream f{"advent_2015.csv"};
+    bench.render(nb::templates::csv(), f);
+};

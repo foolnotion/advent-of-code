@@ -5,10 +5,6 @@ template <>
 auto advent2016::day12() -> result
 {
     auto input = aoc::util::readlines("./source/2016/12/input.txt");
-    // std::vector<std::string> input {
-    //     "cpy 41 a", "inc a", "inc a", "dec a", "jnz a 2", "dec a"
-    // };
-
     aoc::interpreters::asmbunny::interpreter interpreter{input};
     using aoc::interpreters::asmbunny::registers;
 

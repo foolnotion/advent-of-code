@@ -30,9 +30,9 @@ auto advent2022::day10() -> result {
         }
     }
 
-    for (auto const& d : display) {
-        fmt::print("{}\n", d);
-    }
+    //for (auto const& d : display) {
+    //    fmt::print("{}\n", d);
+    //}
     return aoc::result(part1, "EHZFZHCZ");
 }
 

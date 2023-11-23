@@ -12,7 +12,7 @@ auto advent2016::day25() -> result {
     for (auto i = 0; i < 10000; ++i) {
         registers r{i, 0, 0, 0};
         interpreter interpreter{input};
-        interpreter(r);
+        interpreter(r, /*detect_cycles=*/true);
         if (interpreter.status) {
             part1 = i;
             break;

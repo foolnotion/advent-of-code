@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 #include <util/md5.h>
 
-namespace detail {
+namespace {
     using point = Eigen::Array<i32, 2, 1>;
 
     struct state {
@@ -29,15 +29,15 @@ namespace detail {
             return nb;
         }
     };
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2016::day17() -> result {
-    std::queue<detail::state> queue;
+    std::queue<state> queue;
     queue.push({"", {0,0}});
     std::string shortest_path;
     auto longest_path{0UL};
-    detail::point goal{3,3};
+    point goal{3,3};
 
     while(!queue.empty()) {
         auto s = queue.front();

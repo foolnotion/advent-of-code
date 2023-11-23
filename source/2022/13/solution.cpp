@@ -12,6 +12,10 @@ namespace detail {
         explicit packet(seq const& v) : variant(v) { }
 
         friend auto operator<(packet const& a, packet const& b) -> bool;
+        friend auto operator>(packet const& a, packet const& b) -> bool;
+        friend auto operator==(packet const& a, packet const& b) -> bool;
+
+        friend auto operator<=>(packet const& a, packet const& b) -> std::weak_ordering;
     };
 
     struct comparison_visitor {
@@ -34,6 +38,11 @@ namespace detail {
 
     auto operator<(packet const& a, packet const& b) -> bool {
         return std::visit(comparison_visitor{}, a, b);
+    }
+
+    auto operator<=>(packet const& a, packet const& b) -> std::weak_ordering {
+        if (a < b) { return std::weak_ordering::less; }
+        return std::weak_ordering::equivalent;
     }
 
     auto parse(std::string_view& s) -> packet {

@@ -46,14 +46,14 @@
 #define EXPECT(cond) \
     if(!(cond)) \
     { \
-        fmt::print("Precondition {} failed at {}: {}\n", fmt::format(fmt::fg(fmt::terminal_color::green), "{}", #cond), __FILE__, __LINE__); \
+        fmt::print("Precondition {} failed at {}: {}\n", fmt::format(fmt::fg(fmt::terminal_color::red), "{}", #cond), __FILE__, __LINE__); \
         std::terminate(); \
     }
 
 #define ENSURE(cond) \
     if(!(cond)) \
     { \
-        fmt::print("Postcondition {} failed at {}: {}\n", fmt::format(fmt::fg(fmt::terminal_color::green), "{}", #cond), __FILE__, __LINE__); \
+        fmt::print("Postcondition {} failed at {}: {}\n", fmt::format(fmt::fg(fmt::terminal_color::red), "{}", #cond), __FILE__, __LINE__); \
         std::terminate(); \
     }
 // NOLINTEND(*)
@@ -106,7 +106,7 @@ struct advent {
     static auto day25() -> result;
 
     private:
-    static constexpr std::array<result(*)(), 25> days = { // NOLINT
+    std::array<result(*)(), 25> days = { // NOLINT
         &advent<year>::day01,
         &advent<year>::day02,
         &advent<year>::day03,
@@ -131,7 +131,7 @@ struct advent {
         &advent<year>::day22,
         &advent<year>::day23,
         &advent<year>::day24,
-        &advent<year>::day25,
+        &advent<year>::day25
     };
 };
 
@@ -143,6 +143,7 @@ using advent2019 = advent<2019>; // NOLINT
 using advent2020 = advent<2020>; // NOLINT
 using advent2021 = advent<2021>; // NOLINT
 using advent2022 = advent<2022>; // NOLINT
+using advent2023 = advent<2023>; // NOLINT
 
 namespace aoc {
 template<typename T1, typename T2>

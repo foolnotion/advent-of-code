@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
 struct bitset {
     u64 bits{};
     auto set(u32 i) { bits |= (u64{1} << i); }
@@ -13,7 +13,7 @@ struct state {
     u64 sum;
     u64 product;
 };
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2015::day24() -> result {
@@ -24,9 +24,9 @@ auto advent2015::day24() -> result {
     auto minp = std::numeric_limits<u64>::max();
     auto const sz = std::ssize(pkgs);
     aoc::dense::set<u64> seen;
-    detail::bitset used;
+    bitset used;
 
-    auto find_sum = [&](auto i, auto t, detail::state st, auto&& f) {
+    auto find_sum = [&](auto i, auto t, state st, auto&& f) {
         auto [c, s, p] = st;
         if (std::tie(c, p) > std::tie(minc, minp)) { return; }
         if (auto [it, ok] = seen.insert(used.bits); !ok) { return; }

@@ -15,11 +15,12 @@
           };
         in rec
         {
-          devShells.default = pkgs.llvmPackages_16.stdenv.mkDerivation {
+          devShells.default = pkgs.gcc13Stdenv.mkDerivation {
+          # devShells.default = pkgs.llvmPackages_16.stdenv.mkDerivation {
             name = "aoc";
             hardeningDisable = [ "all" ];
             impureUseNativeOptimizations = true;
-            nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools_16 cppcheck gcc13 ninja ];
+            nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools_16 cppcheck ninja ];
             buildInputs = with pkgs; [
                 cmake-language-server
                 cpp-lazy

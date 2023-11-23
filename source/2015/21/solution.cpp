@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
 struct item {
     i32 cost;
     i32 damage;
@@ -38,14 +38,14 @@ auto battle(hero h, boss b) {
     }
     return h.health > 0;
 }
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2015::day21() -> result {
-    using detail::item;
-    using detail::hero;
-    using detail::boss;
-    using detail::battle;
+    using ::item;
+    using ::hero;
+    using ::boss;
+    using ::battle;
 
     constexpr std::array weapons {
         item{ 8, 4, 0}, // NOLINT

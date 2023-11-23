@@ -101,18 +101,18 @@ auto advent2020::day04() -> result {
         });
     };
 
-    fmt::memory_buffer buf;
+    std::string buf;
     bool space = false;
     int valid_entries = 0;
     auto input = aoc::util::readlines("./source/2020/04/input.txt");
     for(auto const& line : input) {
-        if (line.empty() && buf.size() > 0) {
+        if (line.empty() && !buf.empty()) {
             std::string_view entry(buf.data(), buf.size());
             valid_entries += validate_entry(entry);
             // encountered an empty line, reset the buffer
             buf.clear();
         }
-        fmt::format_to(std::back_inserter(buf), "{}", buf.size() > 0 ? " " : "");
+        fmt::format_to(std::back_inserter(buf), "{}", buf.empty() ? "" : " ");
         for (auto c : line) {
             if (std::isspace(c)) {
                 space = true;
