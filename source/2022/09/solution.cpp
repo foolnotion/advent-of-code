@@ -1,22 +1,12 @@
 #include <aoc.hpp>
+#include <thread>
+using namespace std::chrono_literals;
 
-template<>
-auto advent2022::day09() -> result {
-    auto input = aoc::util::readlines("./source/2022/09/input.txt");
+namespace {
     using point = Eigen::Vector2i;
-    std::array<point, 'R'-'A'+1> move;
-    move['L'-'A'] = {0, -1};
-    move['R'-'A'] = {0, +1};
-    move['U'-'A'] = {-1, 0};
-    move['D'-'A'] = {+1, 0};
 
-    auto moves = lz::map(input, [&](auto const& line) {
-        auto c = line[0];
-        auto s = scn::scan_value<i32>(line.substr(2, line.size()-2)).value();
-        return std::tuple{move[c-'A'], s};
-    }).toVector();
-
-    auto trace_tail = []<std::size_t N>(auto const& moves) {
+    template<std::size_t N>
+    auto trace_tail (auto const& moves) {
         auto hash = [](point p) { return aoc::util::hash{}(p[0], p[1]); };
         aoc::dense::set<point, decltype(hash)> tailtrace;
 
@@ -34,8 +24,26 @@ auto advent2022::day09() -> result {
             }
         }
         return tailtrace.size();
-    };
-    auto part1 = trace_tail.operator()<2>(moves);  // NOLINT
-    auto part2 = trace_tail.operator()<10>(moves); // NOLINT
+    }
+} // namespace
+
+template<>
+auto advent2022::day09() -> result {
+    auto input = aoc::util::readlines("./source/2022/09/input.txt");
+    std::array<point, 'R'-'A'+1> move;
+    move['L'-'A'] = {0, -1};
+    move['R'-'A'] = {0, +1};
+    move['U'-'A'] = {-1, 0};
+    move['D'-'A'] = {+1, 0};
+
+    auto moves = lz::map(input, [&](auto const& line) {
+        auto c = line[0];
+        auto s = scn::scan_value<i32>(line.substr(2, line.size()-2)).value();
+        return std::tuple{move[c-'A'], s};
+    }).toVector();
+
+
+    auto part1 = trace_tail<2>(moves);  // NOLINT
+    auto part2 = trace_tail<10>(moves); // NOLINT
     return aoc::result(part1, part2);
 }

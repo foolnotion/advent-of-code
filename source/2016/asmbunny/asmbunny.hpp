@@ -78,16 +78,18 @@ namespace aoc::interpreters::asmbunny {
                     i.lhs = scn::scan_value<i32>(tokens[1]).value();
                 }
 
-                if (tokens.size() > 2 && std::isalpha(tokens[2].front())) {
-                    i.rhs = tokens[2].front();
-                } else {
-                    i.rhs = scn::scan_value<i32>(tokens[2]).value();
+                if (tokens.size() > 2) {
+                    if(std::isalpha(tokens[2].front())) {
+                        i.rhs = tokens[2].front();
+                    } else {
+                        i.rhs = scn::scan_value<i32>(tokens[2]).value();
+                    }
                 }
                 code_.push_back(i);
             }
         }
 
-        auto operator()(registers reg) {
+        auto operator()(registers reg, bool detect_cycles = false) {
             aoc::util::hash h;
             get_value_visitor get{reg};
 
@@ -99,9 +101,11 @@ namespace aoc::interpreters::asmbunny {
             };
 
             for (auto i = 0; i < std::ssize(code_) && status; ++i) {
-                auto h = hash(i, signal_, reg);
-                if (auto [it, ok] = seen.insert(h); !ok) {
-                    break;
+                if (detect_cycles) {
+                    auto h = hash(i, signal_, reg);
+                    if (auto [it, ok] = seen.insert(h); !ok) {
+                        break;
+                    }
                 }
 
                 if (!code_[i].valid()) { continue; }

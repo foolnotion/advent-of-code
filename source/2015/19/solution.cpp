@@ -100,4 +100,5 @@ auto advent2015::day19() -> result {
         }
     };
     search(molecule, 0, search);
+    return aoc::result("", "");
 }

@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
     using point = Eigen::Array2i;
 
     auto parse(auto const& input, bool part1) {
@@ -64,7 +64,7 @@ namespace detail {
     auto drop(auto& cave, point p, bool part1) {
         auto const nrow{cave.rows()};
         auto const ncol{cave.cols()};
-        if (part1 && p[1] == 0 || p[1] == ncol-1) {
+        if (part1 && (p[1] == 0 || p[1] == ncol-1)) {
             return false;
         }
         while(p[0] < nrow-1 && cave(p[0]+1L, p[1]) == '.') { ++p[0]; }
@@ -72,26 +72,39 @@ namespace detail {
             auto [x, y] = std::tuple{p[0], p[1]};
             return x >= 0 && y >= 0 && x < nrow && y < ncol && cave(x, y) == '.';
         };
-        if (auto x = p + point{+1, -1}; is_valid(x)) { return drop(cave, std::move(x), part1); }
-        if (auto x = p + point{+1, +1}; is_valid(x)) { return drop(cave, std::move(x), part1); }
+        if (point q{p[0]+1, p[1]-1}; is_valid(q)) { return drop(cave, q, part1); }
+        if (point r{p[0]+1, p[1]+1}; is_valid(r)) { return drop(cave, r, part1); }
         cave(p[0], p[1]) = 'o';
         return true;
     }
 
     auto simulate(auto& cave, point sand, bool part1) {
-        while (cave(sand[0], sand[1]) != 'o' && detail::drop(cave, sand, part1)) { }
+        while (cave(sand[0], sand[1]) != 'o' && ::drop(cave, sand, part1)) { }
+        std::queue<point> queue;
+        queue.push(sand);
+
+        auto is_valid = [&](point p) {
+            auto [x, y] = std::tuple{p[0], p[1]};
+            auto res = x >= 0 && y >= 0 && x < cave.rows() && y < cave.cols() && cave(x, y) == '.';
+            return res;
+        };
+
+        while (!queue.empty()) {
+            auto p = queue.front();
+            queue.pop();
+        }
         return (cave == 'o').count();
     };
 
 
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2022::day14() -> result {
     auto input = aoc::util::readlines("./source/2022/14/input.txt");
-    auto [cave1, sand1] = detail::parse(input, /*part1=*/true);
-    auto [cave2, sand2] = detail::parse(input, /*part1=*/false);
-    auto part1 = detail::simulate(cave1, sand1, /*part1=*/true);
-    auto part2 = detail::simulate(cave2, sand2, /*part1=*/false);
+    auto [cave1, sand1] = ::parse(input, /*part1=*/true);
+    auto [cave2, sand2] = ::parse(input, /*part1=*/false);
+    auto part1 = ::simulate(cave1, sand1, /*part1=*/true);
+    auto part2 = ::simulate(cave2, sand2, /*part1=*/false);
     return aoc::result(part1, part2);
 }

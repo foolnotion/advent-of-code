@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 #include <functional>
 
-namespace detail {
+namespace {
 struct node {
     std::string id;
     std::function<u16(u16, u16)> op{nullptr}; // NONE means that the node is a leaf node
@@ -16,12 +16,12 @@ struct node {
         return signal.value();
     }
 };
-} // namespace detail
+} // namespace
 
 template <>
 auto advent2015::day07() -> result
 {
-    using detail::node;
+    using ::node;
 
     std::fstream f("./source/2015/07/input.txt");
     constexpr auto npos = std::string::npos;
@@ -50,25 +50,25 @@ auto advent2015::day07() -> result
 
     for (std::string s; std::getline(f, s); ) {
         std::string a, b, c; // NOLINT
-        decltype(node::op) func{nullptr}; 
+        decltype(node::op) func{nullptr};
 
         // figure out the OP
         bool binary{true};
         if (s.find("AND") != npos) {
-            func = [](u16 x, u16 y) { return x & y; }; 
+            func = [](u16 x, u16 y) { return x & y; };
             (void)scn::scan(s, "{} AND {} -> {}", a, b, c);
         } else if (s.find("OR") != npos) {
-            func = [](u16 x, u16 y) { return x | y; }; 
+            func = [](u16 x, u16 y) { return x | y; };
             (void)scn::scan(s, "{} OR {} -> {}", a, b, c);
         } else if (s.find("RSHIFT") != npos) {
-            func = [](u16 x, u16 y) { return x >> y; }; 
+            func = [](u16 x, u16 y) { return x >> y; };
             (void)scn::scan(s, "{} RSHIFT {} -> {}", a, b, c);
         } else if (s.find("LSHIFT") != npos) {
-            func = [](u16 x, u16 y) { return x << y; }; 
+            func = [](u16 x, u16 y) { return x << y; };
             (void)scn::scan(s, "{} LSHIFT {} -> {}", a, b, c);
         } else if (s.find("NOT") != npos) {
             binary = false;
-            func = [](u16 x, u16) { return ~x; }; 
+            func = [](u16 x, u16) { return ~x; };
             (void)scn::scan(s, "NOT {} -> {}", a, b);
         } else { // ASSIGN
             binary = false;

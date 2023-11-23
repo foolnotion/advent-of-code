@@ -132,8 +132,6 @@ auto bfs(auto const& valves, auto const* startpos) {
             queue.push(s);
         }
     }
-    fmt::print("cached states: {}\n", seen.size());
-    fmt::print("best time: {}\n", best.time);
     while (best.time < M) { best.update(valves); }
     return best.pressure;
 }

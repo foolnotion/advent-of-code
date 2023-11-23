@@ -198,8 +198,8 @@ target_compile_features(aoc_exe PRIVATE cxx_std_20)
 target_link_libraries(aoc_exe PRIVATE aoc_lib)
 
 if(ipo_supported)
-    set_property(aoc_lib PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
-    set_property(aoc_exe PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+    set_property(TARGET aoc_lib PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
+    set_property(TARGET aoc_exe PROPERTY INTERPROCEDURAL_OPTIMIZATION TRUE)
 endif()
 
 # ---- Install rules ----
