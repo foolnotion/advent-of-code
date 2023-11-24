@@ -10,6 +10,7 @@
 #include <endian.h>
 #endif
 
+namespace brumme {
 
 /// same as reset()
 MD5::MD5()
@@ -378,3 +379,5 @@ std::string MD5::operator()(const std::string& text)
   add(text.c_str(), text.size());
   return getHash();
 }
+
+} // namespace

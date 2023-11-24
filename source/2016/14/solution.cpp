@@ -2,6 +2,8 @@
 #include <util/md5.h>
 
 namespace detail {
+    using brumme::MD5;
+
     auto has_repeats(std::string_view sv, auto len) -> std::optional<char> {
         for (auto i = 0; i < std::ssize(sv)-len+1; ++i) {
             std::string_view v{&sv[i], len};

@@ -4,6 +4,8 @@
 namespace {
     using point = Eigen::Array<i32, 2, 1>;
 
+    using brumme::MD5;
+
     struct state {
         static constexpr auto passcode{"dmypynyp"};
         static constexpr auto doors{"UDLR"};
