@@ -30,7 +30,7 @@ std::array const advent2015_results {
     /* day 25 */ std::tuple{"9132360", ""},
 };
 
-TEST_CASE("correctness" * doctest::test_suite("correctness")) {
+TEST_CASE("correctness" * doctest::test_suite("2015")) {
     for (auto [i, result] : lz::enumerate(advent2015_results)) {
         auto label = fmt::format("2015/{}", i+1);
         advent2015 advent;
@@ -40,7 +40,7 @@ TEST_CASE("correctness" * doctest::test_suite("correctness")) {
     }
 };
 
-TEST_CASE("performance" * doctest::test_suite("performance")) {
+TEST_CASE("performance" * doctest::test_suite("2015")) {
     namespace nb = ankerl::nanobench;
     nb::Bench bench;
     advent2015 advent;
