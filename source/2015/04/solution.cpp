@@ -2,18 +2,18 @@
 #include <util/md5.h>
 
 template <>
-auto advent2015::day04() -> result
-{
+auto advent2015::day04() -> result {
+    using brumme::MD5;
     constexpr auto input { "iwrupvqb" };
     std::array<u8, 16> buf{};
-    MD5 md5;
 
     auto count = [&](int n) -> std::optional<i64> {
         for (auto i = 0;; ++i) {
-            auto const s = fmt::format("{}{}", input, i);
-            md5.reset();
-            md5.add(s.data(), s.size());
-            md5.getHash(buf.data());
+            auto const s = fmt::format("{}", i);
+            MD5 hash;
+            hash.add(input, sizeof(input));
+            hash.add(s.data(), s.size());
+            hash.getHash(buf.data());
             auto cnt = std::transform_reduce(buf.begin(), buf.begin() + n/2 + n%2, 0UL, std::plus{},
                     [&](auto c) { return ((c & 0xF0) == 0) + ((c & 0x0F) == 0); }); // NOLINT
 
