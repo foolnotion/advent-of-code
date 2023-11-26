@@ -13,41 +13,42 @@
             inherit system;
             overlays = [ foolnotion.overlay ];
           };
-        in rec
+        in
+        rec
         {
-          devShells.default = pkgs.gcc13Stdenv.mkDerivation {
-          # devShells.default = pkgs.llvmPackages_16.stdenv.mkDerivation {
+          # devShells.default = pkgs.gcc13Stdenv.mkDerivation {
+          devShells.default = pkgs.llvmPackages_16.stdenv.mkDerivation {
             name = "aoc";
             hardeningDisable = [ "all" ];
             impureUseNativeOptimizations = true;
             nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools_16 cppcheck ninja ];
             buildInputs = with pkgs; [
-                cmake-language-server
-                cpp-lazy
-                cpp-sort
-                doctest
-                eigen
-                fast_float
-                fmt
-                gdb
-                hotspot
-                hyperfine
-                linuxPackages_latest.perf
-                mdspan
-                nlohmann_json
-                openlibm
-                pkg-config
-                pratt-parser
-                robin-hood-hashing
-                scnlib
-                seer
-                unordered_dense
-                valgrind
-              ];
+              cmake-language-server
+              cpp-lazy
+              cpp-sort
+              doctest
+              eigen
+              fast_float
+              fmt
+              gdb
+              hotspot
+              hyperfine
+              linuxPackages_latest.perf
+              mdspan
+              nlohmann_json
+              openlibm
+              pkg-config
+              pratt-parser
+              robin-hood-hashing
+              scnlib
+              seer
+              unordered_dense
+              valgrind
+            ];
 
-              shellHook = ''
-                alias bb="cmake --build build -j"
-              '';
+            shellHook = ''
+              alias bb="cmake --build build -j"
+            '';
           };
         }
       );
