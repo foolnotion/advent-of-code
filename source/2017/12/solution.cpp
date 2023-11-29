@@ -9,7 +9,7 @@ namespace {
         [[nodiscard]] auto group_size() const -> i32 {
             visited = true;
             return std::transform_reduce(pipes.begin(), pipes.end(), 0, std::plus{}, [&](auto const* n) {
-                return n->visited ? 0 : n->group_size(); 
+                return n->visited ? 0 : n->group_size();
             }) + 1;
         }
     };
@@ -30,16 +30,9 @@ auto advent2017::day12() -> result {
     }
 
     auto p1 = nodes.front().group_size();
-    auto p2{1};
-    while(true) {
-        for (auto& n : nodes) {
-            if (!n.visited) {
-                ++p2;
-                (void)n.group_size();
-                continue;
-            }
-        }
-        break;
-    }
+    auto p2 = std::transform_reduce(nodes.begin(), nodes.end(), 1, std::plus{}, [](auto const& n) {
+        if (!n.visited) { (void)n.group_size(); return 1; }
+        return 0;
+    });
     return aoc::result(p1, p2);
 }
