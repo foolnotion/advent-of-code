@@ -38,31 +38,6 @@ auto advent2017::day10() -> result {
     };
     hash(list, lengths);
     auto const p1 = list[0] * list[1];
-
-    // part two
-    auto dense_hash = [&](auto const& input) {
-        constexpr auto rounds{64};
-        constexpr auto block_size{16};
-        auto bytes = converter{}(input);
-        std::array<u8, size> list{};
-        std::iota(list.begin(), list.end(), 0);
-        std::tuple t{0, 0}; // position and skip
-        for (auto r = 0; r < rounds; ++r) {
-            auto [p, s] = t;
-            t = hash(list, bytes, p, s);
-        }
-        std::string dense_hash;
-        constexpr auto hex{"0123456789abcdef"};
-        constexpr auto mask{15U};
-        for (auto k = 0; k < size; k += block_size) {
-            std::span sp{list.data()+k, block_size};
-            auto h = std::reduce(sp.begin(), sp.end(), u32{0}, std::bit_xor{});
-            dense_hash.push_back(hex[(h >> 4U) & mask]);
-            dense_hash.push_back(hex[h & mask]);
-        }
-        return dense_hash;
-    };
-
-    auto const p2 = dense_hash(std::string{"94,84,0,79,2,27,81,1,123,93,218,23,103,255,254,243"});
+    auto const p2 = aoc::util::knot_hash{}("94,84,0,79,2,27,81,1,123,93,218,23,103,255,254,243");
     return aoc::result(p1, p2);
 }
