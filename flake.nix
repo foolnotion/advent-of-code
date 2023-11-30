@@ -24,11 +24,13 @@
             nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools_16 cppcheck ninja ];
             buildInputs = with pkgs; [
               cmake-language-server
+              cpp-flux
               cpp-lazy
               cpp-sort
               doctest
               eigen
               fast_float
+              fastor
               fmt
               gdb
               hotspot
