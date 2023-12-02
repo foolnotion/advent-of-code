@@ -46,9 +46,9 @@ auto advent2023::day02() -> result {
             for (auto z : std::views::split(sv, ", "sv)) {
                 (void)scn::scan(z, "{} {}", value, color);
                 switch(aoc::util::hash{}(color)) {
-                    case red:   { m.r = std::max(m.r, value); break;   }
+                    case red:   { m.r = std::max(m.r, value); break; }
                     case green: { m.g = std::max(m.g, value); break; }
-                    case blue:  { m.b = std::max(m.b, value); break;  }
+                    case blue:  { m.b = std::max(m.b, value); break; }
                 }
             }
         }
