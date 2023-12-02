@@ -384,4 +384,6 @@ struct std::hash<aoc::point<T>> {
     }
 };
 
+constexpr auto operator ""_hash(char const* str, size_t /*unused*/) { return aoc::util::hash{}(str); }
+
 #endif

@@ -155,6 +155,30 @@ add_library(
     source/2022/25/solution.cpp
     # 2023
     source/2023/01/solution.cpp
+    source/2023/02/solution.cpp
+    source/2023/03/solution.cpp
+    source/2023/04/solution.cpp
+    source/2023/05/solution.cpp
+    source/2023/06/solution.cpp
+    source/2023/07/solution.cpp
+    source/2023/08/solution.cpp
+    source/2023/09/solution.cpp
+    source/2023/10/solution.cpp
+    source/2023/11/solution.cpp
+    source/2023/12/solution.cpp
+    source/2023/13/solution.cpp
+    source/2023/14/solution.cpp
+    source/2023/15/solution.cpp
+    source/2023/16/solution.cpp
+    source/2023/17/solution.cpp
+    source/2023/18/solution.cpp
+    source/2023/19/solution.cpp
+    source/2023/20/solution.cpp
+    source/2023/21/solution.cpp
+    source/2023/22/solution.cpp
+    source/2023/23/solution.cpp
+    source/2023/24/solution.cpp
+    source/2023/25/solution.cpp
 )
 
 target_include_directories(
