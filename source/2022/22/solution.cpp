@@ -177,7 +177,7 @@ namespace {
         faces_p2[5].r = {&faces_p2[4], orientation::left};
         faces_p2[5].l = {&faces_p2[0], orientation::left};
         faces_p2[5].u = {&faces_p2[3], orientation::up};
-        faces_p2[5].d = {&faces_p2[1], orientation::up};  
+        faces_p2[5].d = {&faces_p2[1], orientation::up};
     }
 } // namespace
 
@@ -227,7 +227,7 @@ auto advent2022::day22() -> result
         { orientation::left, 2 },
         { orientation::right, 0 },
         { orientation::up, 3 },
-        { orientation::down, 1 }  
+        { orientation::down, 1 }
     };
 
     aoc::dense::map<std::pair<point, point>, point, decltype(hash_pair)> omap {

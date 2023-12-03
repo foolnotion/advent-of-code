@@ -1,12 +1,13 @@
 #include <aoc.hpp>
 #include <thread>
+
 using namespace std::chrono_literals;
 
 namespace {
     using point = Eigen::Vector2i;
 
     template<std::size_t N>
-    auto trace_tail (auto const& moves) {
+    auto trace_tail (auto const& moves) -> u64 {
         auto hash = [](point p) { return aoc::util::hash{}(p[0], p[1]); };
         aoc::dense::set<point, decltype(hash)> tailtrace;
 
@@ -42,8 +43,7 @@ auto advent2022::day09() -> result {
         return std::tuple{move[c-'A'], s};
     }).toVector();
 
-
-    auto part1 = trace_tail<2>(moves);  // NOLINT
-    auto part2 = trace_tail<10>(moves); // NOLINT
+    auto const part1 = trace_tail<2>(moves);  // NOLINT
+    auto const part2 = trace_tail<10>(moves); // NOLINT
     return aoc::result(part1, part2);
 }
