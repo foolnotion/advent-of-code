@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 #include <iostream>
 
-namespace detail {
+namespace {
 struct ingredient {
     i32 cap{}; // capacity
     i32 dur{}; // durability
@@ -22,12 +22,10 @@ struct ingredient {
         return { a.cap * q, a.dur * q, a.fla * q, a.tex * q, a.cal * q };
     }
 };
-} // namespace detail
+} // namespace
 
 template <>
 auto advent2015::day15() -> result {
-    using detail::ingredient;
-
     std::vector<std::string> const input {
         "Sprinkles: capacity 5, durability -1, flavor 0, texture 0, calories 5",
         "PeanutButter: capacity -1, durability 3, flavor 0, texture 0, calories 1",

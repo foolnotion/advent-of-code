@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
     auto length(std::string_view s, bool part2 = false) -> u64 { // NOLINT
         auto len{0UL};
         for (auto i = 0UL; i < std::ssize(s); ++i, ++len) {
@@ -18,12 +18,12 @@ namespace detail {
         }
         return len;
     };
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2016::day09() -> result {
     auto input = aoc::util::readlines("./source/2016/09/input.txt").front();
-    auto part1 = detail::length(input, /*part2=*/false);
-    auto part2 = detail::length(input, /*part2=*/true);
+    auto part1 = length(input, /*part2=*/false);
+    auto part2 = length(input, /*part2=*/true);
     return aoc::result(part1, part2);
 }

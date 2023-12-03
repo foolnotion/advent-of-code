@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
 struct monkey {
     std::vector<u64> worry;
     char op;
@@ -16,20 +16,20 @@ struct monkey {
     i32 id_false{};
     u64 inspected{0};
 };
-} // namespace detail
+} // namespace
 
 template <>
 auto advent2022::day11() -> result
 {
     auto input = aoc::util::readlines("./source/2022/11/input.txt");
 
-    std::vector<detail::monkey> monkeys;
+    std::vector<monkey> monkeys;
     for (auto i = 0L; i < std::ssize(input); i += 7L) { // NOLINT
         auto const& s = input[i + 1L];
         auto j = 0;
         while (!std::isdigit(s[j])) { ++j; }
         std::string_view sv { &s[j], s.size() - j };
-        detail::monkey m;
+        monkey m;
         (void)scn::scan_list_ex(sv, m.worry, scn::list_separator(','));
 
         auto res = scn::scan(input[i + 2], "  Operation: new = old {} {}", m.op, m.val);
@@ -58,7 +58,7 @@ auto advent2022::day11() -> result
                 m.worry.clear();
             }
         }
-        std::ranges::sort(monkeys, std::greater{}, &detail::monkey::inspected); 
+        std::ranges::sort(monkeys, std::greater{}, &monkey::inspected); 
         return monkeys[0].inspected * monkeys[1].inspected;
     };
 

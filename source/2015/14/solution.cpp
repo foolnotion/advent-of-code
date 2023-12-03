@@ -2,7 +2,7 @@
 
 namespace rg = std::ranges;
 
-namespace detail {
+namespace {
 struct reindeer_stats {
     u32 speed;
     u32 duration;
@@ -35,13 +35,10 @@ struct reindeer {
         return distance;
     };
 };
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2015::day14() -> result {
-    using detail::reindeer;
-    using detail::reindeer_stats;
-
     std::vector<std::string> input {
         "Dancer can fly 27 km/s for 5 seconds, but then must rest for 132 seconds",
         "Cupid can fly 22 km/s for 2 seconds, but then must rest for 41 seconds",

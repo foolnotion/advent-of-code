@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 #include "util/dynamic_bitset.hpp"
 
-namespace detail {
+namespace {
 struct valve {
     u64 index{};
     u64 id{};
@@ -135,14 +135,14 @@ auto bfs(auto const& valves, auto const* startpos) {
     while (best.time < M) { best.update(valves); }
     return best.pressure;
 }
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2022::day16() -> result {
     auto input = aoc::util::readlines("./source/2022/16/input.txt");
     aoc::util::hash hash;
 
-    using valve = detail::valve;
+    using valve = valve;
     std::vector<valve> valves(input.size()); // important for iterator stability
 
     aoc::dense::map<u64, std::string> names;

@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 #include <bits/ranges_algo.h>
 
-namespace detail{
+namespace{
     using point = aoc::point<i32, 3>;
 
     template<std::size_t ... Idx>
@@ -36,21 +36,19 @@ namespace detail{
         }
         return { std::move(points), pmin, pmax };
     }
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2022::day18() -> result {
-    using detail::point;
-
-    auto [points, pmin, pmax] = detail::parse(aoc::util::readlines("./source/2022/18/input.txt"));
+    auto [points, pmin, pmax] = parse(aoc::util::readlines("./source/2022/18/input.txt"));
     auto hash = [](point const& p) { return aoc::util::hash{}(p); };
     aoc::dense::set<point, decltype(hash)> lava(points.begin(), points.end());
     aoc::dense::set<point, decltype(hash)> air;
 
     auto cmp = [](auto const& a, auto const& b, auto&& cmp) {
-        return [&]<auto... Idx>(detail::seq_i<Idx...>) {
+        return [&]<auto... Idx>(seq_i<Idx...>) {
             return (cmp(a[Idx], b[Idx]) || ...);
-        }(detail::seq_n);
+        }(seq_n);
     };
 
     auto sides = [](point const& p) {
@@ -59,9 +57,9 @@ auto advent2022::day18() -> result {
             auto b = p; b[i] += 1;
             return std::tuple{a, b};
         };
-        return [&]<auto... Idx>(detail::seq_i<Idx...>) {
-            return detail::unpack(std::tuple_cat(get_sides(Idx)...));
-        }(detail::seq_n);
+        return [&]<auto... Idx>(seq_i<Idx...>) {
+            return unpack(std::tuple_cat(get_sides(Idx)...));
+        }(seq_n);
     };
 
     auto is_lava = [&](auto const& p) { return lava.contains(p); };

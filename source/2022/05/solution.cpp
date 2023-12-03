@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
     auto rearrange(auto const& input, auto&& mover) {
         std::vector<std::vector<char>> stacks;
         for(auto const& line : input) {
@@ -15,7 +15,7 @@ namespace detail {
         }
         return lz::map(stacks, [](auto const& s){ return s.back(); }).toString();
     }
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2022::day05() -> result {
@@ -28,5 +28,5 @@ auto advent2022::day05() -> result {
         std::copy(src.end()-count, src.end(), std::back_inserter(dst));
         src.erase(src.end()-count, src.end());
     };
-    return aoc::result(detail::rearrange(input, f1), detail::rearrange(input, f2));
+    return aoc::result(rearrange(input, f1), rearrange(input, f2));
 }

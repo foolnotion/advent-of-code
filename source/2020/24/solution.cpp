@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
     using point = aoc::point<i32, 3>;
 
     inline auto add(point a, point b) {
@@ -70,18 +70,15 @@ namespace detail {
         }
         return flipped;
     }
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2020::day24() -> result {
     auto input = aoc::util::readlines("./source/2020/24/input.txt");
-    auto flipped = detail::parse(input);
+    auto flipped = parse(input);
 
     using std::ranges::transform;
     using std::ranges::count_if;
-    using detail::point;
-    using detail::tile;
-    using detail::add;
 
     auto p1 = count_if(flipped, [](auto it) { return it.second.black(); });
 
@@ -97,7 +94,7 @@ auto advent2020::day24() -> result {
         for (auto [h, tile] : flipped) {
             bool b = tile.black();
             auto count{0U};
-            for (auto&& p : detail::generate_neighbours(tile.coord)) {
+            for (auto&& p : generate_neighbours(tile.coord)) {
                 auto h = hash(p);
                 auto it = flipped.find(h);
                 if (it != flipped.end()) {
@@ -117,7 +114,7 @@ auto advent2020::day24() -> result {
             bool b = tile.black();
             auto count{0U};
 
-            for (auto&& p : detail::generate_neighbours(tile.coord)) {
+            for (auto&& p : generate_neighbours(tile.coord)) {
                 auto it = flipped.find(hash(p));
                 if (it == flipped.end()) { continue; }
                 count += it->second.black();

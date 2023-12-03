@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 #include <util/md5.h>
 
-namespace detail {
+namespace {
     using brumme::MD5;
 
     auto has_repeats(std::string_view sv, auto len) -> std::optional<char> {
@@ -49,13 +49,13 @@ namespace detail {
             }), candidates.end());
 
             for (auto const [c, j] : candidates) {
-                if (detail::has_repeats(s, c, 5UL)) { // NOLINT
+                if (has_repeats(s, c, 5UL)) { // NOLINT
                     keys.insert(j);
                 }
             }
 
             if (std::ssize(keys) < target) {
-                if (auto res = detail::has_repeats(s, 3UL); res) {
+                if (auto res = has_repeats(s, 3UL); res) {
                     candidates.emplace_back(*res, i);
                 }
             }
@@ -64,12 +64,12 @@ namespace detail {
         // std::ranges::sort(keys);
         return keys.values()[target-1];
     }
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2016::day14() -> result {
     constexpr auto salt{"ihaygndm"};
-    auto part1 = detail::find_64th_key(salt, 1);
-    auto part2 = detail::find_64th_key(salt, 2017); // NOLINT
+    auto part1 = find_64th_key(salt, 1);
+    auto part2 = find_64th_key(salt, 2017); // NOLINT
     return aoc::result(part1, part2);
 }

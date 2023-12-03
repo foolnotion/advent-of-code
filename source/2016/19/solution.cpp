@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
     // this function demonstrates an implementation using std::deque,
     // simulating the rotation around the circle while balancing the halves
     // (I was then able to derive an analytical formula by analyzing its output)
@@ -22,7 +22,7 @@ namespace detail {
         }
         return s.empty() ? q.front() : s.front();
     };
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2016::day19() -> result {

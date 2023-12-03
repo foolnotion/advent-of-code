@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
     struct bot {
         u64 id{};
         mutable u64 count{};
@@ -17,14 +17,14 @@ namespace detail {
             return std::tuple{std::min(a, b), std::max(a, b)};
         }
     };
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2016::day10() -> result {
     auto hash = [](auto const& bot) { return bot.id; };
     auto equals = [](auto const& a, auto const& b) { return a.id == b.id; };
 
-    aoc::dense::set<detail::bot, decltype(hash), decltype(equals)> bots;
+    aoc::dense::set<bot, decltype(hash), decltype(equals)> bots;
     aoc::dense::map<u64, u64> outputs;
 
     auto input = aoc::util::readlines("./source/2016/10/input.txt");
@@ -34,7 +34,7 @@ auto advent2016::day10() -> result {
     for (auto const& s : std::span{input.begin(), pt}) {
         u64 v, b; // NOLINT
         (void)scn::scan(s, "value {} goes to bot {}", v, b);
-        detail::bot bot{b};
+        bot bot{b};
         *bots.insert(bot).first = v;
     }
 

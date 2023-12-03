@@ -1,11 +1,11 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
     using point = aoc::point<i32, 2>;
 
     auto const parse = [](auto const& line) {
         i32 i{};
-        detail::point p{};
+        point p{};
         (void)scn::scan(line, "Disc #{} has {} positions; at time=0, it is at position {}.", i, p[0], p[1]);
         return p;
     };
@@ -18,13 +18,13 @@ namespace detail {
             }
         }
     }
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2016::day15() -> result {
-    auto discs = lz::map(aoc::util::readlines("./source/2016/15/input.txt"), detail::parse).toVector();
-    auto part1 = detail::find_time(discs);
+    auto discs = lz::map(aoc::util::readlines("./source/2016/15/input.txt"), parse).toVector();
+    auto part1 = find_time(discs);
     discs.push_back({11, 0}); // NOLINT
-    auto part2 = detail::find_time(discs);
+    auto part2 = find_time(discs);
     return aoc::result(part1, part2);
 }

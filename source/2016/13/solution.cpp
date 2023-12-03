@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
     using point = aoc::point<i32, 2>;
     using bitset = std::bitset<std::numeric_limits<u64>::digits>;
 
@@ -25,11 +25,10 @@ namespace detail {
         }
         return neighbors;
     }
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2016::day13() -> result {
-    using detail::point;
     constexpr auto input{1364};
     constexpr point goal{39, 31};
     constexpr auto radius{50};
@@ -38,7 +37,7 @@ auto advent2016::day13() -> result {
     map.setConstant(0);
     for (auto i = 0; i < map.rows(); ++i) {
         for (auto j = 0; j < map.cols(); ++j) {
-            map(i, j) = detail::is_open_space({i,j}, input) ? '.' : '#';
+            map(i, j) = is_open_space({i,j}, input) ? '.' : '#';
         }
     }
     map.transposeInPlace();
@@ -52,7 +51,7 @@ auto advent2016::day13() -> result {
         auto p = queue.front(); queue.pop();
         if (auto [it, ok] = seen.insert(p); !ok) { continue; }
         auto v = arr(p[0], p[1]);
-        for (auto [x, y] : detail::get_neighbors(map, p)) {
+        for (auto [x, y] : get_neighbors(map, p)) {
             arr(x, y) = std::min(v+1, arr(x, y));
             queue.push({x, y});
         }

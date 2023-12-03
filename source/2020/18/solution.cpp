@@ -2,7 +2,7 @@
 #include <pratt-parser/parser.hpp>
 #include <pratt-parser/token.hpp>
 
-namespace detail {
+namespace {
 enum op { add, sub, mul, noop };
 
 struct nud {
@@ -61,13 +61,13 @@ struct led {
     }
 };
 
-} // namespace detail
+} // namespace
 
 template <>
 auto advent2020::day18() -> result
 {
-    using token = detail::nud::token_t;
-    using op = detail::op;
+    using token = nud::token_t;
+    using op = op;
     using as = pratt::associativity;
     using ki = pratt::token_kind;
 
@@ -80,7 +80,7 @@ auto advent2020::day18() -> result
         { "eof", token(ki::eof, "eof", op::noop, 0, as::none) }
     };
 
-    using parser = pratt::parser<detail::nud, detail::led, std::identity, decltype(tokens)>;
+    using parser = pratt::parser<nud, led, std::identity, decltype(tokens)>;
     auto input = aoc::util::readlines("./source/2020/18/input.txt");
     auto evaluate = [&tokens](auto const& expr) { return parser(expr, tokens, {}).parse(); };
     auto p1 = std::transform_reduce(input.begin(), input.end(), 0UL, std::plus{}, evaluate);

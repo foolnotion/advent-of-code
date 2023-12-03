@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
     using shape = Eigen::Array<u8, -1, -1>;
 
     struct shape_library {
@@ -93,13 +93,11 @@ namespace detail {
         }
         return height;
     }
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2022::day17() -> result {
     std::string jets = aoc::util::readlines("./source/2022/17/input.txt").front();
-    using detail::shape;
-    using detail::shape_library;
 
     constexpr auto height{10000};
     constexpr auto width{7};
@@ -110,7 +108,7 @@ auto advent2022::day17() -> result {
     chamber.setConstant(0);
     auto constexpr rocks_p1{2022UL};
     auto constexpr rocks_p2{1'000'000'000'000UL};
-    auto part1 = detail::tower_height(chamber, jets, rocks_p1);
-    auto part2 = detail::tower_height(chamber, jets, rocks_p2, /*detect_cycle=*/true);
+    auto part1 = tower_height(chamber, jets, rocks_p1);
+    auto part2 = tower_height(chamber, jets, rocks_p2, /*detect_cycle=*/true);
     return aoc::result(part1, part2);
 }

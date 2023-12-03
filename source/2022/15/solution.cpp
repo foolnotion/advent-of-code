@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 #include <util/dynamic_bitset.hpp>
 
-namespace detail {
+namespace {
     using point = Eigen::Matrix<i64, 2, 1>;
     using interval = aoc::math::interval<i64>;
 
@@ -16,20 +16,20 @@ namespace detail {
             return interval{c[1] - r + a, c[1] + r - a};
         }
     };
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2022::day15() -> result {
     auto input = aoc::util::readlines("./source/2022/15/input.txt");
 
-    using point = detail::point;
+    using point = point;
     auto xmin{std::numeric_limits<i64>::max()};
     auto xmax{std::numeric_limits<i64>::min()};
     auto ymin{std::numeric_limits<i64>::max()};
     auto ymax{std::numeric_limits<i64>::min()};
     aoc::dense::map<u64, point> bmap;
     auto sensors = lz::map(input, [&](auto const& line) {
-        detail::sensor r;
+        sensor r;
         (void)scn::scan(line, "Sensor at x={}, y={}: closest beacon is at x={}, y={}", r.c[1], r.c[0], r.b[1], r.b[0]);
         r.r = (r.c - r.b).matrix().template lpNorm<1>();
         xmin = std::min({xmin, r.c[0]-r.r});

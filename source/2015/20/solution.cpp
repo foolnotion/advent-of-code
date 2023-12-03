@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
     inline auto pow(auto x, auto p) -> u64 {
         if (p == 0) { return 1; }
         auto m = x;
@@ -67,7 +67,7 @@ namespace detail {
             return div;
         };
     };
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2015::day20() -> result {
@@ -76,7 +76,7 @@ auto advent2015::day20() -> result {
     constexpr u64 m2{11};
     constexpr u64 maxvisit{50};
 
-    constexpr detail::factorcalc calc{};
+    constexpr factorcalc calc{};
 
     aoc::dense::map<u64, u64> count;
     auto i{0};
