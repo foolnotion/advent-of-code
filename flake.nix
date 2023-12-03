@@ -32,6 +32,7 @@
               fast_float
               fastor
               fmt
+              fplus
               gdb
               hotspot
               hyperfine
