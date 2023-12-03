@@ -1,4 +1,5 @@
 #include <aoc.hpp>
+#include <flux.hpp>
 
 namespace detail {
 template <typename T, int S = 10> // NOLINT
@@ -150,7 +151,12 @@ auto advent2020::day20() -> result {
 
     // part 1
     auto dim = static_cast<i64>(std::sqrt(tiles.size()));
-    auto all = lz::flatten(lz::map(tiles, [](auto const& t) { return t.dihedral_group(); })).toVector();
+    std::vector<tile_t> all; all.reserve(tiles.size() * 8);
+    for (auto&& g: tiles | std::views::transform(&tile_t::dihedral_group)) {
+        for (auto&& t : g) {
+            all.push_back(std::move(t));
+        }
+    }
     auto im = assemble_image(all, dim);
     auto p1 = all[im(0,0)].id * all[im(0,dim-1)].id * all[im(dim-1,0)].id * all[im(dim-1,dim-1)].id;
 
