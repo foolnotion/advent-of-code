@@ -31,12 +31,9 @@ std::array const advent2020_results {
 };
 
 TEST_CASE("correctness" * doctest::test_suite("2020")) {
-    for (auto [i, result] : lz::enumerate(advent2020_results)) {
-        auto label = fmt::format("2020/{}", i+1);
-        advent2020 advent;
-        SUBCASE(label.c_str()) {
-            CHECK_EQ(advent(i+1), result);
-        }
+    advent2020 advent;
+    for (auto i = 0; i < advent2020_results.size(); ++i) {
+        CHECK_EQ(advent2020_results[i], advent(i+1));
     }
 };
 
@@ -47,7 +44,7 @@ TEST_CASE("performance" * doctest::test_suite("2020")) {
     // bench.output(nullptr);
     aoc::util::hash hash;
     auto h{0UL};
-    for (auto i = 1; i <= 25; ++i) {
+    for (auto i = 1; i <= advent2020_results.size(); ++i) {
         bench.run(fmt::format("2020/{:02d}", i), [&](){
             auto const& [p1, p2] = advent(i);
             h += hash(p1) + hash(p2);

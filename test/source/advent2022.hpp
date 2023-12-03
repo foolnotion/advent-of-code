@@ -24,19 +24,16 @@ std::array const advent2022_results {
     /* day 19 */ std::tuple{"2193", "7200"},
     /* day 20 */ std::tuple{"6640", "11893839037215"},
     /* day 21 */ std::tuple{"38914458159166", "3665520865940"},
-    /* day 22 */ std::tuple{"", ""},
+    /* day 22 */ std::tuple{"93226", "37415"},
     /* day 23 */ std::tuple{"16868", "1079"},
     /* day 24 */ std::tuple{"343", "960"},
     /* day 25 */ std::tuple{"2-0-020-1==1021=--01", ""},
 };
 
 TEST_CASE("correctness" * doctest::test_suite("2022")) {
-    for (auto [i, result] : lz::enumerate(advent2022_results)) {
-        auto label = fmt::format("2022/{}", i+1);
-        advent2022 advent;
-        SUBCASE(label.c_str()) {
-            CHECK_EQ(advent(i+1), result);
-        }
+    advent2022 advent;
+    for (auto i = 0; i < advent2022_results.size(); ++i) {
+        CHECK_EQ(advent2022_results[i], advent(i+1));
     }
 };
 
@@ -47,7 +44,7 @@ TEST_CASE("performance" * doctest::test_suite("2022")) {
     // bench.output(nullptr);
     aoc::util::hash hash;
     auto h{0UL};
-    for (auto i = 1; i <= 25; ++i) {
+    for (auto i = 1; i <= advent2022_results.size(); ++i) {
         bench.run(fmt::format("2022/{:02d}", i), [&](){
             auto const& [p1, p2] = advent(i);
             h += hash(p1) + hash(p2);

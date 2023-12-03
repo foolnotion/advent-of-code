@@ -8,12 +8,9 @@ std::array const advent2023_results {
 };
 
 TEST_CASE("correctness" * doctest::test_suite("2023")) {
-    for (auto [i, result] : lz::enumerate(advent2023_results)) {
-        auto label = fmt::format("2023/{}", i+1);
-        advent2023 advent;
-        SUBCASE(label.c_str()) {
-            CHECK_EQ(advent(i+1), result);
-        }
+    advent2023 advent;
+    for (auto i = 0; i < advent2023_results.size(); ++i) {
+        CHECK_EQ(advent2023_results[i], advent(i+1));
     }
 };
 
