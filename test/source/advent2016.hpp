@@ -31,12 +31,9 @@ std::array const advent2016_results {
 };
 
 TEST_CASE("correctness" * doctest::test_suite("2016")) {
-    for (auto [i, result] : lz::enumerate(advent2016_results)) {
-        auto label = fmt::format("2016/{}", i+1);
-        advent2016 advent;
-        SUBCASE(label.c_str()) {
-            CHECK_EQ(advent(i+1), result);
-        }
+    advent2016 advent;
+    for (auto i = 0; i < advent2016_results.size(); ++i) {
+        CHECK_EQ(advent2016_results[i], advent(i+1));
     }
 };
 
