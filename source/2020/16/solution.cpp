@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
 struct range {
     u64 a;
     u64 b;
@@ -8,14 +8,12 @@ struct range {
     [[nodiscard]] auto contains(u64 v) const { return v >= a && v <= b; }
     auto operator<(range const r) const { return std::tie(a, b) < std::tie(r.a, r.b); }
 };
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2020::day16() -> result {
     std::ifstream in("./source/2020/16/input.txt");
     std::string line;
-
-    using detail::range;
 
     std::vector<std::array<range, 2>> ranges;
     std::vector<std::string> range_names;
@@ -24,7 +22,7 @@ auto advent2020::day16() -> result {
     while (std::getline(in, line) && !line.empty()) {
         auto p = line.find(':');
         std::string_view sv(line.data(), p);
-        range_names.push_back(std::string(sv));
+        range_names.emplace_back(sv);
 
         i64 i = p+2;
         i64 j = 0;

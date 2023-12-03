@@ -2,7 +2,7 @@
 
 namespace rg = std::ranges;
 
-namespace detail {
+namespace {
 // some aliases to make it more clear what's going on
 using COST     = i32; // NOLINT
 using HEALTH   = i32; // NOLINT
@@ -111,18 +111,10 @@ struct game {
         return mincost;
     }
 };
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2015::day22() -> result {
-    using detail::ARMOR;
-    using detail::DAMAGE;
-    using detail::HEALTH;
-    using detail::MANA;
-    using detail::boss;
-    using detail::game;
-    using detail::hero;
-
     hero goodhero{HEALTH{50}, MANA{500}, ARMOR{0}}; // NOLINT
     boss evilboss{HEALTH{71}, DAMAGE{10}}; // NOLINT
     game game{goodhero, evilboss};

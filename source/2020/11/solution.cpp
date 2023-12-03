@@ -5,7 +5,7 @@ using Eigen::Array;
 using Eigen::Map;
 using point = aoc::point<i32>;
 
-namespace detail {
+namespace {
 struct count_occupied_p1 {
     auto operator()(auto const& a, point p) {
         auto [x, y] = p;
@@ -134,7 +134,7 @@ struct count_occupied_p2 {
                count_ne(a, p) + count_nn(a, p);
     }
 };
-} // namespace detail
+} // namespace
 
 
 template<>
@@ -175,7 +175,7 @@ auto advent2020::day11() -> result {
         return (mat == '#').count();
     };
 
-    auto p1 = simulate(a, detail::count_occupied_p1{}, s1);
-    auto p2 = simulate(a, detail::count_occupied_p2{}, s2);
+    auto p1 = simulate(a, count_occupied_p1{}, s1);
+    auto p2 = simulate(a, count_occupied_p2{}, s2);
     return aoc::result(p1, p2);
 }

@@ -3,7 +3,7 @@
 using std::ranges::count_if;
 using vec = std::vector<u32>;
 
-namespace detail {
+namespace {
 struct rule {
     u32 index {};
     char literal {'_'};
@@ -44,7 +44,7 @@ struct rule {
         return offsets;
     };
 };
-} // namespace detail
+} // namespace
 
 namespace day19 {
 auto parse(std::vector<std::string> const& input) {
@@ -57,7 +57,6 @@ auto parse(std::vector<std::string> const& input) {
         auto idx = scn::scan_value<u32>(sv).value();
         max = std::max(max, idx);
     }
-    using detail::rule;
 
     std::vector<rule> rules(max+1);
     std::vector<std::string> messages;

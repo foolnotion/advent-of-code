@@ -3,7 +3,7 @@
 using fmt::print;
 using std::optional;
 
-namespace detail {
+namespace {
 struct record {
     optional<int> children;
     optional<int> cats;
@@ -16,13 +16,11 @@ struct record {
     optional<int> cars;
     optional<int> perfumes;
 };
-} // namespace detail
+} // namespace
 
 template <>
 auto advent2015::day16() -> result
 {
-    using detail::record;
-
     auto input = aoc::util::readlines("./source/2015/16/input.txt");
 
     // this is horrible but it's a cheap way to deal with AoC "parsing hell"

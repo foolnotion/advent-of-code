@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
 struct instr {
     static constexpr u64 ACC{aoc::util::hash{}("acc")}; // NOLINT
     static constexpr u64 JMP{aoc::util::hash{}("jmp")}; // NOLINT
@@ -9,14 +9,12 @@ struct instr {
     u64 op;
     i64 val;
 };
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2020::day08() -> result {
     auto input = aoc::util::readlines("./source/2020/08/input.txt");
     aoc::util::hash h;
-
-    using detail::instr;
 
     auto parse = [](auto const& s) {
         std::string name;

@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 #include <variant>
 
-namespace detail {
+namespace {
     // see https://www.open-std.org/jtc1/sc22/wg21/docs/papers/2020/p2162r0.html
     struct packet : std::variant<i32, std::vector<packet>> {
         using val = i32;
@@ -70,14 +70,12 @@ namespace detail {
         std::string_view v{s.data(), s.size()};
         return parse(v);
     }
-} // namespace detail
+} // namespace
 
 template <>
 auto advent2022::day13() -> result
 {
     auto input = aoc::util::readlines("./source/2022/13/input.txt");
-    using detail::packet;
-    using detail::parse;
     auto part1{0L};
     auto p1{parse("[[2]]")};
     auto p2{parse("[[6]]")};

@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 #include <flux.hpp>
 
-namespace detail {
+namespace {
 template <typename T, int S = 10> // NOLINT
 struct tile {
     enum { dimension = S };
@@ -82,9 +82,9 @@ struct tile {
         return tmp;
     }
 };
-} // namespace detail
+} // namespace
 
-using tile_t = detail::tile<char, 10>; // NOLINT
+using tile_t = tile<char, 10>; // NOLINT
 
 namespace day20 {
 auto parse(std::vector<std::string> const& input) {
@@ -170,7 +170,7 @@ auto advent2020::day20() -> result {
         stitched.block(i * d, j * d, d, d) = all[im(i, j)].m.block(1, 1, d, d).transpose();
     });
     stitched = (stitched == '#').select(stitched, ' ');
-    detail::tile<char, -1> img{0, stitched};
+    tile<char, -1> img{0, stitched};
 
     std::string s0{"                  # "};
     std::string s1{"#    ##    ##    ###"};

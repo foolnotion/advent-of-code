@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 #include <unsupported/Eigen/CXX11/Tensor>
 
-namespace detail {
+namespace {
 template<std::size_t N>
 auto iterate(auto a, auto b) {
     return [&]<auto... Idx>(std::index_sequence<Idx...>) {
@@ -26,7 +26,7 @@ constexpr auto repeat(auto const& v) {
         return std::tuple{f(Idx)...};
     }(std::make_index_sequence<N>{});
 };
-} // namespace detail
+} // namespace
 
 template<typename T, std::size_t N = 3>
 requires std::is_integral_v<T>
@@ -49,7 +49,7 @@ struct pocket_universe {
 
         auto const radius = 2 * (steps+1) + nrow;
         auto const mid = radius / 2;
-        std::apply([&](auto... a){ tensor.resize(a...); }, detail::repeat<N>(radius));
+        std::apply([&](auto... a){ tensor.resize(a...); }, repeat<N>(radius));
         tensor.setConstant(0);
 
         for (auto&& [i, s] : lz::enumerate(input)) {
@@ -58,7 +58,7 @@ struct pocket_universe {
                 auto x = i+mid-nrow/2;
                 auto y = j+mid-ncol/2;
                 std::apply([&](auto... a) { tensor(a...) = state; },
-                        std::tuple_cat(detail::repeat<N-2>(mid), std::tuple{x,y}));
+                        std::tuple_cat(repeat<N-2>(mid), std::tuple{x,y}));
             }
         }
 
@@ -66,7 +66,7 @@ struct pocket_universe {
         auto ext{nrow+2};       // extent
         decltype(tensor) aux = tensor;
         for (auto s = 0; s < steps; ++s, off -= 1, ext += 2) {
-            for (auto const& tup : detail::iterate<N>(off, off+ext)) {
+            for (auto const& tup : iterate<N>(off, off+ext)) {
                 auto n = neighbours(tup);
                 std::apply([&](auto... args) {
                     aux(args...) = tensor(args...) ? (n == 3 || n == 4) : (n == 3);
@@ -80,7 +80,7 @@ struct pocket_universe {
     private:
     auto neighbours(auto const& t) {
         auto off = std::apply([](auto... a) { return std::array{(a-1)...}; }, t);
-        auto ext = detail::unpack(detail::repeat<N>(3));
+        auto ext = unpack(repeat<N>(3));
         return sum(off, ext);
     };
 };

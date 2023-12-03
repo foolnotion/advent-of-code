@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
     using std::ranges::any_of;
     using std::ranges::none_of;
 
@@ -54,7 +54,7 @@ namespace detail {
     };
 
     auto bfs(auto items) {
-        detail::state<items.size()> start{0, items};
+        state<items.size()> start{0, items};
         using item = std::tuple<decltype(start), i32>;
         std::queue<item> queue;
         queue.push({ start, 0});
@@ -97,7 +97,7 @@ namespace detail {
         }
         return best;
     }
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2016::day11() -> result {
@@ -119,7 +119,7 @@ auto advent2016::day11() -> result {
         aoc::point<i32, 2>{ 0, 0 },
     };
 
-    auto part1 = detail::bfs(items_p1);
-    auto part2 = detail::bfs(items_p2);
+    auto part1 = bfs(items_p1);
+    auto part2 = bfs(items_p2);
     return aoc::result(part1, part2);
 }

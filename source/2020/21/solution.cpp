@@ -1,6 +1,6 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
 struct food {
     std::vector<u64> ingredients;
     std::vector<u64> allergens;
@@ -25,13 +25,11 @@ struct food {
         allergens.erase(std::remove(allergens.begin(), allergens.end(), allergen), allergens.end());
     }
 };
-} // namespace detail
+} // namespace
 
 template<>
 auto advent2020::day21() -> result {
     auto input = aoc::util::readlines("./source/2020/21/input.txt");
-
-    using detail::food;
 
     std::vector<food> recipes;
     aoc::dense::set<u64> ingredients;

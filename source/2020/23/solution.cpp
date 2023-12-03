@@ -1,18 +1,18 @@
 #include <aoc.hpp>
 
-namespace detail {
+namespace {
 struct node {
     u32 value;
     u32 next;
     u32 index;
 };
-} // namespace detail
+} // namespace
 
 template <>
 auto advent2020::day23() -> result {
     std::vector<u8> input { 6, 2, 4, 3, 9, 7, 1, 5, 8 }; // NOLINT
     auto play = [&input](auto ncups, auto rounds, bool part2 = false) {
-        std::vector<detail::node> nodes(ncups);
+        std::vector<node> nodes(ncups);
         for (u32 i = 0; i < ncups; ++i) {
             auto& n = nodes[i];
             n.value = i < input.size() ? input[i] : i + 1;
