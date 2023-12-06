@@ -5,6 +5,10 @@
 std::array const advent2023_results {
     /* day 01 */ std::tuple{"54159", "53866"},
     /* day 02 */ std::tuple{"2204", "71036"},
+    /* day 03 */ std::tuple{"531561", "83279367"},
+    /* day 04 */ std::tuple{"28538", "9425061"},
+    /* day 05 */ std::tuple{"174137457", "1493866"},
+    /* day 06 */ std::tuple{"1624896", "32583852"},
 };
 
 TEST_CASE("correctness" * doctest::test_suite("2023")) {
