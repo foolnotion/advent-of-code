@@ -171,8 +171,17 @@ struct hash {
         return xxh::xxhash3<hash_bits>(s.begin(), s.end());
     }
 
-    constexpr inline auto operator()(std::ranges::range auto&& r) const -> u64 {
+    constexpr inline auto operator()(std::ranges::contiguous_range auto&& r) const -> u64 {
         return xxh::xxhash3<hash_bits>(r.begin(), r.end());
+    }
+
+    constexpr inline auto operator()(std::ranges::forward_range auto&& r) const -> u64 {
+        constexpr u64 p = 0x00000100000001b3;
+        u64 h = 0xcbf29ce484222325;
+        for (auto v : r) {
+            h = (h ^ v) * p;
+        }
+        return h;
     }
 
     constexpr inline auto operator()(auto... args) const -> u64 {
@@ -383,7 +392,5 @@ struct std::hash<aoc::point<T>> {
         return aoc::util::hash{}(p);
     }
 };
-
-constexpr auto operator ""_hash(char const* str, size_t /*unused*/) { return aoc::util::hash{}(str); }
 
 #endif
