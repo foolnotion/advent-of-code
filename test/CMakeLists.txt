@@ -13,9 +13,8 @@ target_compile_features(aoc_test PRIVATE cxx_std_20)
 target_link_libraries(aoc_test PRIVATE aoc_lib doctest::doctest)
 
 include(doctest)
-add_test(NAME aoc_test COMMAND aoc_test)
+doctest_discover_tests(aoc_test COMMAND aoc_test WORKING_DIRECTORY ${aoc_SOURCE_DIR} ADD_LABELS 1)
 
 # ---- End-of-file commands ----
-
-doctest_discover_tests(aoc_test)
+# doctest_discover_tests(aoc_test)
 # add_folders(test)

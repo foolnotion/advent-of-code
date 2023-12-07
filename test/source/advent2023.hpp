@@ -9,16 +9,17 @@ std::array const advent2023_results {
     /* day 04 */ std::tuple{"28538", "9425061"},
     /* day 05 */ std::tuple{"174137457", "1493866"},
     /* day 06 */ std::tuple{"1624896", "32583852"},
+    /* day 07 */ std::tuple{"248453531", "248781813"},
 };
 
-TEST_CASE("correctness" * doctest::test_suite("2023")) {
+TEST_CASE("advent 2023 correctness" * doctest::test_suite("2023")) {
     advent2023 advent;
     for (auto i = 0; i < advent2023_results.size(); ++i) {
         CHECK_EQ(advent2023_results[i], advent(i+1));
     }
 };
 
-TEST_CASE("performance" * doctest::test_suite("2023")) {
+TEST_CASE("advent 2023 performance" * doctest::test_suite("2023")) {
     namespace nb = ankerl::nanobench;
     nb::Bench bench;
     advent2023 advent;
