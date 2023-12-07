@@ -30,14 +30,14 @@ std::array const advent2016_results {
     /* day 25 */ std::tuple{"189", ""}
 };
 
-TEST_CASE("correctness" * doctest::test_suite("2016")) {
+TEST_CASE("advent 2016 correctness" * doctest::test_suite("2016")) {
     advent2016 advent;
     for (auto i = 0; i < advent2016_results.size(); ++i) {
         CHECK_EQ(advent2016_results[i], advent(i+1));
     }
 };
 
-TEST_CASE("performance" * doctest::test_suite("2016")) {
+TEST_CASE("advent 2016 performance" * doctest::test_suite("2016")) {
     namespace nb = ankerl::nanobench;
     nb::Bench bench;
     advent2016 advent;
