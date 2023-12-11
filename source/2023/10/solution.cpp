@@ -94,14 +94,8 @@ auto advent2023::day10() -> result {
         polygon.push_back(p);
         std::ranges::copy(fp::keep_if(valid, neighbors(p)), std::back_inserter(stack));
     }
-    polygon.push_back(start);
-
-    auto f = [&](auto x, auto i) -> i64 {
-        auto [a, b] = polygon[i];
-        auto [c, d] = polygon[i+1];
-        return x + (a+c)*(b-d);
-    };
-    auto a = fp::fold_left(f, 0L, fp::numbers(0L, std::ssize(polygon)-1));
+    auto f = [](auto pair) { auto [p, q] = pair; return (p[0]+q[0]) * (p[1]-q[1]); };
+    auto a = fp::fold_left(std::plus{}, 0L, fp::transform(f, fp::overlapping_pairs_cyclic(polygon)));
     auto b = std::ssize(polygon) / 2;
     auto const p2 = std::abs(a)/2 + 1 - b;
 
