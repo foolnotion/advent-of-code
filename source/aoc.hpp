@@ -177,11 +177,16 @@ struct hash {
 
     constexpr inline auto operator()(std::ranges::forward_range auto&& r) const -> u64 {
         constexpr u64 p = 0x00000100000001b3;
-        u64 h = 0xcbf29ce484222325;
+        constexpr u64 q = 0xcbf29ce484222325;
+        u64 h = q;
         for (auto v : r) {
             h = (h ^ v) * p;
         }
         return h;
+    }
+
+    constexpr inline auto operator()(std::contiguous_iterator auto a, std::integral auto b) {
+        return xxh::xxhash3<hash_bits>(a, a+b);
     }
 
     constexpr inline auto operator()(auto... args) const -> u64 {
@@ -388,8 +393,19 @@ auto equals(char c) {
 
 template<typename T>
 struct std::hash<aoc::point<T>> {
+    using is_avalanching = void;
+
     constexpr auto operator()(aoc::point<T> p) const noexcept -> std::size_t {
         return aoc::util::hash{}(p);
+    }
+};
+
+template<typename T>
+struct std::hash<std::complex<T>> {
+    using is_avalanching = void;
+
+    constexpr auto operator()(std::complex<T> p) const noexcept -> std::size_t {
+        return aoc::util::hash{}(p.real(), p.imag());
     }
 };
 
