@@ -24,7 +24,7 @@ namespace {
 
             auto i = hash(v);
             auto pred = [&](auto t) { return t.first == v; };
-            auto box = boxes[i];
+            auto& box = boxes[i];
             if (op == '=') {
                 if (auto it = std::ranges::find_if(box, pred); it != box.end()) {
                     it->second = focal_length;
