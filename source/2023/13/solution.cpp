@@ -9,7 +9,7 @@ namespace {
         std::vector<matrix> v;
         for (auto i = 0; i < std::ssize(input); ++i) {
             auto j = i;
-            while(!input[j].empty()) { ++j; }
+            while(j < std::ssize(input) && !input[j].empty()) { ++j; }
             matrix m(j-i, std::ssize(input[i]));
             for (auto k = i; k < j; ++k) {
                 std::ranges::copy(input[k], m.row(k-i).begin());
