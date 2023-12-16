@@ -5,15 +5,18 @@ namespace fp = fplus;
 
 namespace {
     auto count_valid(auto const& s, auto const& g) -> i64 {
-        aoc::dense::map<u64, i64> seen;
-        aoc::util::hash hash;
-
+        aoc::dense::map<u32, i64> seen;
         auto const n{std::ssize(s)};
         auto const m{std::ssize(g)};
 
-        auto f = [&](i64 i, i64 j, i64 k, auto&& f) -> i64 {
-            if (auto it = seen.find(hash(i, j, k)); it != seen.end()) {
-                return it->second;
+        // we know that the three numbers that we cache (the string index, the groups index, and the current group)
+        // are quite small: they will fit inside a u8. therefore, we can build a more efficient hash function
+        auto hash = [](u32 a, u32 b, u32 c) -> u32 { return a << 16U | b << 8U | c; }; // NOLINT
+
+        auto f = [&](u8 i, u8 j, u8 k, auto&& f) -> i64 {
+            auto h = hash(i, j, k);
+            if (auto it = seen.find(h); it != seen.end()) {
+                 return it->second;
             }
 
             if (i == n) {
@@ -39,7 +42,7 @@ namespace {
                 valid += f(i+1, j, k+1, f);
             }
 
-            seen.insert({hash(i, j, k), valid});
+            seen.insert({h, valid});
             return valid;
         };
 
