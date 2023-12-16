@@ -23,6 +23,7 @@
             impureUseNativeOptimizations = true;
             nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools_16 cppcheck ninja ];
             buildInputs = with pkgs; [
+              boost
               cmake-language-server
               cpp-flux
               cpp-lazy
@@ -45,6 +46,7 @@
               robin-hood-hashing
               scnlib
               seer
+              gch-small-vector
               unordered_dense
               valgrind
             ];

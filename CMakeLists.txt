@@ -101,6 +101,10 @@ add_library(
     source/2017/23/solution.cpp
     source/2017/24/solution.cpp
     source/2017/25/solution.cpp
+    # 2019
+    source/2019/01/solution.cpp
+    source/2019/02/solution.cpp
+    source/2019/03/solution.cpp
     # 2020
     source/2020/01/solution.cpp
     source/2020/02/solution.cpp
@@ -190,6 +194,7 @@ target_include_directories(
 target_compile_features(aoc_lib PUBLIC cxx_std_20)
 
 # ---- Find deps ----
+find_package(Boost REQUIRED)
 find_package(Eigen3 REQUIRED NO_MODULE)
 find_package(fmt REQUIRED)
 find_package(robin_hood REQUIRED)
@@ -202,6 +207,7 @@ find_package(unordered_dense REQUIRED)
 find_package(pratt-parser REQUIRED)
 
 target_link_libraries(aoc_lib PUBLIC
+    Boost::boost
     Eigen3::Eigen
     cpp-lazy::cpp-lazy
     cpp-sort::cpp-sort
