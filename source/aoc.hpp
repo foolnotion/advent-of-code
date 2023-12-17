@@ -271,6 +271,14 @@ inline auto readlines(std::string const& path) {
     throw std::runtime_error(fmt::format("could not open path {}\n", path));
 }
 
+template<typename T>
+requires std::is_arithmetic_v<T>
+inline auto read(std::string_view sv) {
+    T value{};
+    (void)scn::scan(sv, "{}", value);
+    return value;
+}
+
 inline auto replace_all(std::string& inout, std::string_view what, std::string_view with) -> std::size_t
 {
     std::size_t count{};
