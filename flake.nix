@@ -17,11 +17,11 @@
         rec
         {
           # devShells.default = pkgs.gcc13Stdenv.mkDerivation {
-          devShells.default = pkgs.llvmPackages_16.stdenv.mkDerivation {
+          devShells.default = pkgs.llvmPackages_17.stdenv.mkDerivation {
             name = "aoc";
             hardeningDisable = [ "all" ];
             impureUseNativeOptimizations = true;
-            nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools_16 cppcheck ninja ];
+            nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools_17 cppcheck ninja ];
             buildInputs = with pkgs; [
               boost
               cmake-language-server
@@ -34,6 +34,7 @@
               fastor
               fmt
               fplus
+              gch-small-vector
               gdb
               hotspot
               hyperfine
@@ -46,7 +47,7 @@
               robin-hood-hashing
               scnlib
               seer
-              gch-small-vector
+              tlx
               unordered_dense
               valgrind
             ];
