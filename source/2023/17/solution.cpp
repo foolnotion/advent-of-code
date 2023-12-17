@@ -1,5 +1,6 @@
 #include <aoc.hpp>
 #include <experimental/mdspan>
+#include <tlx/container/radix_heap.hpp>
 
 using std::experimental::mdspan;
 using std::experimental::extents;
@@ -44,13 +45,9 @@ namespace {
         point d;    // direction
         point p;    // position
         u32   m{0}; // momentum
-        u32   c{0}; // cost so far
-        u32   h{0}; // heuristic
-
-        auto operator<(state const& s) const { return h > s.h; };
     };
 
-    auto astar(grid grid, i32 mmin, i32 mmax) {
+    auto astar(grid grid, u32 mmin, u32 mmax) {
         auto const nrows{ grid.extent(0) };
         auto const ncols{ grid.extent(1) };
         point const goal{nrows-1, ncols-1};
@@ -60,17 +57,11 @@ namespace {
             return x >= 0 && x < nrows && y >= 0 && y < ncols;
         };
 
-        auto heat = [&](auto p) -> u16 {
-            return grid(p.real(), p.imag());
-        };
-
-        auto distance = [&](auto p) -> u16 {
-            return std::abs(p.real()-goal.real()) + std::abs(p.imag()-goal.imag());
-        };
+        auto heat = [&](auto p) -> u16 { return grid(p.real(), p.imag()); };
 
         std::vector<u64> cache(nrows * ncols, 0);
 
-        auto try_cache = [&](state t, bool update) {
+        auto try_cache = [&](state const& t, bool update) {
             auto& b = cache[nrows * t.p.real() + t.p.imag()];
             auto const m = 1UL << (facing::index(t.d) * (mmax+1) + t.m);
             auto res = b & m;
@@ -80,14 +71,14 @@ namespace {
 
         std::array turns { turn::none, turn::left, turn::right };
 
-        std::priority_queue<state> queue;
-        queue.push({ facing::right, point{0, 0}, 0, 0 });
+        tlx::RadixHeapPair<u32, state> queue;
+        queue.push({0, state{ facing::right, point{0, 0}, 0 }});
 
         while(!queue.empty()) {
-            auto s = queue.top();
+            auto [c, s] = queue.top();
             queue.pop();
 
-            if (s.p == goal) { return s.c; }
+            if (s.p == goal) { return c; }
             if (try_cache(s, true)) { continue; }
 
             auto check = [&](u32 m, point r) { return r == turn::none ? m < mmax : m >= mmin; };
@@ -95,8 +86,8 @@ namespace {
             for (auto t : turns) {
                 auto m = t == turn::none ? s.m+1 : 1;
                 if (auto d = s.d * t, p = s.p + d; valid(p) && check(s.m, t)) {
-                    state q{ d, p, m, s.c + heat(p), s.c + heat(p) + distance(p) };
-                    if (!try_cache(q, false)) { queue.push(q); }
+                    state q{ d, p, m };
+                    if (!try_cache(q, false)) { queue.push({c + heat(p), q}); }
                 }
             }
         }
