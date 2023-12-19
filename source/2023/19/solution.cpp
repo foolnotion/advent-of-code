@@ -23,8 +23,6 @@ namespace {
         std::array<T, 4> v;
         auto operator[](i64 i) -> T& { return v[i]; }
         auto operator[](i64 i) const -> T { return v[i]; }
-        auto operator()(char c) const -> T { return v[xmas(c)]; }
-        auto operator()(char c) -> T& { return v[xmas(c)]; }
         [[nodiscard]] auto sum() const { return ::sum<T>(v); }
     };
 
@@ -59,7 +57,7 @@ namespace {
     template<typename T>
     [[nodiscard]] auto rule_impl(rule<T> const& rule, part<T> p) -> std::pair<part<T>, bool> {
         auto [op, field, value] = std::tuple{rule.op, rule.field, rule.value};
-        auto ok = (op == '!') || (op == '<' && p(field) < value) || (op == '>' && p(field) > value);
+        auto ok = (op == '!') || (op == '<' && p[xmas(field)] < value) || (op == '>' && p[xmas(field)] > value);
         if(ok) { rule.work->parts.push_front(p); }
         return {p, ok};
     }
@@ -98,9 +96,7 @@ namespace {
 
             if (r.op != '!') {
                 auto i = xmas(r.field);
-                auto u = uv[i];
-                auto v = p[i];
-                auto x = u.a == v.a ? interval{u.b+1, v.b} : interval{v.a, u.a-1};
+                auto x = r.op == '<' ? interval{uv[i].b+1, p[i].b} : interval{p[i].a, uv[i].a-1};
                 p[i] = x;
             }
             (*r.work)(uv);
@@ -119,8 +115,7 @@ namespace {
             rs::for_each(parts, *in);
         } else {
             constexpr interval range{1, 4000};
-            part<interval> pi = { range, range, range, range };
-            (*in)(pi);
+            (*in)({ range, range, range, range });
         }
         auto* out = rs::find_if(workflows, [&](auto const& w){ return w->id == hash("A"); })->get();
         auto const& acc = out->parts;
