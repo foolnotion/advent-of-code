@@ -107,6 +107,7 @@ add_library(
     source/2019/03/solution.cpp
     source/2019/04/solution.cpp
     source/2019/05/solution.cpp
+    source/2019/06/solution.cpp
     # 2020
     source/2020/01/solution.cpp
     source/2020/02/solution.cpp
