@@ -4,10 +4,8 @@ namespace {
     using point = aoc::point<i32, 2>;
 
     auto const parse = [](auto const& line) {
-        i32 i{};
-        point p{};
-        (void)scn::scan(line, "Disc #{} has {} positions; at time=0, it is at position {}.", i, p[0], p[1]);
-        return p;
+        auto [_, x, y] = scn::scan<i32, i32, i32>(line, "Disc #{} has {} positions; at time=0, it is at position {}.")->values();
+        return point{x, y};
     };
 
     auto find_time(auto const& discs) {

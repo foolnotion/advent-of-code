@@ -66,7 +66,7 @@ auto advent2015::day16() -> result
         record rec;
         for (auto j = 2; j < std::ssize(words); j += 2) {
             auto const& [set, _] = tab[words[j]];
-            set(rec, scn::scan_value<int>(words[j + 1UL]).value());
+            set(rec, scn::scan_value<int>(words[j + 1UL])->value());
         }
         if (check_part1(rec, target)) { sue1 = i+1; }
         if (check_part2(rec, target)) { sue2 = i+1; }

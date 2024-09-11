@@ -29,14 +29,12 @@ auto advent2017::day07() -> result {
     }
 
     std::vector<program> programs;
-    robin_hood::unordered_map<std::string, u64> map;
+    ankerl::unordered_dense::map<std::string, u64> map;
 
     // first, get all the programs
     for (auto const& line : input) {
-        std::string name;
-        u64 weight = 0;
-        (void)scn::scan(line, "{} ({})", name, weight);
-        program p { weight, weight, name };
+        auto [name, weight] = scn::scan<std::string, u64>(line, "{} ({})")->values();
+        program p{ weight, weight, name };
         map.insert({name, programs.size()});
         programs.push_back(p);
     }

@@ -7,9 +7,8 @@ namespace {
             auto c = s[i];
             if (c == '(') {
                 auto j = s.find(')', i);
-                std::string_view v{&s[i], j-i};
-                u64 a, b; // NOLINT
-                (void)scn::scan(v, "({}x{})", a, b);
+                std::string_view v{&s[i], j-i+1};
+                auto [a, b] = scn::scan<u64, u64>(v, "({}x{})")->values();
                 auto c = part2 ? length({&s[j+1], a}, part2) : a;
                 len += b * c - 1;
                 i = j + a;

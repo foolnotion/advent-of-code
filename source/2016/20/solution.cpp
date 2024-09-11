@@ -9,9 +9,7 @@ auto advent2016::day20() -> result {
     intervals.reserve(input.size());
 
     for (auto const& s : input){
-        uint32_t a{};
-        uint32_t b{};
-        std::ignore = scn::scan(s, "{}-{}", a, b);
+        auto [a, b] = scn::scan<u32, u32>(s, "{}-{}")->values();
         intervals.push_back({a, b});
     }
 

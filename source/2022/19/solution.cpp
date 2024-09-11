@@ -1,5 +1,4 @@
 #include <aoc.hpp>
-#include <thread>
 
 namespace {
     static auto constexpr N{4}; // NOLINT
@@ -122,21 +121,19 @@ namespace {
 
             for (auto&& [i, tok] : lz::enumerate(lz::split(v, '.'))) {
                 if (tok.empty()) { continue; }
-                std::string mineral1, mineral2; // NOLINT
-                i32 price1, price2; // NOLINT
-
-                auto const& name = names[i];
 
                 if (tok.find("and") != std::string::npos) {
-                    auto scanstr{fmt::format(" Each {} robot costs {{}} {{}} and {{}} {{}}", name)};
-                    auto res = scn::scan(tok, scanstr, price1, mineral1, price2, mineral2);
+                    // auto scanstr{fmt::format(" Each {} robot costs {{}} {{}} and {{}} {{}}", name)};
+                    auto res = scn::scan<scn::discard<std::string>, i32, std::string, i32, std::string>(tok, " Each {} robot costs {} {} and {} {}");
+                    auto [_, price1, mineral1, price2, mineral2] = res->values();
                     auto j = std::distance(names.begin(), std::ranges::find(names, mineral1));
                     auto k = std::distance(names.begin(), std::ranges::find(names, mineral2));
                     b(j, i) = price1;
                     b(k, i) = price2;
                 } else {
-                    auto scanstr{fmt::format(" Each {} robot costs {{}} {{}}", name)};
-                    auto res = scn::scan(tok, scanstr, price1, mineral1);
+                    // auto scanstr{fmt::format(" Each {} robot costs {{}} {{}}", name)};
+                    auto res = scn::scan<scn::discard<std::string>, i32, std::string>(tok, " Each {} robot costs {} {}");
+                    auto [_, price1, mineral1] = res->values();
                     auto j = std::distance(names.begin(), std::ranges::find(names, mineral1));
                     b(j, i) = price1;
                 }

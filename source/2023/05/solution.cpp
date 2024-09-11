@@ -4,17 +4,13 @@ namespace {
     using interval = aoc::math::interval<i64>;
 
     auto parse_seeds(auto const& input) {
-        auto const& seedline = input.front();
-        std::string_view sv{seedline.begin()+seedline.find(':')+2, seedline.end()};
-        std::vector<i64> seeds;
-        for (auto const& s : std::views::split(sv, ' ')) {
-            seeds.push_back(scn::scan_value<i64>(s).value());
-        }
-        return seeds;
+        auto const& s = input.front();
+        std::string_view sv{s.begin()+s.find(':')+2, s.end()};
+        return lz::map(lz::split(sv, ' '), aoc::util::read<i64>).toVector();
     }
 
     auto parse_ranges(auto const& input) {
-        aoc::dense::map<i64, std::vector<std::pair<interval, interval>>> ranges;
+        aoc::dense::map<u64, std::vector<std::pair<interval, interval>>> ranges;
 
         for (auto i = 2; i < std::ssize(input); ++i) {
             auto const& s = input[i];
@@ -28,10 +24,7 @@ namespace {
                 std::vector<std::pair<interval, interval>> map;
                 for (; j < std::ssize(input); ++j) {
                     if (input[j].empty()) { break; }
-                    i64 src{};
-                    i64 dst{};
-                    i64 len{};
-                    (void)scn::scan(input[j], "{} {} {}", dst, src, len);
+                    auto [dst, src, len] = scn::scan<i64, i64, i64>(input[j], "{} {} {}")->values();
                     interval destination_interval{dst, dst+len-1};
                     interval source_interval{src, src+len-1};
                     map.emplace_back(source_interval, destination_interval);
@@ -64,7 +57,7 @@ auto advent2023::day05() -> result {
     };
 
     auto lowest_location = [&](auto seed_ranges) {
-        for (auto [k, v] : ranges) {
+        for (auto const& [_, v] : ranges) {
             std::vector<interval> mapped;
             for (auto r : seed_ranges) {
                 std::vector<interval> unmapped{r};

@@ -14,7 +14,7 @@ auto advent2022::day02() -> result {
     };
     auto input = aoc::util::readlines("./source/2022/02/input.txt");
     auto res = std::transform_reduce(input.begin(), input.end(), Eigen::Array2i{0, 0}, std::plus{}, [&](auto const& s) {
-        char a, b; (void)scn::scan(s, "{} {}", a, b); // NOLINT
+        auto [a, b] = scn::scan<char, char>(s, "{} {}")->values();
         return Eigen::Array2i{outcome_p1(a-'A', b-'X'), outcome_p2(a-'A', b-'X')};
     });
     return aoc::result(res(0), res(1));

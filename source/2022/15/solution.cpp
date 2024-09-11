@@ -30,7 +30,9 @@ auto advent2022::day15() -> result {
     aoc::dense::map<u64, point> bmap;
     auto sensors = lz::map(input, [&](auto const& line) {
         sensor r;
-        (void)scn::scan(line, "Sensor at x={}, y={}: closest beacon is at x={}, y={}", r.c[1], r.c[0], r.b[1], r.b[0]);
+        auto [c1, c0, b1, b0] = scn::scan<i32, i32, i32, i32>(line, "Sensor at x={}, y={}: closest beacon is at x={}, y={}")->values();
+        r.b = point{b0, b1};
+        r.c = point{c0, c1};
         r.r = (r.c - r.b).matrix().template lpNorm<1>();
         xmin = std::min({xmin, r.c[0]-r.r});
         xmax = std::max({xmax, r.c[0]+r.r});

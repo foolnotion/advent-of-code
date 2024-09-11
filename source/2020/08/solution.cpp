@@ -17,9 +17,7 @@ auto advent2020::day08() -> result {
     aoc::util::hash h;
 
     auto parse = [](auto const& s) {
-        std::string name;
-        i64 value{};
-        (void)scn::scan(s, "{} {}", name, value);
+        auto [name, value] = scn::scan<std::string, i64>(s, "{} {}")->values();
         return instr{aoc::util::hash{}(name), value};
     };
     auto code = lz::map(input, parse).toVector();

@@ -4,16 +4,14 @@ template <>
 auto advent2015::day09() -> result // NOLINT
 {
     auto input = aoc::util::readlines("./source/2015/09/input.txt");
-    robin_hood::unordered_flat_map<u64, std::string> names;
+    ankerl::unordered_dense::map<u64, std::string> names;
 
     using point = aoc::point<u64>;
-    robin_hood::unordered_map<point, i64> dist;
+    ankerl::unordered_dense::map<point, i64> dist;
     aoc::util::hash hash;
 
     for (auto const& s : input) {
-        std::string a, b; // NOLINT
-        u32 d {};
-        (void)scn::scan(s, "{} to {} = {}", a, b, d);
+        auto [a, b, d] = scn::scan<std::string, std::string, u32>(s, "{} to {} = {}")->values();
         auto ha = hash(a);
         auto hb = hash(b);
         names.insert({ ha, a });
@@ -24,7 +22,7 @@ auto advent2015::day09() -> result // NOLINT
     std::vector<u64> cities = lz::map(names, [](auto const& x) { return x.first; }).toVector();
 
     i64 goal {};
-    robin_hood::unordered_flat_set<u64> visited;
+    ankerl::unordered_dense::set<u64> visited;
     auto search = [&]<typename F, typename G>(auto curr, auto depth, auto distance, F accept, G reject, auto&& search) {
         visited.insert(curr);
         if (depth == cities.size() && accept(distance, goal)) {

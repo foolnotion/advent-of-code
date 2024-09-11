@@ -90,9 +90,10 @@ namespace day20 {
 auto parse(std::vector<std::string> const& input) {
     std::vector<tile_t> tiles;
     for (auto i = 0; i < input.size(); i += tile_t::dimension + 2) {
-        auto id{0U};
+        // auto id{0U};
         tile_t::matrix m;
-        (void)scn::scan(input[i], "Tile {}:", id);
+        // (void)scn::scan(input[i], "Tile {}:", id);
+        auto id = scn::scan<u32>(input[i], "Tile {}:")->value();
         for (auto j = 0; j < tile_t::dimension; ++j) {
             auto const& line = input[i+j+1];
             m.row(j) = Eigen::Map<Eigen::Array<char, -1, 1> const>(line.data(), std::ssize(line));

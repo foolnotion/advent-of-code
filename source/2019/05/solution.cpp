@@ -4,8 +4,8 @@
 template<>
 auto advent2019::day05() -> result {
     auto input = aoc::util::readlines("./source/2019/05/input.txt");
-    std::vector<i64> intcode;
-    (void)scn::scan_list_ex(input.front(), intcode, scn::list_separator(','));
+    auto read_value = aoc::util::read<i64>;
+    auto intcode = lz::map(lz::split(input.front(), ','), read_value).toVector();
 
     using aoc::interpreters::intcode::interpreter;
 

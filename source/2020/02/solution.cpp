@@ -6,12 +6,13 @@ auto advent2020::day02() -> result {
 
     auto n1{0UL};
     auto n2{0UL};
-    u32 lo{};
-    u32 hi{};
-    char let{};
-    std::string pass;
+    // u32 lo{};
+    // u32 hi{};
+    // char let{};
+    // std::string pass;
+    using std::string;
     for(auto& s : input) {
-        (void)scn::scan(s, "{}-{} {}: {}", lo, hi, let, pass);
+        auto [lo, hi, let, pass] = scn::scan<u32, u32, char, string>(s, "{}-{} {}: {}")->values();
         constexpr auto nletter{26};
         std::array<int, nletter> counts = {0};
         for (auto c : pass) {

@@ -3,7 +3,7 @@
 template<>
 auto advent2020::day13() -> result {
     auto input = aoc::util::readlines("./source/2020/13/input.txt");
-    auto s = scn::scan_value<u64>(input.front()).value();
+    auto s = aoc::util::read<u64>(input.front());
 
     auto tokens = lz::split(input.back(), ',').toVector();
     std::vector<std::pair<u64, u64>> buses;
@@ -11,7 +11,7 @@ auto advent2020::day13() -> result {
     size_t i = 0;
     for (auto& tok : tokens) {
         if (auto res = scn::scan_value<u64>(tok); res.has_value()) {
-            buses.emplace_back( res.value(), i );
+            buses.emplace_back( res->value(), i );
         }
         ++i;
     }

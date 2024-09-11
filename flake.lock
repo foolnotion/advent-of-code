@@ -1,15 +1,33 @@
 {
   "nodes": {
+    "flake-parts": {
+      "inputs": {
+        "nixpkgs-lib": "nixpkgs-lib"
+      },
+      "locked": {
+        "lastModified": 1725234343,
+        "narHash": "sha256-+ebgonl3NbiKD2UD0x4BszCZQ6sTfL4xioaM49o5B3Y=",
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "rev": "567b938d64d4b4112ee253b9274472dc3a346eb6",
+        "type": "github"
+      },
+      "original": {
+        "owner": "hercules-ci",
+        "repo": "flake-parts",
+        "type": "github"
+      }
+    },
     "flake-utils": {
       "inputs": {
         "systems": "systems"
       },
       "locked": {
-        "lastModified": 1694529238,
-        "narHash": "sha256-zsNZZGTGnMOf9YpHKJqMSsa0dXbfmxeoJ7xHlrt+xmY=",
+        "lastModified": 1710146030,
+        "narHash": "sha256-SZ5L6eA7HJ/nmkzGG7/ISclqe6oZdOZTNoesiInkXPQ=",
         "owner": "numtide",
         "repo": "flake-utils",
-        "rev": "ff7b65b44d01cf9ba6a71320833626af21126384",
+        "rev": "b1d9ab70662946ef0850d488da1c9019f3a9752a",
         "type": "github"
       },
       "original": {
@@ -20,14 +38,34 @@
     },
     "foolnotion": {
       "inputs": {
-        "nixpkgs": "nixpkgs"
+        "nixpkgs": [
+          "nixpkgs"
+        ]
       },
       "locked": {
-        "lastModified": 1700220858,
-        "narHash": "sha256-ogCelsMxGwlAGRioW74ZoXgmIQ0rVClK2CdwmaDYNuM=",
+        "lastModified": 1725366713,
+        "narHash": "sha256-4OGQvEuL2K0V0EHV+YTKZZXaOKLKqZi9HE1pko/E2zc=",
         "owner": "foolnotion",
         "repo": "nur-pkg",
-        "rev": "b53618eae13ecdaa687ef49b4eb42d394d0a52ca",
+        "rev": "56bb9c677de762484f259cc23119f1b051e090fc",
+        "type": "github"
+      },
+      "original": {
+        "owner": "foolnotion",
+        "repo": "nur-pkg",
+        "type": "github"
+      }
+    },
+    "foolnotion_2": {
+      "inputs": {
+        "nixpkgs": "nixpkgs_2"
+      },
+      "locked": {
+        "lastModified": 1725366713,
+        "narHash": "sha256-4OGQvEuL2K0V0EHV+YTKZZXaOKLKqZi9HE1pko/E2zc=",
+        "owner": "foolnotion",
+        "repo": "nur-pkg",
+        "rev": "56bb9c677de762484f259cc23119f1b051e090fc",
         "type": "github"
       },
       "original": {
@@ -38,11 +76,39 @@
     },
     "nixpkgs": {
       "locked": {
-        "lastModified": 1700679385,
-        "narHash": "sha256-0GOJSkIjZ+mYsaQ7f3z50XwguA/t/QUgxZp0c5+BUl0=",
+        "lastModified": 1725566350,
+        "narHash": "sha256-yz+gDUr0q7lZXVWPjz6fdshyvgk5kr8O2c5bLENWADA=",
+        "owner": "nixos",
+        "repo": "nixpkgs",
+        "rev": "2ff3306cdef984792b3bf9232db30c663be4e9f9",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nixos",
+        "ref": "master",
+        "repo": "nixpkgs",
+        "type": "github"
+      }
+    },
+    "nixpkgs-lib": {
+      "locked": {
+        "lastModified": 1725233747,
+        "narHash": "sha256-Ss8QWLXdr2JCBPcYChJhz4xJm+h/xjl4G0c0XlP6a74=",
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/356624c12086a18f2ea2825fed34523d60ccc4e3.tar.gz"
+      },
+      "original": {
+        "type": "tarball",
+        "url": "https://github.com/NixOS/nixpkgs/archive/356624c12086a18f2ea2825fed34523d60ccc4e3.tar.gz"
+      }
+    },
+    "nixpkgs_2": {
+      "locked": {
+        "lastModified": 1725566350,
+        "narHash": "sha256-yz+gDUr0q7lZXVWPjz6fdshyvgk5kr8O2c5bLENWADA=",
         "owner": "NixOS",
         "repo": "nixpkgs",
-        "rev": "4648a958e3aaffd860ce26b79cbc67c6e4a02a71",
+        "rev": "2ff3306cdef984792b3bf9232db30c663be4e9f9",
         "type": "github"
       },
       "original": {
@@ -52,27 +118,34 @@
         "type": "github"
       }
     },
-    "nixpkgs_2": {
+    "pratt": {
+      "inputs": {
+        "flake-utils": "flake-utils",
+        "foolnotion": "foolnotion_2",
+        "nixpkgs": [
+          "nixpkgs"
+        ]
+      },
       "locked": {
-        "lastModified": 1700679385,
-        "narHash": "sha256-0GOJSkIjZ+mYsaQ7f3z50XwguA/t/QUgxZp0c5+BUl0=",
-        "owner": "nixos",
-        "repo": "nixpkgs",
-        "rev": "4648a958e3aaffd860ce26b79cbc67c6e4a02a71",
+        "lastModified": 1717246420,
+        "narHash": "sha256-11aCsUXBNBVREyZ7og4UkUVdKZU0hyk6JyR3LOrggwc=",
+        "owner": "foolnotion",
+        "repo": "pratt-parser-calculator",
+        "rev": "5093c67e2e642178cce1bc455f7dee8720820642",
         "type": "github"
       },
       "original": {
-        "owner": "nixos",
-        "ref": "master",
-        "repo": "nixpkgs",
+        "owner": "foolnotion",
+        "repo": "pratt-parser-calculator",
         "type": "github"
       }
     },
     "root": {
       "inputs": {
-        "flake-utils": "flake-utils",
+        "flake-parts": "flake-parts",
         "foolnotion": "foolnotion",
-        "nixpkgs": "nixpkgs_2"
+        "nixpkgs": "nixpkgs",
+        "pratt": "pratt"
       }
     },
     "systems": {

@@ -1,4 +1,5 @@
 #include <aoc.hpp>
+#include <fplus/fplus.hpp>
 
 template<>
 auto advent2016::day21() -> result {
@@ -31,6 +32,7 @@ auto advent2016::day21() -> result {
     };
 
     auto rotate_left_x = [&](auto& s, char x) {
+        auto i = s.find(x);
         rotate_left(s, rmap[s.find(x)]);
     };
 
@@ -55,44 +57,31 @@ auto advent2016::day21() -> result {
 
     auto scramble = [&](auto s, auto const& input, bool reverse = false) {
         for (auto const& line : input) {
-            std::vector<std::string> tok;
-            auto split_view = std::views::split(line, ' ');
-            std::ranges::transform(split_view, std::back_inserter(tok), [](auto const sv) { return std::string{sv.begin(), sv.end()}; });
+            auto tok = fplus::split(' ', false, line);
             if (tok[0] == "swap") {
                 if (tok[1] == "position") {
-                    int x{};
-                    int y{};
-                    std::ignore = scn::scan(line, "swap position {} with position {}", x, y);
+                    auto [x, y] = scn::scan<i32, i32>(line, "swap position {} with position {}")->values();
                     swap_pos_xy(s, x, y);
                 } else if (tok[1] == "letter") {
-                    char x{};
-                    char y{};
-                    std::ignore = scn::scan(line, "swap letter {} with letter {}", x, y);
+                    auto [x, y] = scn::scan<char, char>(line, "swap letter {} with letter {}")->values();
                     swap_let_xy(s, x, y);
                 }
             } else if (tok[0] == "rotate") {
                 if (tok[1] == "left") {
-                    int k{};
-                    std::ignore = scn::scan(line, "rotate left {} steps", k);
+                    auto k = scn::scan<i32>(line, "rotate left {} step")->value();
                     reverse ? rotate_right(s, k) : rotate_left(s, k);
                 } else if (tok[1] == "right") {
-                    int k{};
-                    std::ignore = scn::scan(line, "rotate right {} steps", k);
+                    auto k = scn::scan<i32>(line, "rotate right {} step")->value();
                     reverse ? rotate_left(s, k) : rotate_right(s, k);
                 } else if (tok[1] == "based") {
-                    char x{};
-                    std::ignore = scn::scan(line, "rotate based on position of letter {}", x);
+                    auto x = scn::scan<char>(line, "rotate based on position of letter {}")->value();
                     reverse ? rotate_left_x(s, x) : rotate_right_x(s, x);
                 }
             } else if (tok[0] == "reverse") {
-                int x{};
-                int y{};
-                std::ignore = scn::scan(line, "reverse positions {} through {}", x, y);
+                auto [x, y] = scn::scan<i32, i32>(line, "reverse positions {} through {}")->values();
                 reverse_xy(s, x, y);
             } else if (tok[0] == "move") {
-                int x{};
-                int y{};
-                std::ignore = scn::scan(line, "move position {} to position {}", x, y);
+                auto [x, y] = scn::scan<i32, i32>(line, "move position {} to position {}")->values();
                 reverse ? move_x_to_y(s, y, x) : move_x_to_y(s, x, y);
             }
         }

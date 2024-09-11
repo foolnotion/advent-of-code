@@ -32,6 +32,9 @@ namespace {
                 case module_type::broadcast: {
                     return {};
                 }
+                default: {
+                    throw std::runtime_error("unkown type");
+                }
             }
         }
         module_type type{};

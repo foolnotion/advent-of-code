@@ -31,7 +31,10 @@ auto advent2017::day20() -> result {
     particles.reserve(input.size());
     for (auto i = 0; i < std::ssize(input); ++i) {
         particle t{i};
-        (void)scn::scan(input[i], "p=<{},{},{}>, v=<{},{},{}>, a=<{},{},{}>", t.p(0), t.p(1), t.p(2), t.v(0), t.v(1), t.v(2), t.a(0), t.a(1), t.a(2));
+        auto [p1, p2, p3, v1, v2, v3, a1, a2, a3] = scn::scan<i64, i64, i64, i64, i64, i64, i64, i64, i64>(input[i], "p=<{},{},{}>, v=<{},{},{}>, a=<{},{},{}>")->values();
+        t.p = point{p1, p2, p3};
+        t.v = point{v1, v2, v3};
+        t.a = point{a1, a2, a3};
         particles.push_back(t);
     }
 

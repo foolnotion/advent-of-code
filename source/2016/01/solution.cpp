@@ -18,7 +18,7 @@ auto advent2016::day01() -> result {
     for (auto const& m : lz::split(input, ", ")) {
         dir *= m[0] == 'L' ? complex{0, 1} : complex{0, -1};
         std::string_view sv{&m[1], m.size()-1};
-        auto s = scn::scan_value<int>(sv).value();
+        auto s = scn::scan_value<int>(sv)->value();
         for (auto i = 0; i < s; ++i) {
             pos += dir;
             if (auto [_, ok] = seen.insert(pos); !ok) {

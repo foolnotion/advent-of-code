@@ -1,95 +1,132 @@
 #include <aoc.hpp>
-#include <util/dynamic_bitset.hpp>
-#include <Eigen/Dense>
+#define MDSPAN_IMPL_STANDARD_NAMESPACE std
+#define MDSPAN_IMPL_PROPOSED_NAMESPACE experimental
+#include <mdspan/mdspan.hpp>
+#include <tlx/container/radix_heap.hpp>
+
+namespace rs = std::ranges;
+
+using point   = aoc::point<i32, 2>;
+using extents = std::extents<i32, std::dynamic_extent, std::dynamic_extent>;
+using mdspan  = std::mdspan<char, extents>;
 
 namespace {
-    using point = Eigen::Vector2i;
-    using vec3d = Eigen::Vector3d;
-
-    struct grid {
-        Eigen::Array<char, -1, -1> m;
-
-        [[nodiscard]] inline auto remap(auto i, auto j) const {
-            return std::tuple{aoc::math::mod_euclid(i, m.rows()), aoc::math::mod_euclid(j, m.cols())};
-        }
-
-        auto operator()(i32 i, i32 j) const -> char {
-            auto [x, y] = remap(i, j);
-            return m(x, y);
-        }
-
-        template<std::size_t N = 1>
-        [[nodiscard]] auto reachable(std::array<i32, N> steps) const -> std::array<i32, N> {
-            point s{m.rows()/2, m.cols()/2};
-            std::deque<std::pair<point, i32>> queue{{s, 0}};
-
-            auto neighbors = [&](point p) {
-                return std::array<point, 4> {
-                    point{ p[0]-1, p[1] }, { p[0]+1, p[1] }, { p[0], p[1]-1 }, { p[0], p[1]+1 }
-                };
-            };
-
-            auto parity = [](auto x) { return x % 2; };
-            std::array<i32, N> total{};
-
-            auto const n{steps.back()};
-            auto const d{2UL*n+1UL};
-            sul::dynamic_bitset<u64> seen(d*d);
-
-            while(!queue.empty()) {
-                auto [p, t] = queue.front();
-                queue.pop_front();
-
-                auto k{(p(0)-s(0)+n) * d + (p(1)-s(1)+n)};
-                if (seen.test_set(k)) { continue; }
-
-                // total += t <= n && parity(t) == parity(n);
-                for (auto i = 0; i < N; ++i) {
-                    total[i] += t <= steps[i] && parity(t) == parity(steps[i]);
-                }
-                if (t+1 > n) { continue; }
-
-                for (auto q : neighbors(p)) {
-                    auto [x, y] = remap(q(0), q(1));
-                    if (m(x, y) != '#') { queue.emplace_back(q, t+1); }
-                }
-            }
-            return total;
-        }
-    };
-
     auto parse(auto const& input) {
-        Eigen::Array<char, -1, -1> m(input.size(), input.front().size());
-        for (auto i = 0; i < input.size(); ++i) {
-            std::ranges::copy(input[i], m.row(i).begin());
-        }
-        return grid{m};
+        std::vector<char> buf;
+        buf.reserve(input.size()* input.front().size());
+        auto copy = [&](auto const& s) { rs::copy(s, std::back_inserter(buf)); };
+        rs::for_each(input, copy);
+        return buf;
     }
 
-    auto find_roots(Eigen::Vector3d xs, Eigen::Vector3d ys) -> Eigen::Vector3d {
-        Eigen::Matrix3d vm;
-        vm.col(0).setConstant(1);
-        vm.col(1) = xs;
-        vm.col(2) = xs.array().square();
-        return vm.householderQr().solve(ys);
+    auto print(auto grid) {
+        for (auto i{0}; i < grid.extent(0); ++i) {
+            for (auto j{0}; j < grid.extent(1); ++j) {
+                fmt::print("{}", grid(i, j));
+            }
+            fmt::print("\n");
+        }
     }
 } // namespace
 
 template<>
 auto advent2023::day21() -> result {
-    auto input = aoc::util::readlines("./source/2023/21/input.txt");
-    auto grid = parse(input);
+    auto input = aoc::util::readlines("./source/2023/21/example.txt");
+    auto const nrows{input.size()};
+    auto const ncols{input.front().size()};
+    auto buf = parse(input);
+    mdspan grid(buf.data(), nrows, ncols);
 
-    constexpr auto steps_p1{64L};
-    auto const p1 = grid.reachable({steps_p1})[0];
+    auto s = rs::find(buf, 'S');
+    auto x = std::distance(buf.begin(), s) / ncols;
+    auto y = std::distance(buf.begin(), s) % ncols;
+    point p{static_cast<i32>(x), static_cast<i32>(y)};
+
+    auto remap = [&](point p) -> point {
+        auto mod = [](auto a, auto b) -> i32 {
+            while(a < 0) { a += b; }
+            return a % b;
+        };
+        return point{mod(p[0], nrows), mod(p[1], ncols)};
+    };
+
+    auto valid = [&](point p) -> bool {
+        auto [x, y] = remap(p);
+        return x >= 0 && x < nrows && y >= 0 && y < ncols && aoc::equals<'.', 'S'>(grid(x, y));
+    };
+
+    auto neighbors = [&](point p) {
+        return std::array {
+            point { p[0]-1, p[1] },
+            point { p[0]+1, p[1] },
+            point { p[0], p[1]-1 },
+            point { p[0], p[1]+1 }
+        };
+    };
+
+    auto hash = [](auto p) {
+        auto [c, q] = p;
+        return aoc::util::hash{}(c, q[0], q[1]);
+    };
+
+    aoc::dense::set<std::pair<i32, point>, decltype(hash)> seen;
+
+    auto count{0UL};
+    constexpr auto steps{10};
+
+
+
+    std::queue<std::pair<i32, point>> queue;
+    queue.emplace(0, p);
+    while(!queue.empty()) {
+        auto [c, q] = queue.front();
+        queue.pop();
+
+        if (auto [it, ok] = seen.insert({c, q}); !ok) {
+            continue;
+        }
+
+        count += c == steps;
+        if (c > steps) { continue; }
+
+        for (auto r : neighbors(q) | std::views::filter(valid)) {
+            queue.emplace(c+1, r);
+        }
+    }
+    auto const p1 = count;
 
     // part 2
-    constexpr auto steps_p2{26501365L};
-    constexpr auto t{(steps_p2 - 65L) / 131L};
-    vec3d x{0, 1, 2};
-    auto r{grid.reachable<3>({65L, 196L, 327L})};
-    vec3d y{r[0], r[1], r[2]};
-    vec3d roots = find_roots(x, y).array().round();
-    auto const p2 = (vec3d::Constant(t).array().pow(x.array()) * roots.array()).sum();
-    return aoc::result(p1, p2);
+    std::vector<i64> dist(nrows * ncols, 0L);
+    std::mdspan<i64, extents> distances(dist.data(), nrows, ncols);
+
+    aoc::dense::set<point> ss;
+    queue.emplace(0, p);
+    while(!queue.empty()) {
+        auto [c, q] = queue.front();
+        queue.pop();
+
+        auto r = remap(q);
+        fmt::print("{}\n", r);
+
+        if (auto [it, ok] = ss.insert(r); !ok) {
+            continue;
+        }
+        distances(r[0], r[1]) = c;
+
+        for (auto n : neighbors(q) | std::views::filter(valid)) {
+            queue.emplace(c+1, n);
+        }
+    }
+
+    for (auto i = 0; i < nrows; ++i) {
+        for (auto j = 0; j < ncols; ++j) {
+            auto color = grid(i, j) == 'S' ? fmt::color::green : fmt::color::gray;
+            if (distances(i, j) > 0 && steps % distances(i, j) == 0) { color = fmt::color::orange; }
+            if (grid(i, j) == '#') { color = fmt::color::red; }
+            fmt::print(fmt::fg(color), "{:#2d} ", distances(i, j));
+        }
+        fmt::print("\n");
+    }
+
+    return aoc::result(p1, "");
 }

@@ -15,24 +15,22 @@ auto advent2015::day06() -> result
         input.push_back(s);
     }
 
-    auto setup_lights = [&](bool part1) {
+    auto setup_lights = [&](bool part1) -> void {
         for (auto const& s : input) {
-            i64 x1{0}, x2{0}, y1{0}, y2{0}; // NOLINT
-
             if (s[1] == 'u' /* turn on/off */) {
                 if (s[6] == 'n') { // NOLINT
-                    (void)scn::scan(s, "turn on {},{} through {},{}", x1, y1, x2, y2);
+                    auto [x1, y1, x2, y2] = scn::scan<i64, i64, i64, i64>(s, "turn on {},{} through {}, {}")->values();
                     auto block = grid.block(x1, y1, x2 - x1 + 1, y2 - y1 + 1);
                     if (part1) { block = 1; }
                     else       { block += 1; }
                 } else if (s[6] == 'f') { // NOLINT
-                    (void)scn::scan(s, "turn off {},{} through {},{}", x1, y1, x2, y2);
+                    auto [x1, y1, x2, y2] = scn::scan<i64, i64, i64, i64>(s, "turn off {},{} through {}, {}")->values();
                     auto block = grid.block(x1, y1, x2 - x1 + 1, y2 - y1 + 1);
                     if (part1) { block = 0; }
                     else       { block = (block > 0).select(block-1, 0); }
                 }
             } else if (s[1] == 'o' /* toggle */) {
-                (void)scn::scan(s, "toggle {},{} through {},{}", x1, y1, x2, y2);
+                auto [x1, y1, x2, y2] = scn::scan<i64, i64, i64, i64>(s, "toggle {},{} through {}, {}")->values();
                 auto block = grid.block(x1, y1, x2 - x1 + 1, y2 - y1 + 1);
                 if (part1) { block = (block == 0).select(2, block) - 1; }
                 else       { block += 2; }

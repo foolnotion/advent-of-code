@@ -33,6 +33,7 @@ std::array const advent2015_results {
 TEST_CASE("advent 2015 correctness" * doctest::test_suite("2015")) {
     advent2015 advent;
     for (auto i = 0; i < advent2015_results.size(); ++i) {
+        CAPTURE(i);
         CHECK_EQ(advent2015_results[i], advent(i+1));
     }
 };

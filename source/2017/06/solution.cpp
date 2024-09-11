@@ -6,7 +6,7 @@ auto advent2017::day06() -> result {
     constexpr int nb{input.size()};
 
     auto mem = input;
-    robin_hood::unordered_map<decltype(mem), u64, aoc::util::hash> seen;
+    ankerl::unordered_dense::map<decltype(mem), u64, aoc::util::hash> seen;
 
     u64 cycles_part1{0};
     u64 cycles_part2{0};

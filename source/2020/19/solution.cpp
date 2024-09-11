@@ -54,7 +54,7 @@ auto parse(std::vector<std::string> const& input) {
         auto const& s = *line;
         auto n = s.find(':');
         std::string_view sv { s.data(), n };
-        auto idx = scn::scan_value<u32>(sv).value();
+        auto idx = aoc::util::read<u32>(sv);
         max = std::max(max, idx);
     }
 
@@ -62,27 +62,34 @@ auto parse(std::vector<std::string> const& input) {
     std::vector<std::string> messages;
 
     auto line = input.begin();
+
+    auto add_subrule = [&](auto& r, auto sv) {
+        r.subrules.push_back(lz::map(lz::split(sv, ' '), [&](auto qv){
+                auto v = aoc::util::read<u32>(qv);
+                return static_cast<rule const*>(&rules[v]);
+        }).toVector());
+    };
+
     for (; !line->empty(); ++line) {
         auto const& s = *line;
         auto n = s.find(':');
         std::string_view sv { s.data(), n };
-        auto idx = scn::scan_value<u32>(sv).value();
+        auto idx = aoc::util::read<u32>(sv);
         auto& r = rules[idx];
         r.index = idx;
+
         sv = std::string_view { &s[n + 2], s.size() - n - 2};
          // check if this rule is a literal
         if (n = sv.find('"'); n != std::string::npos) {
             r.literal = sv[n + 1];
             continue;
         }
-        n = -1;
-        do {
-            std::vector<u32> values;
-            sv.remove_prefix(n+1);
-            (void)scn::scan_list(sv, values);
-            r.subrules.push_back(lz::map(values, [&](auto v) { return static_cast<rule const*>(&rules[v]); }).toVector());
-            n = sv.find('|');
-        } while (n != std::string::npos);
+        if (auto n = sv.find('|'); n != std::string::npos) {
+            add_subrule(r, std::string_view{sv.begin(), sv.begin()+n-1});
+            add_subrule(r, std::string_view{sv.begin()+n+2, sv.end()});
+        } else {
+            add_subrule(r, sv);
+        }
     }
     std::copy(line + 1, input.end(), std::back_inserter(messages));
     return std::make_tuple(std::move(rules), std::move(messages));

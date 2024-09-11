@@ -152,9 +152,9 @@ namespace {
 
             auto fill_value = [](std::variant<char, i64>& var, std::string const& str) {
                 if (std::isalpha(str.front())) {
-                    var = scn::scan_value<char>(str).value();
+                    var = scn::scan_value<char>(str)->value();
                 } else {
-                    var = scn::scan_value<i64>(str).value();
+                    var = scn::scan_value<i64>(str)->value();
                 }
             };
 

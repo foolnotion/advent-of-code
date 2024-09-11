@@ -23,8 +23,8 @@ namespace{
         point pmin; std::ranges::fill(pmin, std::numeric_limits<i32>::max());
         point pmax; std::ranges::fill(pmax, std::numeric_limits<i32>::min());
         for (auto const& line : input) {
-            point p;
-            (void)scn::scan(line, "{},{},{}", p[0], p[1], p[2]);
+            auto [x, y, z] = scn::scan<i32, i32, i32>(line, "{},{},{}")->values();
+            point p{x, y, z};
             [&]<auto... Idx>(seq_i<Idx...>) {
                 auto f = [&](auto i) {
                     pmin[i] = std::min(p[i]-1, pmin[i]);

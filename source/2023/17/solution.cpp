@@ -1,15 +1,17 @@
 #include <aoc.hpp>
-#include <experimental/mdspan>
+#define MDSPAN_IMPL_STANDARD_NAMESPACE std
+#define MDSPAN_IMPL_PROPOSED_NAMESPACE experimental
+#include <mdspan/mdspan.hpp>
 #include <tlx/container/radix_heap.hpp>
 
-using std::experimental::mdspan;
-using std::experimental::extents;
+using std::mdspan;
+using std::extents;
 
 namespace {
     template<typename T>
     using mdspan = mdspan<T, extents<i32, std::dynamic_extent, std::dynamic_extent>>;
     using grid   = mdspan<u8>;
-    using point  = std::complex<u16>;
+    using point  = std::complex<i32>;
 
     struct facing {
         static constexpr point left{0, -1};

@@ -21,7 +21,7 @@ auto advent2020::day07() -> result {
             }
 
             auto s = tokens[i+1] + tokens[i+2];
-            contains[key].emplace_back(qty.value(), s);
+            contains[key].emplace_back(qty->value(), s);
             contained[s].push_back(key);
         }
     }

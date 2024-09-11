@@ -1,4 +1,5 @@
 #include <aoc.hpp>
+#include <fplus/fplus.hpp>
 
 namespace {
 struct computer {
@@ -16,30 +17,32 @@ struct computer {
     auto run(std::vector<std::string>& instructions) {
         aoc::util::hash h;
 
+        using std::string;
+
         for (auto i = 0; i < std::ssize(instructions); ++i) {
             auto& s = instructions[i];
             aoc::util::remove_all(s, ",");
-            std::string a;
-            std::string b;
-            std::string c;
-            (void)scn::scan(s, "{} {} {}", a, b, c);
+            auto tokens = fplus::split(' ', false, s);
+            auto a = tokens[0];
+            auto b = tokens[1];
+            auto c = tokens.size() > 2 ? tokens[2] : "";
 
             switch(h(a)) {
                 case instr::jmp: // jump
                     {
-                        i += scn::scan_value<i32>(b).value()-1;
+                        i += scn::scan_value<i32>(b)->value()-1;
                         break;
                     }
                 case instr::jio: // jump if one
                     {
                         auto r = reg[b[0]-'a'];
-                        if (r == 1) { i += scn::scan_value<i32>(c).value()-1; }
+                        if (r == 1) { i += aoc::util::read<i32>(c)-1; }
                         break;
                     }
                 case instr::jie: // jump if even
                     {
                         auto r = reg[b[0]-'a'];
-                        if (r % 2 == 0) { i += scn::scan_value<i32>(c).value()-1; }
+                        if (r % 2 == 0) { i += aoc::util::read<i32>(c)-1; }
                         break;
                     }
                 case instr::hlf: // half the register

@@ -9,7 +9,7 @@ auto advent2015::day03() -> result
 
     using point = aoc::point<i64>;
     auto count_houses = [](auto const& input, bool robo) {
-        robin_hood::unordered_map<point, u64> map;
+        ankerl::unordered_dense::map<point, u64> map;
         point p{0, 0}; // santa
         point q{0, 0}; // robo-santa
         for (auto c : input) {

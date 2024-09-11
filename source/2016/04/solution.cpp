@@ -24,7 +24,7 @@ auto advent2016::day04() -> result {
             return std::tie(counts[rhs-'a'], lhs) < std::tie(counts[lhs-'a'], rhs);
         });
         auto const zipped = lz::zip(std::span{let.data(), code.size()}, code);
-        auto id_value = scn::scan_value<int>(id).value();
+        auto id_value = scn::scan_value<int>(id)->value();
 
         if (std::ranges::all_of(zipped, [](auto t) { auto [a,b] = t; return a == b; })) {
             part1 += id_value;

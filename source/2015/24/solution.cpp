@@ -18,7 +18,7 @@ struct state {
 template<>
 auto advent2015::day24() -> result {
     auto input = aoc::util::readlines("./source/2015/24/input.txt");
-    auto pkgs = lz::map(input, [](auto const& s) { return scn::scan_value<u64>(s).value(); }).toVector();
+    auto pkgs = lz::map(input, [](auto const& s) { return scn::scan_value<u64>(s)->value(); }).toVector();
     std::reverse(pkgs.begin(), pkgs.end());
     auto minc = std::numeric_limits<u64>::max();
     auto minp = std::numeric_limits<u64>::max();

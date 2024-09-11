@@ -200,7 +200,6 @@ target_compile_features(aoc_lib PUBLIC cxx_std_20)
 find_package(Boost REQUIRED)
 find_package(Eigen3 REQUIRED NO_MODULE)
 find_package(fmt REQUIRED)
-find_package(robin_hood REQUIRED)
 find_package(scn REQUIRED)
 find_package(cpp-lazy REQUIRED)
 find_package(cpp-sort REQUIRED)
@@ -219,6 +218,7 @@ target_link_libraries(aoc_lib PUBLIC
     pratt-parser::pratt-parser
     scn::scn
     unordered_dense::unordered_dense
+    z3
 )
 
 # ---- Declare executable ----

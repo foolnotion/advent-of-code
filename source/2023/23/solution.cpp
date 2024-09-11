@@ -1,12 +1,15 @@
 #include <aoc.hpp>
-#include <experimental/mdspan>
+#define MDSPAN_IMPL_STANDARD_NAMESPACE std
+#define MDSPAN_IMPL_PROPOSED_NAMESPACE experimental
+#include <mdspan/mdspan.hpp>
+#include <tlx/container/radix_heap.hpp>
 
 namespace rs = std::ranges;
 
 namespace {
     using point = std::complex<i64>;
-    using extents = std::experimental::extents<i32, std::dynamic_extent, std::dynamic_extent>;
-    using mdspan = std::experimental::mdspan<char, extents>;
+    using extents = std::extents<i32, std::dynamic_extent, std::dynamic_extent>;
+    using mdspan = std::mdspan<char, extents>;
 
     auto parse(auto const& input) {
         std::vector<char> vec;

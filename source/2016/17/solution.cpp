@@ -4,8 +4,6 @@
 namespace {
     using point = Eigen::Array<i32, 2, 1>;
 
-    using brumme::MD5;
-
     struct state {
         static constexpr auto passcode{"dmypynyp"};
         static constexpr auto doors{"UDLR"};
@@ -16,7 +14,7 @@ namespace {
         [[nodiscard]] static inline auto is_open(char c) { return aoc::equals<'b', 'c', 'd', 'e', 'f'>(c); }
         [[nodiscard]] inline auto neighbors() const {
             std::vector<state> nb;
-            auto s = MD5{}(fmt::format("{}{}", passcode, path));
+            auto s = hashing::md5::hash(fmt::format("{}{}", passcode, path));
 
             std::array<point, 4> moves{ point{-1,  0}, {+1,  0}, { 0, -1}, { 0, +1} };
             for (auto i = 0; i < 4; ++i) {

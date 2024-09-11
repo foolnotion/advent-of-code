@@ -8,9 +8,8 @@ auto advent2017::day13() -> result {
     std::vector<layer> layers;
     layers.reserve(input.size());
     for (auto const& s : input) {
-        layer l{};
-        (void)scn::scan(s, "{}: {}", l.first, l.second);
-        layers.push_back(l);
+        auto [first, second] = scn::scan<i32, i32>(s, "{}: {}")->values();
+        layers.emplace_back(first, second);
     }
     auto scanner_top = [](layer l) {
         return l.first % (2 * (l.second - 1)) == 0;

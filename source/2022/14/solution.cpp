@@ -18,8 +18,8 @@ namespace {
 
         for (auto const& line : input) {
             points.push_back(lz::map(lz::split(line, " -> "), [&](auto s) {
-                point p;
-                (void)scn::scan(s, "{},{}", p[0], p[1]);
+                auto [x, y] = scn::scan<i32, i32>(s, "{},{}")->values();
+                point p{x, y};
                 pmin = (pmin < p).select(pmin, p);
                 pmax = (pmax > p).select(pmax, p);
                 return p;

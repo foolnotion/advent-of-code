@@ -29,15 +29,22 @@ auto advent2017::day08() -> result {
 
     auto part2{0};
     aoc::dense::map<std::string, i32> registers;
-    for (auto const& line : input) {
-        std::string target_register;
-        std::string test_register;
-        std::string test_condition;
-        std::string opcode;
-        i32 opcode_arg{};
-        i32 test_arg{};
 
-        std::ignore = scn::scan(line, "{} {} {} if {} {} {}", target_register, opcode, opcode_arg, test_register, test_condition, test_arg);
+    using std::string;
+    for (auto const& line : input) {
+        // std::string target_register;
+        // std::string test_register;
+        // std::string test_condition;
+        // std::string opcode;
+        // i32 opcode_arg{};
+        // i32 test_arg{};
+
+        auto [target_register,
+              opcode,
+              opcode_arg,
+              test_register,
+              test_condition,
+              test_arg] = scn::scan<string, string, i32, string, string, i32>(line, "{} {} {} if {} {} {}")->values();
 
         auto test_value = registers.insert({test_register, 0}).first->second;
         if (test(test_value, test_arg, test_condition)) {

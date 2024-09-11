@@ -63,7 +63,7 @@ namespace {
         std::string_view v{s.begin(), it};
         auto res = scn::scan_value<i32>(v);
         s.remove_prefix(v.size());
-        return packet{res.value()};
+        return packet{res->value()};
     }
 
     auto parse(std::string const& s) -> packet {
