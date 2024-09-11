@@ -29,13 +29,16 @@ auto advent2022::day11() -> result
         auto j = 0;
         while (!std::isdigit(s[j])) { ++j; }
         std::string_view sv { &s[j], s.size() - j };
-        monkey m;
-        (void)scn::scan_list_ex(sv, m.worry, scn::list_separator(','));
-
-        auto res = scn::scan(input[i + 2], "  Operation: new = old {} {}", m.op, m.val);
-        auto result = scn::scan(input[i + 3], "  Test: divisible by {}", m.div);
-        (void)scn::scan(input[i + 4], "    If true: throw to monkey {}", m.id_true);
-        (void)scn::scan(input[i + 5], "    If false: throw to monkey {}", m.id_false); // NOLINT
+        auto worry = lz::map(lz::split(sv, ','), aoc::util::read<u64>).toVector();
+        auto [op, arg] = scn::scan<char, std::string>(input[i + 2], "  Operation: new = old {} {}")->values();
+        auto val = arg == "old" ? 0 : aoc::util::read<u64>(arg);
+        // if (arg == "old") {
+            // val = 0;
+        // }
+        auto div = scn::scan<u64>(input[i + 3], "  Test: divisible by {}")->value();
+        auto id_true = scn::scan<i32>(input[i + 4], "    If true: throw to monkey {}")->value();
+        auto id_false = scn::scan<i32>(input[i + 5], "    If false: throw to monkey {}")->value(); // NOLINT
+        monkey m{std::move(worry), op, val, div, id_true, id_false};
         monkeys.push_back(m);
     }
 
@@ -58,11 +61,11 @@ auto advent2022::day11() -> result
                 m.worry.clear();
             }
         }
-        std::ranges::sort(monkeys, std::greater{}, &monkey::inspected); 
+        std::ranges::sort(monkeys, std::greater{}, &monkey::inspected);
         return monkeys[0].inspected * monkeys[1].inspected;
     };
 
-    auto part1 = monkey_business(monkeys, rounds_p1, den_p1, 1); 
+    auto part1 = monkey_business(monkeys, rounds_p1, den_p1, 1);
     auto part2 = monkey_business(monkeys, rounds_p2, den_p2, mod);
     return aoc::result(part1, part2);
 }

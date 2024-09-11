@@ -1,6 +1,9 @@
 #include <aoc.hpp>
-#include <experimental/mdspan>
 #include <queue>
+
+#define MDSPAN_IMPL_STANDARD_NAMESPACE std
+#define MDSPAN_IMPL_PROPOSED_NAMESPACE experimental
+#include <mdspan/mdspan.hpp>
 
 namespace {
     using point = aoc::point<i32, 2>;
@@ -41,9 +44,10 @@ namespace {
             if (s.front() != '/') { continue; }
             auto q = aoc::util::trim_extra_space(s);
             node n{};
-            i32 size{};    // not used
-            i32 percent{}; // not used
-            std::ignore = scn::scan(q, "/dev/grid/node-x{}-y{} {}T {}T {}T {}%", n.pos[0], n.pos[1], size, n.used, n.avail, percent);
+            auto [x, y, size, used, avail, percent] = scn::scan<i32, i32, i32, i32, i32, i32>(q, "/dev/grid/node-x{}-y{} {}T {}T {}T {}%")->values();
+            n.pos = point{x, y};
+            n.used = used;
+            n.avail = avail;
             xmax = std::max(xmax, n.pos[0]);
             ymax = std::max(ymax, n.pos[1]);
             nodes.push_back(n);
@@ -54,8 +58,8 @@ namespace {
 
 template<>
 auto advent2016::day22() -> result {
-    using std::experimental::mdspan;
-    using std::experimental::extents;
+    using std::mdspan;
+    using std::extents;
 
     auto input = aoc::util::readlines("./source/2016/22/input.txt");
     auto [nodes, xmax, ymax] = parse_input(input);

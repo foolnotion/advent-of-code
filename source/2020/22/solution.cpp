@@ -11,11 +11,11 @@ auto advent2020::day22() -> result {
 
     auto line = input.begin()+1; // skip "Player 1"
     for (line = input.begin() + 1; !line->empty(); ++line) {
-        d1.push_back(scn::scan_value<u32>(*line).value());
+        d1.push_back(aoc::util::read<u32>(*line));
     }
     line += 2; // skip empty line and "Player 2" line
     for (; line < input.end(); ++line) {
-        d2.push_back(scn::scan_value<u32>(*line).value());
+        d2.push_back(aoc::util::read<u32>(*line));
     }
 
     auto score = [](auto const& deq) {

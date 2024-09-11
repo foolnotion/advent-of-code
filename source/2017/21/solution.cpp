@@ -35,15 +35,14 @@ namespace {
         i64 ncols{};
         i64 k{};
         for (auto const& s : input) {
-            std::array<std::string, 2> rule;
-            (void)scn::scan(s, "{} => {}", rule[0], rule[1]);
+            auto [s0, s1] = scn::scan<std::string, std::string>(s, "{} => {}")->values();
             // parse source rule
-            k = parse_rule(rule[0]);
+            k = parse_rule(s0);
             nrows = k+1;
             ncols = std::ssize(buf) / nrows;
             matrix src = Eigen::Map<matrix>(buf.data(), nrows, ncols);
             // parse destination rule
-            k = parse_rule(rule[1]);
+            k = parse_rule(s1);
             nrows = k+1;
             ncols = std::ssize(buf) / nrows;
             matrix dst = Eigen::Map<matrix>(buf.data(), nrows, ncols);

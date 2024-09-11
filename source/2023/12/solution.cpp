@@ -75,8 +75,9 @@ auto advent2023::day12() -> result {
     for (auto const& s : input) {
         auto i = s.find(' ');
         record r{s.begin(), s.begin()+i};
-        groups g;
-        (void)scn::scan_list_ex(std::string_view{s.begin()+i+1, s.end()}, g, scn::list_separator(','));
+        std::string_view v{s.begin()+i+1, s.end()};
+        auto read_value = [](auto&& r){ return scn::scan_value<i64>(r)->value(); };
+        auto g = lz::map(std::views::split(v, ','), read_value).toVector();
         input_p1.emplace_back(r, g);
     }
 

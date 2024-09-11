@@ -37,7 +37,9 @@ namespace {
         components.reserve(input.size());
         for (auto const& s : input) {
             component c;
-            (void)scn::scan(s, "{}/{}", c.ports[0].value, c.ports[1].value);
+            auto [v0, v1] = scn::scan<i64, i64>(s, "{}/{}")->values();
+            c.ports[0].value = v0;
+            c.ports[1].value = v1;
             for (auto& p : c.ports) {
                 p.free = p.value != 0;
             }

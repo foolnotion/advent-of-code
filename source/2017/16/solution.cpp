@@ -17,17 +17,18 @@ namespace {
 
             switch(m.c) {
                 case 's': {
-                    (void)scn::scan(v, "s{}", m.a);
+                    auto a = scn::scan<u8>(v, "s{}")->value();
+                    m.a = a;
                     break;
                 }
                 case 'x': {
-                    (void)scn::scan(v, "x{}/{}", m.a, m.b);
+                    auto [a, b] = scn::scan<u8, u8>(v, "x{}/{}")->values();
+                    m.a = a;
+                    m.b = b;
                     break;
                 }
                 case 'p': {
-                    char a{};
-                    char b{};
-                    (void)scn::scan(v, "p{}/{}", a, b);
+                    auto [a, b] = scn::scan<char, char>(v, "p{}/{}")->values();
                     m.a = a - 'a';
                     m.b = b - 'a';
                     break;

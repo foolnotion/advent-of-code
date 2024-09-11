@@ -8,10 +8,8 @@ namespace {
     };
 
     auto parse(auto const& input) {
-        char initial_state{};
-        (void)scn::scan(input.front(), "Begin in state {}.", initial_state);
-        i64 steps{};
-        (void)scn::scan(*(input.begin()+1), "Perform a diagnostic checksum after {}} steps.", steps);
+        auto initial_state = scn::scan<char>(input.front(), "Begin in state {}.")->value();
+        auto steps = scn::scan<i64>(*(input.begin()+1), "Perform a diagnostic checksum after {} steps.")->value();
 
         std::array<std::array<blueprint, 2>, aoc::constants::alphabet.size()> map{};
         std::span rules{input.begin()+3, input.end()};
@@ -21,20 +19,25 @@ namespace {
 
         for (auto it = rules.begin(); it < rules.end(); ++it) {
             if (it->empty()) { continue; }
-            char current_state{};
-            (void)scn::scan(*it++, "In state {}:", current_state);
+            auto current_state = scn::scan<char>(*it++, "In state {}:")->value();
             std::array<blueprint, 2> bp;
+            i64 value{};
             std::string location;
+            char next{};
             ++it;
-            (void)scn::scan(*it++, "    - Write the value {}.", bp[0].value);
-            (void)scn::scan(*it++, "    - Move one slot to the {}.", location);
+            value = scn::scan<i64>(*it++, "    - Write the value {}.")->value();
+            bp[0].value = value;
+            location = scn::scan<std::string>(*it++, "    - Move one slot to the {}.")->value();
             bp[0].move = location == right;
-            (void)scn::scan(*it++, "    - Continue with state {}.", bp[0].next);
+            next = scn::scan<char>(*it++, "    - Continue with state {}.")->value();
+            bp[0].next = next;
             ++it;
-            (void)scn::scan(*it++, "    - Write the value {}.", bp[1].value);
-            (void)scn::scan(*it++, "    - Move one slot to the {}.", location);
+            value = scn::scan<i64>(*it++, "    - Write the value {}.")->value();
+            bp[1].value = value;
+            location = scn::scan<std::string>(*it++, "    - Move one slot to the {}.")->value();
             bp[1].move = location == right;
-            (void)scn::scan(*it++, "    - Continue with state {}.", bp[1].next);
+            next = scn::scan<char>(*it++, "    - Continue with state {}.")->value();
+            bp[1].next = next;
             map[current_state-'A'] = bp;
         }
         return std::tuple{initial_state, steps, map};

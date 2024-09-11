@@ -90,8 +90,7 @@ namespace {
                 ++j;
             }
             std::string_view sv{path.begin()+i, path.begin()+j};
-            i32 v{};
-            (void)scn::scan(sv, "{}", v);
+            auto v = aoc::util::read<i32>(sv);
             moves.emplace_back(v, '.');
             i = j;
         }
@@ -202,7 +201,7 @@ auto advent2022::day22() -> result
     for (auto i = 0L; i < map.rows(); i += dim) {
         for (auto j = 0L; j < map.cols(); j += dim) {
             if (map(i, j) != ' ') {
-                faces_p1.push_back(face{view{map.data(), rows, cols}, {i, j}, (i32)dim});
+                faces_p1.push_back(face{view{map.data(), rows, cols}, point(i, j), static_cast<i32>(dim)});
             }
         }
     }

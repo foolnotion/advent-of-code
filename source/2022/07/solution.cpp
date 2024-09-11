@@ -12,15 +12,13 @@ auto advent2022::day07() -> result {
     for (auto&& line : aoc::util::readlines("./source/2022/07/input.txt")) {
         switch(line.front()) {
         case 'd': {
-            std::string dir;
-            std::ignore = scn::scan(line, "dir {}", dir);
+            auto dir = scn::scan<std::string>(line, "dir {}")->value();
             nodes.insert({ path.back() + hash(dir), 0 });
             break;
         }
         case '$': {
             if (line[2] == 'c') {
-                std::string dir;
-                (void)scn::scan(line, "$ cd {}", dir);
+                auto dir = scn::scan<std::string>(line, "$ cd {}")->value();
                 if (dir == "..") {
                     path.pop_back();
                 } else {
@@ -31,9 +29,8 @@ auto advent2022::day07() -> result {
             break;
         }
         default: {
-            u64 size{};
             std::string_view v{line.data(), line.find(' ')};
-            (void)scn::scan(v, "{}", size);
+            auto size = scn::scan<u64>(v, "{}")->value();
             for (auto p : path) { nodes[p] += size; }
             break;
         }

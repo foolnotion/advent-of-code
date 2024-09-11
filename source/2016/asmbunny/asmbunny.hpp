@@ -75,14 +75,14 @@ namespace aoc::interpreters::asmbunny {
                 if (std::isalpha(tokens[1].front())) {
                     i.lhs = tokens[1].front();
                 } else {
-                    i.lhs = scn::scan_value<i32>(tokens[1]).value();
+                    i.lhs = scn::scan_value<i32>(tokens[1])->value();
                 }
 
                 if (tokens.size() > 2) {
                     if(std::isalpha(tokens[2].front())) {
                         i.rhs = tokens[2].front();
                     } else {
-                        i.rhs = scn::scan_value<i32>(tokens[2]).value();
+                        i.rhs = scn::scan_value<i32>(tokens[2])->value();
                     }
                 }
                 code_.push_back(i);

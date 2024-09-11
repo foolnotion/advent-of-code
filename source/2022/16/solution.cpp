@@ -152,9 +152,9 @@ auto advent2022::day16() -> result {
     for (auto i = 0UL; i < input.size(); ++i) {
         auto const& line = input[i];
         std::string_view s{line.data(), line.find(';')};
-        std::string id;
-        auto rate{0UL};
-        (void)scn::scan(s, "Valve {} has flow rate={}", id, rate);
+        // std::string id;
+        // auto rate{0UL};
+        auto [id, rate] = scn::scan<std::string, u64>(s, "Valve {} has flow rate={}")->values();
         valves[i] = { i, hash(id), rate };
         names.insert({ valves[i].id, id });
         ptr.insert({ valves[i].id, &valves[i] });
@@ -166,8 +166,7 @@ auto advent2022::day16() -> result {
         auto p = line.find(';');
         std::string_view s{&line[p+2], line.size()-p-2};
         while(std::isspace(s.front()) || std::islower(s.front())) { s.remove_prefix(1); }
-        std::vector<std::string> tunnels;
-        (void)scn::scan_list(s, tunnels);
+        auto tunnels = lz::map(lz::split(s, ' '), [](auto sv){ return std::string{sv}; }).toVector();
 
         auto& v = valves[i];
         for (auto const& t : tunnels) {

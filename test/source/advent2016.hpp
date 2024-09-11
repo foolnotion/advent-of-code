@@ -16,7 +16,7 @@ std::array const advent2016_results {
     /* day 11 */ std::tuple{"33", "57"},
     /* day 12 */ std::tuple{"318117", "9227771"},
     /* day 13 */ std::tuple{"86", "127"},
-    /* day 14 */ std::tuple{"14937", "19636"},
+    /* day 14 */ std::tuple{"15035", "19968"},
     /* day 15 */ std::tuple{"317371", "2080951"},
     /* day 16 */ std::tuple{"10010010110011010", "01010100101011100"},
     /* day 17 */ std::tuple{"RDRDUDLRDR", "386"},
@@ -33,6 +33,7 @@ std::array const advent2016_results {
 TEST_CASE("advent 2016 correctness" * doctest::test_suite("2016")) {
     advent2016 advent;
     for (auto i = 0; i < advent2016_results.size(); ++i) {
+        CAPTURE(i);
         CHECK_EQ(advent2016_results[i], advent(i+1));
     }
 };

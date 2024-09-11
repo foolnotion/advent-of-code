@@ -9,8 +9,7 @@ namespace {
                 stacks.emplace_back(line.rbegin(), line.rend());
                 continue;
             }
-            i32 count, from, to; // NOLINT
-            (void)scn::scan(line, "move {} from {} to {}", count, from, to);
+            auto [count, from, to] = scn::scan<i32, i32, i32>(line, "move {} from {} to {}")->values();
             mover(stacks[from-1], stacks[to-1], count);
         }
         return lz::map(stacks, [](auto const& s){ return s.back(); }).toString();

@@ -48,9 +48,9 @@ namespace {
     auto parse(auto const& input) {
         std::vector<hailstone> hs;
         for (auto const& s : input) {
-            vec3 p;
-            vec3 v;
-            (void)scn::scan(s, "{}, {}, {} @ {}, {}, {}", p(0), p(1), p(2), v(0), v(1), v(2));
+            auto [p1, p2, p3, v1, v2, v3] = scn::scan<i64, i64, i64, i64, i64, i64>(s, "{}, {}, {} @ {}, {}, {}")->values();
+            vec3 p(p1, p2, p3);
+            vec3 v(v1, v2, v3);
             hs.push_back({p, v});
         }
         return hs;

@@ -30,8 +30,8 @@
 #include <fmt/color.h>
 #include <fmt/core.h>
 #include <fmt/ranges.h>
-#include <robin_hood.h>
-#include <scn/scn.h>
+#include <scn/scan.h>
+#include <scn/ranges.h>
 #include <ankerl/unordered_dense.h>
 
 #include <Eigen/Core>
@@ -73,10 +73,14 @@ template<int YEAR>
 struct advent {
     static constexpr int year = YEAR;
     using result = std::tuple<std::string, std::string>;
+    using dayptr = std::add_pointer_t<result()>;
 
     auto operator()(int day) const -> result {
-        assert(day >= 1 && day <= 25);
-        return days[day-1]();
+        EXPECT(day >= 1 && day <= 25);
+        EXPECT(day <= days.size());
+        auto const fun = days[day-1];
+        ENSURE(fun != nullptr);
+        return std::invoke(*fun);
     }
 
     static auto day01() -> result;
@@ -106,7 +110,7 @@ struct advent {
     static auto day25() -> result;
 
     private:
-    std::array<result(*)(), 25> days = { // NOLINT
+    std::vector<dayptr> days = { // NOLINT
         &advent<year>::day01,
         &advent<year>::day02,
         &advent<year>::day03,
@@ -148,7 +152,9 @@ using advent2023 = advent<2023>; // NOLINT
 namespace aoc {
 template<typename T1, typename T2>
 auto result(T1 t1, T2 t2) -> std::tuple<std::string, std::string> {
-    return std::tuple{fmt::format("{}", t1), fmt::format("{}", t2)};
+    auto s1 = fmt::format("{}", t1);
+    auto s2 = fmt::format("{}", t2);
+    return std::make_tuple(std::move(s1), std::move(s2));
 }
 
 template<typename T, std::size_t S=2>
@@ -274,9 +280,11 @@ inline auto readlines(std::string const& path) {
 template<typename T>
 requires std::is_arithmetic_v<T>
 inline auto read(std::string_view sv) {
-    T value{};
-    (void)scn::scan(sv, "{}", value);
-    return value;
+    auto result = scn::scan_value<T>(sv);
+    if (!result) {
+        throw std::runtime_error(result.error().msg());
+    }
+    return result->value();
 }
 
 inline auto replace_all(std::string& inout, std::string_view what, std::string_view with) -> std::size_t
@@ -357,7 +365,8 @@ inline auto pow_mod(T a, T n, T m) -> T // NOLINT
 }
 
 inline auto mod_euclid(std::integral auto a, std::integral auto b) {
-    return a < 0 ? ((a % b) + b) % b : a % b;
+    EXPECT(b != 0);
+    return a < 0 ? (((a % b) + b) % b) : (a % b);
 }
 
 template<typename T>

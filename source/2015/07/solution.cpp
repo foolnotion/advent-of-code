@@ -27,7 +27,7 @@ auto advent2015::day07() -> result
     constexpr auto npos = std::string::npos;
     std::vector<node> nodes;
     nodes.reserve(1024); // NOLINT
-    robin_hood::unordered_map<std::string, node*> map;
+    aoc::dense::map<std::string, node*> map;
 
     auto add_node = [&](auto const&... ids) {
         auto try_add = [&](auto const& id) {
@@ -40,8 +40,7 @@ auto advent2015::day07() -> result
                 p = it->second;
             }
             if (std::isdigit(id[0])) { // leaf node
-                u16 s{}; (void)scn::scan(id, "{}", s);
-                p->signal = s;
+                p->signal = scn::scan_value<u16>(id)->value();
             }
             return p;
         };
@@ -49,33 +48,39 @@ auto advent2015::day07() -> result
     };
 
     for (std::string s; std::getline(f, s); ) {
-        std::string a, b, c; // NOLINT
+        // std::string a, b, c; // NOLINT
         decltype(node::op) func{nullptr};
+
+        using S = std::string; // NOLINT
+        std::tuple<S, S, S> ids;
 
         // figure out the OP
         bool binary{true};
         if (s.find("AND") != npos) {
             func = [](u16 x, u16 y) { return x & y; };
-            (void)scn::scan(s, "{} AND {} -> {}", a, b, c);
+            ids = scn::scan<S, S, S>(s, "{} AND {} -> {}")->values();
         } else if (s.find("OR") != npos) {
             func = [](u16 x, u16 y) { return x | y; };
-            (void)scn::scan(s, "{} OR {} -> {}", a, b, c);
+            ids = scn::scan<S, S, S>(s, "{} OR {} -> {}")->values();
         } else if (s.find("RSHIFT") != npos) {
             func = [](u16 x, u16 y) { return x >> y; };
-            (void)scn::scan(s, "{} RSHIFT {} -> {}", a, b, c);
+            ids = scn::scan<S, S, S>(s, "{} RSHIFT {} -> {}")->values();
         } else if (s.find("LSHIFT") != npos) {
             func = [](u16 x, u16 y) { return x << y; };
-            (void)scn::scan(s, "{} LSHIFT {} -> {}", a, b, c);
+            ids = scn::scan<S, S, S>(s, "{} LSHIFT {} -> {}")->values();
         } else if (s.find("NOT") != npos) {
             binary = false;
             func = [](u16 x, u16) { return ~x; };
-            (void)scn::scan(s, "NOT {} -> {}", a, b);
+            auto [a, b] = scn::scan<S, S>(s, "NOT {} -> {}")->values();
+            ids = {a, b, ""};
         } else { // ASSIGN
             binary = false;
             func = [](u16 x, u16) { return x; };
-            (void)scn::scan(s, "{} -> {}", a, b);
+            auto [a, b] = scn::scan<S, S>(s, "{} -> {}")->values();
+            ids = {a, b, ""};
         }
         // make wires
+        auto [a, b, c] = ids;
         if (binary) { // binary node
             auto [pa, pb, pc] = add_node(a, b, c);
             pc->lhs = pa; pa->parent = pc;

@@ -26,13 +26,8 @@ auto advent2022::day10() -> result {
         }
 
         if (s.front() == 'a') {
-            x += scn::scan_value<i32>(s.substr(5, s.size()-5)).value(); // NOLINT
+            x += aoc::util::read<i32>(s.substr(5, s.size()-5)); // NOLINT
         }
     }
-
-    //for (auto const& d : display) {
-    //    fmt::print("{}\n", d);
-    //}
-    return aoc::result(part1, "EHZFZHCZ");
+    return aoc::result(part1, std::string{"EHZFZHCZ"});
 }
-

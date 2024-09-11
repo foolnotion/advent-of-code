@@ -1,12 +1,14 @@
 #include <aoc.hpp>
 #include <util/dynamic_bitset.hpp>
-#include <experimental/mdspan>
+#define MDSPAN_IMPL_STANDARD_NAMESPACE std
+#define MDSPAN_IMPL_PROPOSED_NAMESPACE experimental
+#include <mdspan/mdspan.hpp>
 
-using std::experimental::mdspan;
-using std::experimental::extents;
+using std::mdspan;
+using std::extents;
 
 namespace {
-    using point = std::complex<u16>;
+    using point = std::complex<i32>;
     using beam  = std::pair<point, point>;
     using grid  = mdspan<char, extents<u64, std::dynamic_extent, std::dynamic_extent>>;
 
@@ -143,11 +145,11 @@ auto advent2023::day16() -> result {
     auto const p1 = f({ facing::right, point{0, 0} });
 
     auto f1 = [&](auto i) {
-        return std::max(f({ facing::right, {i, 0} }), f({ facing::left, {i, ncols-1} }));
+        return std::max(f({ facing::right, {i, 0} }), f({ facing::left, {i, static_cast<i32>(ncols-1)} }));
     };
 
     auto f2 = [&](auto i) {
-        return std::max(f({ facing::down, {0, i} }), f({ facing::up, {nrows-1, i} }));
+        return std::max(f({ facing::down, {0, i} }), f({ facing::up, {static_cast<i32>(nrows-1), i} }));
     };
 
     auto max = [](auto i, auto&& f) {

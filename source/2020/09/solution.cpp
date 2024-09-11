@@ -5,7 +5,7 @@ using std::ranges::any_of;
 template<>
 auto advent2020::day09() -> result {
     auto input = aoc::util::readlines("./source/2020/09/input.txt");
-    auto vec = lz::map(input, [](auto const& s) { return scn::scan_value<u64>(s).value(); }).toVector();
+    auto vec = lz::map(input, [](auto const& s) { return scn::scan_value<u64>(s)->value(); }).toVector();
     constexpr auto n{25};
 
     auto part1 = [&]() -> std::optional<u64> {

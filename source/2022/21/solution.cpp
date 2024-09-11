@@ -47,13 +47,13 @@ auto advent2022::day21() -> result {
         i64 v{};
 
         if (std::isdigit(r[0])) {
-            v = scn::scan_value<i64>(r).value(); 
+            v = aoc::util::read<i64>(r);
             f = [v](i64, i64) { return v; };
         } else {
-            std::string lhs, rhs; // NOLINT
-            (void)scn::scan(r, "{} {} {}", lhs, op, rhs);
-            hash_lhs = hash(lhs);
-            hash_rhs = hash(rhs);
+            auto res = scn::scan<std::string, char, std::string>(r, "{} {} {}")->values();
+            op = std::get<1>(res);
+            hash_lhs = hash(std::get<0>(res));
+            hash_rhs = hash(std::get<2>(res));
         }
 
         node n{hash(s), op, v, hash_lhs, hash_rhs};
@@ -95,4 +95,3 @@ auto advent2022::day21() -> result {
     auto part2 = v;
     return aoc::result(part1, part2);
 }
-

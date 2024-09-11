@@ -6,9 +6,7 @@ auto advent2020::day12() -> result {
     std::vector<std::pair<char, int>> vec;
 
     for (auto const& line : input) {
-        char dir{};
-        int val{};
-        (void)scn::scan(line, "{}{}", dir, val);
+        auto [dir, val] = scn::scan<char, int>(line, "{}{}")->values();
         vec.emplace_back(dir, val);
     }
 

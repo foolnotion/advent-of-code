@@ -28,16 +28,14 @@ auto advent2020::day16() -> result {
         i64 j = 0;
         while(line[i+j] != 'o') ++j;
         sv = std::string_view(line.data() + i, j-1);
-        u64 a{};
-        u64 b{};
-        (void)scn::scan(sv, "{}-{}", a, b);
-        range r1 { a, b };
+        auto [a1, b1] = scn::scan<u64, u64>(sv, "{}-{}")->values();
+        range r1 { a1, b1 };
 
         i += j + 3;
         j = std::ssize(line) - i;
         sv = std::string_view(&line[i], j);
-        (void)scn::scan(sv, "{}-{}", a, b);
-        range r2 { a, b };
+        auto [a2, b2] = scn::scan<u64, u64>(sv, "{}-{}")->values();
+        range r2 { a2, b2 };
 
         ranges.push_back({ r1, r2 });
     };
@@ -48,7 +46,9 @@ auto advent2020::day16() -> result {
     std::getline(in, line); // skip the line that says your ticket:
     // my ticket
     auto tok = lz::split(line, ',');
-    std::transform(tok.begin(), tok.end(), std::back_inserter(myticket), [](auto const& s) { return scn::scan_value<u64>(s).value(); });
+    auto read_value = aoc::util::read<u64>;
+
+    std::transform(tok.begin(), tok.end(), std::back_inserter(myticket), read_value);
 
     // other tickets
     std::getline(in, line); // skip empty line
@@ -57,7 +57,7 @@ auto advent2020::day16() -> result {
     while (std::getline(in, line) && !line.empty()) {
         auto tok = lz::split(line, ',');
         std::vector<u64> other;
-        std::transform(tok.begin(), tok.end(), std::back_inserter(other), [](auto const& s) { return scn::scan_value<u64>(s).value(); });
+        std::transform(tok.begin(), tok.end(), std::back_inserter(other), read_value);
         nearby.push_back(other);
     }
 

@@ -8,23 +8,24 @@ auto advent2020::day04() -> result {
     constexpr int nfield{7};
     std::array<std::string, nfield> required_fields = { "byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid" };
 
+    auto constexpr nan = std::numeric_limits<i32>::quiet_NaN();
     aoc::dense::map<std::string_view, bool(*)(std::string_view)> validation_rules {
         {
             "byr", [](auto s) {
-                auto res = scn::scan_value<int>(s);
-                return !static_cast<bool>(!res.has_value() || res.value() < 1920 || res.value() > 2002);
+                auto res = scn::scan_value<i32>(s);
+                return !static_cast<bool>(!res.has_value() || res->value() < 1920 || res->value() > 2002);
             }
         },
         {
             "iyr", [](auto s) {
                 auto res = scn::scan_value<int>(s);
-                return !static_cast<bool>(!res.has_value() || res.value() < 2010 || res.value() > 2020);
+                return !static_cast<bool>(!res.has_value() || res->value() < 2010 || res->value() > 2020);
             }
         },
         {
             "eyr", [](auto s) {
                 auto res = scn::scan_value<int>(s);
-                return !static_cast<bool>(!res.has_value() || res.value() < 2020 || res.value() > 2030);
+                return !static_cast<bool>(!res.has_value() || res->value() < 2020 || res->value() > 2030);
             }
         },
         {
@@ -37,7 +38,7 @@ auto advent2020::day04() -> result {
                     return false;
                 }
 
-                auto heightval = res.value();
+                auto heightval = res->value();
 
                 if (unit == "cm") {
                     return heightval >= 150 && heightval <= 193;

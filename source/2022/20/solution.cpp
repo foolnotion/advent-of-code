@@ -48,7 +48,7 @@ namespace {
 template<>
 auto advent2022::day20() -> result {
     auto input = aoc::util::readlines("./source/2022/20/input.txt");
-    auto list = lz::map(input, [](auto const& s) { return scn::scan_value<i64>(s).value(); }).to<std::list<i64>>();
+    auto list = lz::map(input, aoc::util::read<i64>).to<std::list<i64>>();
 
     auto constexpr mix_p1{1L};
     auto constexpr key_p1{1L};

@@ -4,8 +4,9 @@ template<>
 auto advent2020::day15() -> result {
     auto input = aoc::util::readlines("./source/2020/15/input.txt");
     auto tokens = lz::split(input.front(), ',');
-    auto nums = lz::map(tokens, [](auto v) { return scn::scan_value<u32>(v).value(); }).toVector();
-    robin_hood::unordered_map<u32, u32> map;
+    auto read_value = aoc::util::read<u32>;
+    auto nums = lz::map(tokens, read_value).toVector();
+    aoc::dense::map<u32, u32> map;
     map.reserve(nums.size());
     for (auto&& [i, n] : lz::enumerate(nums)) { map.insert({n, i+1}); }
 
@@ -27,4 +28,3 @@ auto advent2020::day15() -> result {
     a2 = n;
     return aoc::result(a1, a2);
 }
-

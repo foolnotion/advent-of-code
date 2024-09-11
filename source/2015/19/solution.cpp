@@ -12,9 +12,7 @@ auto advent2015::day19() -> result {
     for (auto&& [i, s] : lz::enumerate(input)) {
         if (s.empty()) { continue; }
         if (i < std::ssize(input)-1) {
-            std::string a;
-            std::string b;
-            (void)scn::scan(s, "{} => {}", a, b);
+            auto [a, b] = scn::scan<std::string, std::string>(s, "{} => {}")->values();
             if (auto [it, ok] = map.insert({a, {b}}); !ok) {
                 it->second.push_back(b);
             }

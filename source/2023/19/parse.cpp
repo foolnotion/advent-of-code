@@ -37,7 +37,7 @@ auto parse(auto const& input) {
                     rl.op = r[1];
                     rl.field = r[0];
                     auto k = 0; while(r[k] != ':') { ++k; }
-                    (void)scn::scan(std::string_view{r.begin()+2, r.begin()+k}, "{}", rl.value);
+                    rl.value = scn::scan<i64>(std::string_view{r.begin()+2, r.begin()+k}, "{}")->value();
                     rl.work = get_workflow(std::string_view{r.begin()+k+1, r.end()});
                 } else {
                     rl.op = '!';
@@ -49,9 +49,9 @@ auto parse(auto const& input) {
             if constexpr (std::is_same_v<T, i64>) {
                 if (s.empty()) { continue; }
                 part_t p{};
-                std::array<i64, 4> v{};
-                (void)scn::scan(s, "{{x={},m={},a={},s={}}}", p[0], p[1], p[2], p[3]);
-                parts.push_back(p);
+                auto [a, b, c, d] = scn::scan<i64, i64, i64, i64>(s, "{{x={},m={},a={},s={}}}")->values();
+                std::array<i64, 4> v{a, b, c, d};
+                parts.emplace_back(v);
             }
         }
     }

@@ -1,10 +1,13 @@
 #include <aoc.hpp>
-#include <experimental/mdspan>
+
+#define MDSPAN_IMPL_STANDARD_NAMESPACE std
+#define MDSPAN_IMPL_PROPOSED_NAMESPACE experimental
+#include <mdspan/mdspan.hpp>
 
 template<>
 auto advent2016::day24() -> result {
-    using std::experimental::mdspan;
-    using std::experimental::extents;
+    using std::mdspan;
+    using std::extents;
 
     auto input = aoc::util::readlines("./source/2016/24/input.txt");
     auto const nrows = input.size();

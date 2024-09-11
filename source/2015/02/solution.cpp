@@ -7,10 +7,11 @@ auto advent2015::day02() -> result {
     u64 paper{0};
     u64 ribbon{0};
     for (std::string s; std::getline(f, s); ) {
-        u64 l{0}; // length
-        u64 w{0}; // width
-        u64 h{0}; // height
-        (void) scn::scan(s, "{}x{}x{}", l, w, h);
+        auto result = scn::scan<u64, u64, u64>(s, "{}x{}x{}");
+        if (!result) {
+            throw std::runtime_error(fmt::format("scn: scan failed for string {}\n", s));
+        }
+        auto [l, w, h] = result->values();
         auto a = l * w;
         auto b = w * h;
         auto c = h * l;

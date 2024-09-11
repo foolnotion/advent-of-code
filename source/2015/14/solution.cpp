@@ -56,8 +56,11 @@ auto advent2015::day14() -> result {
     for (auto const& s : input) {
         std::string name;
         reindeer_stats stats{};
-        (void)scn::scan(s, "{} can fly {} km/s for {} seconds, but then must rest for {} seconds",
-                name, stats.speed, stats.duration, stats.rest);
+        auto result = scn::scan<std::string, u32, u32, u32>(s, "{} can fly {} km/s for {} seconds, but then must rest for {} seconds")->values();
+        name = std::get<0>(result);
+        stats.speed = std::get<1>(result);
+        stats.duration = std::get<2>(result);
+        stats.rest = std::get<3>(result);
         vec.emplace_back(stats);
     }
 

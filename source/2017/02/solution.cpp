@@ -5,8 +5,7 @@ auto advent2017::day02() -> result {
     std::fstream f("./source/2017/02/input.txt");
     std::vector<std::vector<i64>> values;
     for (std::string line; std::getline(f, line); ) {
-        std::vector<i64> v;
-        (void) scn::scan_list_ex(line, v, scn::list_separator('\t'));
+        auto v = lz::map(lz::split(line, '\t'), [](auto const& s) { return scn::scan_value<i64>(s)->value(); }).toVector();
         std::ranges::sort(v);
         values.push_back(v);
     }

@@ -1,10 +1,9 @@
 #include <aoc.hpp>
-#include <scn/detail/file.h>
 
 template<>
 auto advent2017::day05() -> result {
     auto input = aoc::util::readlines("./source/2017/05/input.txt");
-    auto vec = lz::map(input, [](auto const& s){ return scn::scan_value<i64>(s).value(); }).toVector();
+    auto vec = lz::map(input, [](auto const& s){ return scn::scan_value<i64>(s)->value(); }).toVector();
     auto tmp = vec;
 
     u64 steps{0};

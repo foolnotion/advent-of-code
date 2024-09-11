@@ -14,13 +14,10 @@ namespace {
         aoc::dense::map<char, i64> dirmap{ {'R', 0}, {'D', 1}, {'L', 2}, {'U', 3} };
         constexpr auto b{16L};
 
+        using std::string;
         for (auto const& s : input) {
-            char c{};
-            i64 t{};
-            i64 v{};
-            std::string str;
-            (void)scn::scan(s, "{} {} (#{})", c, t, str);
-            (void)scn::scan("0x" + str, "{:x}", v);
+            auto [c, t, str] = scn::scan<char, i64, string>(s, "{} {} (#{})")->values();
+            auto v = scn::scan<i64>("0x" + str, "{:x}")->value();
             in1.emplace_back(directions[dirmap[c]], t);
             in2.emplace_back(directions[v % b], v / b);
         }

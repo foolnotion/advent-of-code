@@ -17,10 +17,10 @@ auto advent2020::day14() -> result {
         } else {
             // parse memory address
             std::string_view sv{tokens[0].data()+4, tokens[0].size()-5}; // NOLINT
-            auto addr = scn::scan_value<u64>(sv).value();
+            auto addr = aoc::util::read<u64>(sv);
 
             // parse value and apply mask
-            auto val = scn::scan_value<u64>(tokens[2]).value();
+            auto val = aoc::util::read<u64>(tokens[2]);
             auto bits = std::bitset<nbits>(val);
             for(auto i = 0; i < nbits; ++i) {
                 auto m = mask[nbits-i-1];
@@ -61,10 +61,10 @@ auto advent2020::day14() -> result {
         } else {
             // parse memory address
             std::string_view sv{tokens[0].data()+4, tokens[0].size()-5}; // NOLINT
-            auto addr = scn::scan_value<u64>(sv).value();
+            auto addr = aoc::util::read<u64>(sv);
 
             // parse value and apply mask
-            auto val = scn::scan_value<u64>(tokens[2]).value();
+            auto val = aoc::util::read<u64>(tokens[2]);
             bits = std::bitset<nbits>(addr);
             floating.clear();
             for(auto i = 0; i < nbits; ++i) {

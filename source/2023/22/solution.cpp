@@ -52,9 +52,9 @@ namespace {
         point pmax = point::Constant(0);
 
         for (auto i{0UL}; i < input.size(); ++i) {
-            point a{};
-            point b{};
-            (void)scn::scan(input[i], "{},{},{}~{},{},{}", a(0), a(1), a(2), b(0), b(1), b(2));
+            auto [ax, ay, az, bx, by, bz] = scn::scan<i64, i64, i64, i64, i64, i64>(input[i], "{},{},{}~{},{},{}")->values();
+            point a(ax, ay, az);
+            point b(bz, by, bz);
             pmin = a.min(pmin);
             pmax = a.max(pmax);
             bricks.emplace_back(i, a, b-a+1);

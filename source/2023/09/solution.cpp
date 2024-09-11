@@ -3,10 +3,9 @@
 template<>
 auto advent2023::day09() -> result {
     auto input = aoc::util::readlines("./source/2023/09/input.txt");
-    std::vector<std::vector<i64>> seq(input.size());
-    for (auto i = 0; i < input.size(); ++i) {
-        (void)scn::scan_list(input[i], seq[i]);
-    }
+    auto seq = lz::map(input, [](auto const& line){
+        return lz::map(lz::split(line, ' '), aoc::util::read<i64>).toVector();
+    }).toVector();
 
     auto extrapolate = [](auto s, bool reverse = false) {
         i64 c{1};

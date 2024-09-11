@@ -22,10 +22,9 @@ auto advent2017::day12() -> result {
 
     for (auto i = 0; i < input.size(); ++i) {
         auto& node = nodes[i];
-        std::string s;
-        std::vector<i32> v;
-        (void)scn::scan(input[i], "{} <-> {}", node.id, s);
-        (void)scn::scan_list_ex(s, v, scn::list_separator(','));
+        auto [id, str] = scn::scan<i32, std::string>(input[i], "{} <-> {}")->values();
+        node.id = id;
+        auto v = lz::map(lz::split(str, ','), [](auto const& s){ return scn::scan_value<i32>(s)->value(); }).toVector();
         std::ranges::transform(v, std::back_inserter(node.pipes), [&](auto i) { return &nodes[i]; });
     }
 

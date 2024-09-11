@@ -1,8 +1,9 @@
 #include <aoc.hpp>
 #include <iostream>
-#include <experimental/mdspan>
 
-namespace ex = std::experimental;
+#define MDSPAN_IMPL_STANDARD_NAMESPACE std
+#define MDSPAN_IMPL_PROPOSED_NAMESPACE experimental
+#include <mdspan/mdspan.hpp>
 
 template<>
 auto advent2015::day13() -> result {
@@ -20,15 +21,15 @@ auto advent2015::day13() -> result {
     idx["Me"] = i; // for part 2
     i64 sz = std::ssize(idx);
     std::vector<i64> hvec(sz * sz);
-    ex::mdspan const happy(hvec.data(), sz, sz);
-    std::string a, b; // NOLINT
-    i64 v{};
+    std::mdspan const happy(hvec.data(), sz, sz);
+    //std::string a, b; // NOLINT
+    //i64 v{};
     for (auto const& s : input) {
         if (aoc::contains(s, "lose")) {
-            (void)scn::scan(s, "{} would lose {} happiness units by sitting next to {}", a, v, b);
+            auto [a, v, b] = scn::scan<std::string, i64, std::string>(s, "{} would lose {} happiness units by sitting next to {}")->values();
             happy(idx[a], idx[b]) = -v;
         } else {
-            (void)scn::scan(s, "{} would gain {} happiness units by sitting next to {}", a, v, b);
+            auto [a, v, b] = scn::scan<std::string, i64, std::string>(s, "{} would gain {} happiness units by sitting next to {}")->values();
             happy(idx[a], idx[b]) = v;
         }
     }
@@ -36,7 +37,7 @@ auto advent2015::day13() -> result {
     ankerl::unordered_dense::set<u64> seen;
 
     std::vector<u8> mvec(sz * sz, 0);
-    ex::mdspan map(mvec.data(), sz, sz); // map of neighbours
+    std::mdspan map(mvec.data(), sz, sz); // map of neighbours
 
     std::vector<u8> nc(sz, 0); // neighbour count
 

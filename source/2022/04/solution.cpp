@@ -4,9 +4,9 @@ namespace {
     using point = aoc::point<i32, 2>;
 
     auto const parse = [](auto const& line) -> std::pair<point, point> {
-        point a;
-        point b;
-        (void)scn::scan(line, "{}-{},{}-{}", a[0], a[1], b[0], b[1]);
+        auto [x1, y1, x2, y2] = scn::scan<i32, i32, i32, i32>(line, "{}-{},{}-{}")->values();
+        point a{x1, y1};
+        point b{x2, y2};
         return {a,b};
     };
 

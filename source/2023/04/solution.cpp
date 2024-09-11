@@ -26,21 +26,34 @@ auto advent2023::day04() -> result {
     auto p1{0UL};
     for (auto k = 0L; k < std::ssize(input); ++k) {
         auto const& s = input[k];
-        auto i = s.find(':');
-        auto j = s.find('|');
-        std::string_view u{s.begin()+i+2, s.begin()+j-1};
-        std::string_view v{s.begin()+j+2, s.end()};
-
         bitset<2> bs{};
-        for (auto const t : std::views::split(u, ' ')) {
-            i32 x{}; (void)scn::scan(t, "{}", x);
-            bs.set(x);
-        }
+        auto idx = static_cast<i64>(s.find(':'));
+        std::string_view sv{s.begin()+idx+1, s.end()};
+
+        auto f{false};
         u32 n{0};
-        for (auto const t : std::views::split(v, ' ')) {
-            if (t.empty()) { continue; }
-            i32 x{}; (void)scn::scan(t, "{}", x);
-            n += bs[x];
+        while (!sv.empty()) {
+            // eat empty space
+            if (sv.front() == ' ') {
+                sv.remove_prefix(1); continue;
+            }
+
+            // eat the |
+            if (sv.front() == '|') {
+                f = true;
+                sv.remove_prefix(1);
+                continue;
+            }
+
+            // eat digit chars and parse into number
+            auto i = std::min(sv.find(' '), sv.size());
+            std::string_view qv{sv.data(), i};
+            sv.remove_prefix(qv.size());
+
+            auto x = scn::scan_value<i32>(qv)->value();
+
+            // update bitset
+            if (!f) { bs.set(x); } else { n += bs[x]; }
         }
         if (n > 0) { p1 += 1U << (n-1); }
 

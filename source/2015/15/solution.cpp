@@ -14,6 +14,12 @@ struct ingredient {
         return cap * dur * fla * tex;
     }
 
+    static constexpr auto from_tuple(std::tuple<std::string, i32, i32, i32, i32, i32> const& t) -> ingredient {
+        return [&]<auto... Idx>(std::index_sequence<Idx...>) {
+            return ingredient{std::get<Idx+1>(t)...};
+        }(std::make_index_sequence<std::tuple_size_v<std::remove_cvref_t<decltype(t)>>-1>{});
+    };
+
     friend auto operator+(ingredient a, ingredient b) -> ingredient {
         return {a.cap + b.cap, a.dur + b.dur, a.fla + b.fla, a.tex + b.tex, a.cal + b.cal };
     }
@@ -35,10 +41,10 @@ auto advent2015::day15() -> result {
 
     auto ingredients = lz::map(input, [](auto const& s) {
         std::string name;
-        ingredient x{};
-        (void)scn::scan(s, "{} capacity {}, durability {}, flavor {}, texture {}, calories {}",
-                name, x.cap, x.dur, x.fla, x.tex, x.cal);
-        return x;
+        auto result = scn::scan<std::string, i32, i32, i32, i32 ,i32>(s, "{} capacity {}, durability {}, flavor {}, texture {}, calories {}")->values();
+        //name, x.cap, x.dur, x.fla, x.tex, x.cal);
+        name = std::get<0>(result);
+        return ingredient::from_tuple(result); 
     }).toVector();
 
     std::vector<u32> amounts(ingredients.size(), 0);

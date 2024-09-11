@@ -61,12 +61,13 @@ namespace {
     }
 
     auto parse(auto const& input) {
+        using std::string;
         return lz::map(input, [](auto const& s) {
-            std::array<std::string, 2> a;
-            (void)scn::scan(s, "{} {}", a[0], a[1]);
+            auto [s1, s2] = scn::scan<string, string>(s, "{} {}")->values();
+            std::array a{s1, s2};
             hand h;
             std::ranges::copy(a[0], h.cards.begin());
-            (void)scn::scan(a[1], "{}", h.bid);
+            h.bid = scn::scan_value<i64>(a[1])->value();
             return h;
         }).toVector();
     }

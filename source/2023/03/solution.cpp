@@ -28,14 +28,14 @@ auto advent2023::day03() -> result {
                     if (std::isdigit(map(x, y))) {
                         auto k = y;
                         auto l = y;
-                        while(k >= 0 && std::isdigit(map(x, k))) { --k; }
-                        while(l < cols && std::isdigit(map(x, l))) { ++l; }
+                        while(k > 0 && std::isdigit(map(x, k))) { --k; }
+                        while(l < cols-1 && std::isdigit(map(x, l))) { ++l; }
                         k += !std::isdigit(map(x, k));
                         l += std::isdigit(map(x, l));
                         auto row = map.row(x);
                         std::string_view sv{row.data()+k, static_cast<u64>(l-k)};
-                        auto v = scn::scan_value<i32>(sv).value();
-                        while(k < l) { row(k++) = '.'; }
+                        auto v = aoc::util::read<i32>(sv);
+                        while(k < l && k < map.rows()) { row(k++) = '.'; }
 
                         p1 += v;
                         p  *= v;

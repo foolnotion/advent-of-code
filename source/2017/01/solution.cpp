@@ -12,7 +12,7 @@ auto advent2017::day01() -> result {
         std::getline(f, line);
         for (auto it = line.begin(); it < line.end(); ++it) {
             std::string_view sv{it, it+1};
-            u.push_back(scn::scan_value<u8>(sv).value());
+            u.push_back(scn::scan<u8>(sv, "{}")->value());
         }
     }
 

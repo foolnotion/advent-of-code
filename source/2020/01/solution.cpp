@@ -25,7 +25,8 @@ auto find(auto const& vec, u32 n, u32 s, u32 p=1) -> std::optional<int64_t>
 template<>
 auto advent2020::day01() -> result {
     auto input = aoc::util::readlines("./source/2020/01/input.txt");
-    auto values = lz::map(input, [](auto const& s) { return scn::scan_value<u32>(s).value(); }).toVector();
+    auto read_value = aoc::util::read<u32>;
+    auto values = lz::map(input, read_value).toVector();
     std::sort(values.begin(), values.end());
     constexpr auto sum{2020};
     auto p1 = find(values, 2, sum).value();

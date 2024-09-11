@@ -3,7 +3,8 @@
 template<>
 auto advent2020::day10() -> result {
     auto input = aoc::util::readlines("./source/2020/10/input.txt");
-    auto v = lz::map(input, [](auto x) { return scn::scan_value<i64>(x).value(); }).toVector();
+    auto read_value = aoc::util::read<i64>;
+    auto v = lz::map(input, read_value).toVector();
     std::ranges::sort(v);
     i64 a{0};
     i64 b{1};
@@ -55,5 +56,3 @@ auto advent2020::day10() -> result {
     auto p2 = part2(u);
     return aoc::result(p1, p2);
 }
-
-

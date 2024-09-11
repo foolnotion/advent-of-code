@@ -1,7 +1,7 @@
 #include <aoc.hpp>
 
 namespace {
-    using point = std::complex<i32>;
+    using point = std::complex<i64>;
 
     struct turn {
         static constexpr auto left  = point{0, +1};
