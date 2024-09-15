@@ -13,13 +13,13 @@ namespace {
         static constexpr int P{6542}; // number of primes under N NOLINT
 
         bool marked[N] = {}; // NOLINT
-        u64 magic[P] = {}; // NOLINT
+        std::array<u64, P> magic{};
 
         constexpr factorcalc() {
             u32 np{0}; // number of primes
             for (auto i = 2; i < N; ++i) {
                 if (marked[i]) { continue; }
-                magic[np++] = static_cast<u64>(-1) / i + 1;
+                magic[np++] = ~u64{0} / i + 1;
 
                 for (int j = 2 * i; j < N; j += i) {
                     marked[j] = true;
@@ -30,7 +30,7 @@ namespace {
         [[nodiscard]] auto find_factor(u64 n) const -> u64 {
             for (auto m : magic) {
                 if (m * n < m) {
-                    return static_cast<u64>(-1) / m + 1;
+                    return ~u64{0} / m + 1;
                 }
             }
             return 1;
@@ -52,16 +52,22 @@ namespace {
         }
 
         [[nodiscard]] auto divisors(u64 n) const -> std::vector<u64> {
+            using std::ranges::copy;
+            using std::views::iota;
+            using std::views::transform;
+
             auto fac = factorize(n);
             std::vector<u64> aux;
             std::vector<u64> div{1};
             for (auto i = 0; i < std::ssize(fac); ++i) {
                 if (std::get<0>(fac[i]) == 1) { continue; }
                 auto [x, c] = fac[i];
-                auto const rng = lz::range(c+1);
-                auto const tmp = lz::map(lz::view(rng.begin()+1, rng.end()), [x=x](auto p) { return pow(x, p); }).toVector();
-                for (auto&& [a,b] : lz::cartesian(div, tmp)) { aux.push_back(a * b); }
-                std::copy(aux.begin(), aux.end(), std::back_inserter(div));
+                for (auto a : div) {
+                    auto pow1 = [&](auto p) { return a * pow(x, p); };
+                    copy(iota(1UL, c+1) | transform(pow1), std::back_inserter(aux));
+                }
+
+                copy(aux, std::back_inserter(div));
                 aux.clear();
             }
             return div;
