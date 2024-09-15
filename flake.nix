@@ -34,6 +34,7 @@
               cpp-flux
               cpp-lazy
               cpp-sort
+              cpptrace
               doctest
               eigen
               fast-float
@@ -44,6 +45,8 @@
               gdb
               hotspot
               hyperfine
+              libassert
+              libdwarf
               linuxPackages_latest.perf
               mdspan
               nlohmann_json
@@ -56,6 +59,7 @@
               unordered_dense
               valgrind
               z3_4_12
+              zstd
             ];
 
             shellHook = ''
