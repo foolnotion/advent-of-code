@@ -42,21 +42,10 @@
 #include <util/constexpr-xxh3.h>
 #include <util/xxhash.hpp>
 
-// NOLINTBEGIN(*)
-#define EXPECT(cond) \
-    if(!(cond)) \
-    { \
-        fmt::print("Precondition {} failed at {}: {}\n", fmt::format(fmt::fg(fmt::terminal_color::red), "{}", #cond), __FILE__, __LINE__); \
-        std::terminate(); \
-    }
+#include <libassert/assert.hpp>
 
-#define ENSURE(cond) \
-    if(!(cond)) \
-    { \
-        fmt::print("Postcondition {} failed at {}: {}\n", fmt::format(fmt::fg(fmt::terminal_color::red), "{}", #cond), __FILE__, __LINE__); \
-        std::terminate(); \
-    }
-// NOLINTEND(*)
+#define EXPECT ASSERT
+#define ENSURE ASSERT
 
 // convenience aliases
 using i8 = std::int8_t;
