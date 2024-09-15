@@ -101,6 +101,32 @@ add_library(
     source/2017/23/solution.cpp
     source/2017/24/solution.cpp
     source/2017/25/solution.cpp
+    # 2018
+    source/2018/01/solution.cpp
+    source/2018/02/solution.cpp
+    source/2018/03/solution.cpp
+    source/2018/04/solution.cpp
+    source/2018/05/solution.cpp
+    source/2018/06/solution.cpp
+    source/2018/07/solution.cpp
+    source/2018/08/solution.cpp
+    source/2018/09/solution.cpp
+    source/2018/10/solution.cpp
+    source/2018/11/solution.cpp
+    source/2018/12/solution.cpp
+    source/2018/13/solution.cpp
+    source/2018/14/solution.cpp
+    source/2018/15/solution.cpp
+    source/2018/16/solution.cpp
+    source/2018/17/solution.cpp
+    source/2018/18/solution.cpp
+    source/2018/19/solution.cpp
+    source/2018/20/solution.cpp
+    source/2018/21/solution.cpp
+    source/2018/22/solution.cpp
+    source/2018/23/solution.cpp
+    source/2018/24/solution.cpp
+    source/2018/25/solution.cpp
     # 2019
     source/2019/01/solution.cpp
     source/2019/02/solution.cpp
@@ -203,6 +229,7 @@ find_package(fmt REQUIRED)
 find_package(scn REQUIRED)
 find_package(cpp-lazy REQUIRED)
 find_package(cpp-sort REQUIRED)
+find_package(libassert REQUIRED)
 find_package(mdspan REQUIRED)
 find_package(nlohmann_json REQUIRED)
 find_package(unordered_dense REQUIRED)
@@ -214,6 +241,7 @@ target_link_libraries(aoc_lib PUBLIC
     cpp-lazy::cpp-lazy
     cpp-sort::cpp-sort
     fmt::fmt
+    libassert::assert
     nlohmann_json::nlohmann_json
     pratt-parser::pratt-parser
     scn::scn
