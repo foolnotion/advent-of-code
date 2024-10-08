@@ -9,6 +9,7 @@
 #include "advent2015.hpp"
 #include "advent2016.hpp"
 #include "advent2017.hpp"
+#include "advent2018.hpp"
 #include "advent2020.hpp"
 #include "advent2022.hpp"
 #include "advent2023.hpp"
