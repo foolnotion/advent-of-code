@@ -225,6 +225,8 @@ target_compile_features(aoc_lib PUBLIC cxx_std_20)
 # ---- Find deps ----
 find_package(Boost REQUIRED)
 find_package(Eigen3 REQUIRED NO_MODULE)
+find_package(date REQUIRED)
+#find_package(gtl REQUIRED)
 find_package(fmt REQUIRED)
 find_package(scn REQUIRED)
 find_package(cpp-lazy REQUIRED)
@@ -240,7 +242,9 @@ target_link_libraries(aoc_lib PUBLIC
     Eigen3::Eigen
     cpp-lazy::cpp-lazy
     cpp-sort::cpp-sort
+    date::date
     fmt::fmt
+    #gtl
     libassert::assert
     nlohmann_json::nlohmann_json
     pratt-parser::pratt-parser
