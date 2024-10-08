@@ -43,7 +43,9 @@
               fplus
               gch-small-vector
               gdb
+              gtl
               hotspot
+              howard-hinnant-date
               hyperfine
               libassert
               libdwarf
