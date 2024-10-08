@@ -297,6 +297,24 @@ concept arithmetic = std::is_arithmetic_v<T>;
 inline auto sgn(arithmetic auto a) -> i32 {
     auto z = a-a; return (z < a) - (a < z); // NOLINT
 }
+
+template <typename T>
+concept comparable = std::equality_comparable<T> &&
+requires(T a, T b) {
+    { a <= b } -> std::convertible_to<bool>;
+    { a < b } -> std::convertible_to<bool>;
+    { a > b } -> std::convertible_to<bool>;
+    { a >= b } -> std::convertible_to<bool>;
+};
+
+template<std::ranges::random_access_range Range, typename Comp = std::less<>, typename Proj = std::identity>
+requires comparable<std::ranges::range_value_t<Range>>
+inline auto argsort(Range&& r) {
+    std::vector<u64> idx(r.size());
+    std::iota(idx.begin(), idx.end(), 0);
+    std::ranges::sort(idx, Comp{}, [&](auto i) { return Proj{}(r[i]); });
+    return idx;
+}
 } // namespace util
 
 namespace eigen {
