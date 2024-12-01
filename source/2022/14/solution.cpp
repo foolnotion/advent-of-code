@@ -80,19 +80,11 @@ namespace {
 
     auto simulate(auto& cave, point sand, bool part1) {
         while (cave(sand[0], sand[1]) != 'o' && ::drop(cave, sand, part1)) { }
-        std::queue<point> queue;
-        queue.push(sand);
-
-        auto is_valid = [&](point p) {
-            auto [x, y] = std::tuple{p[0], p[1]};
-            auto res = x >= 0 && y >= 0 && x < cave.rows() && y < cave.cols() && cave(x, y) == '.';
-            return res;
-        };
-
-        while (!queue.empty()) {
-            auto p = queue.front();
-            queue.pop();
-        }
+        // std::queue<point> queue;
+        // queue.push(sand);
+        // while (!queue.empty()) {
+        //     queue.pop();
+        // }
         return (cave == 'o').count();
     };
 

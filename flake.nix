@@ -19,15 +19,15 @@
             inherit system;
             overlays = [ foolnotion.overlay ];
           };
-          stdenv = pkgs.llvmPackages_18.stdenv;
-          # stdenv = pkgs.gcc14Stdenv;
+          stdenv = pkgs.llvmPackages_19.stdenv;
+          #stdenv = pkgs.gcc14Stdenv;
         in
         rec {
           devShells.default = stdenv.mkDerivation {
             name = "aoc";
             hardeningDisable = [ "all" ];
             impureUseNativeOptimizations = true;
-            nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools_18 cppcheck ninja ];
+            nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools_19 cppcheck ninja ];
             buildInputs = with pkgs; [
               boost
               cmake-language-server
@@ -52,7 +52,6 @@
               linuxPackages_latest.perf
               mdspan
               nlohmann_json
-              openlibm
               pkg-config
               pratt.packages.${system}.default
               scnlib

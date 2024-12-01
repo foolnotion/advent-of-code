@@ -84,7 +84,7 @@ auto advent2023::day24() -> result {
     z3::expr dz = ctx.int_const("dz");
 
     z3::solver solver(ctx);
-    for (auto i = 0; i < hs.size(); ++i) {
+    for (auto i = 0UL; i < hs.size(); ++i) {
         std::string name = fmt::format("t{}", i);
         auto const& h = hs[i];
         z3::expr t = ctx.int_const(name.c_str());

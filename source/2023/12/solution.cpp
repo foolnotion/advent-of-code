@@ -20,7 +20,7 @@ namespace {
             }
 
             if (i == n) {
-                return j == m && k == 0 || j == m-1 && k == g.back();
+                return (j == m && k == 0) || (j == m-1 && k == g.back());
             }
 
             auto valid{0L};

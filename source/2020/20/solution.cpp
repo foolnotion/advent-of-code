@@ -89,7 +89,7 @@ using tile_t = tile<char, 10>; // NOLINT
 namespace day20 {
 auto parse(std::vector<std::string> const& input) {
     std::vector<tile_t> tiles;
-    for (auto i = 0; i < input.size(); i += tile_t::dimension + 2) {
+    for (auto i = 0UL; i < input.size(); i += tile_t::dimension + 2) {
         // auto id{0U};
         tile_t::matrix m;
         // (void)scn::scan(input[i], "Tile {}:", id);

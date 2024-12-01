@@ -51,7 +51,7 @@ auto advent2020::day23() -> result {
         std::string s;
         s.reserve(ncups - 1);
         auto j = nodes[0].index;
-        for (auto i = 0; i < ncups - 1; ++i) {
+        for (decltype(ncups) i = 0; i < ncups - 1; ++i) {
             j = nodes[j].next;
             s.push_back(static_cast<char>(nodes[j].value + '0'));
         }

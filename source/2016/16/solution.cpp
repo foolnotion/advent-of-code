@@ -6,7 +6,7 @@ auto advent2016::day16() -> result {
         EXPECT(len <= std::ssize(s));
         std::string_view v{s.data(), len};
         do {
-            for (auto i = 0, j = 0; i < std::size(v); i += 2, j += 1) {
+            for (auto i = 0, j = 0; i < std::ssize(v); i += 2, j += 1) {
                 s[j] = '0' + (v[i] == v[i+1L]);
             }
             v.remove_suffix(v.size()/2);
@@ -23,7 +23,7 @@ auto advent2016::day16() -> result {
     };
 
     auto fill = [&](auto s, auto len) {
-        while (std::ssize(s) < len) { grow(s); }
+        while (s.size() < len) { grow(s); }
         return checksum(s, len);
     };
 

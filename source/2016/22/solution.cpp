@@ -25,10 +25,6 @@ namespace {
             used  -= size;
         }
 
-        friend auto operator==(node const& a, node const& b) {
-            return a.pos == b.pos;
-        };
-
         friend auto operator<(node const& a, node const& b) {
             return a.pos < b.pos;
         }

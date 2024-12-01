@@ -12,11 +12,11 @@ auto advent2022::day12() -> result
     point s{}, q{};
     for (auto&& [i, line] : lz::enumerate(input)) {
         map.row(i) = Eigen::Map<Eigen::Array<char, -1, 1>>(line.data(), line.size());
-        if (auto j = line.find('S'); j != -1) {
+        if (auto j = line.find('S'); j != std::string::npos) {
             s = point{ i, j };
             map(i, j) = 'a';
         }
-        if (auto j = line.find('E'); j != -1) {
+        if (auto j = line.find('E'); j != std::string::npos) {
             q = point { i, j };
             map(i, j) = 'z';
         }

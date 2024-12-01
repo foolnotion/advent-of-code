@@ -15,9 +15,9 @@ auto advent2019::day04() -> result {
     };
 
     auto has_double_digit = [](auto const& x, bool p2 = false) {
-        for (auto i = 0; i < x.size()-1; ++i) {
+        for (auto i = 0; i < std::ssize(x)-1; ++i) {
             auto j = i;
-            while(j < x.size() && x[j] == x[i]) { ++j; }
+            while(j < std::ssize(x) && x[j] == x[i]) { ++j; }
             if (p2 && j-i == 2) { return 1L; }
             if (!p2 && j-i >= 2) { return 1L; }
             i = j-1;

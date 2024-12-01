@@ -14,7 +14,6 @@ namespace {
 
         while(s.size() + q.size() > 1) {
             auto a = s.front(); s.pop_front();
-            auto b = s.front(); q.pop_front();
             if(s.size() < q.size()) {
                 s.push_back(q.front()); q.pop_front();
             }

@@ -19,7 +19,7 @@ namespace {
         aoc::util::hash hash;
 
         // first pass get nodes
-        for (auto i = 0; i < input.size(); ++i) {
+        for (auto i = 0UL; i < input.size(); ++i) {
             auto const& s = input[i];
             std::string_view v{s.begin(), s.begin()+s.find(' ')};
             auto h = hash(v);
@@ -28,7 +28,7 @@ namespace {
         }
 
         // second pass fill pointer links
-        for (auto i = 0; i < input.size(); ++i) {
+        for (auto i = 0UL; i < input.size(); ++i) {
             auto const& s = input[i];
             auto j = s.find('(');
             auto k = s.find(',');

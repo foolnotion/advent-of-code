@@ -9,7 +9,7 @@ struct ingredient {
     i32 tex{}; // texture
     i32 cal{}; // calories
 
-    [[nodiscard]] auto score() const -> i32 {
+    [[nodiscard]] auto score() const -> u32 {
         if (std::min({ cap, dur, fla, tex }) < 0) { return 0; }
         return cap * dur * fla * tex;
     }
@@ -21,11 +21,11 @@ struct ingredient {
     };
 
     friend auto operator+(ingredient a, ingredient b) -> ingredient {
-        return {a.cap + b.cap, a.dur + b.dur, a.fla + b.fla, a.tex + b.tex, a.cal + b.cal };
+        return {.cap=a.cap + b.cap, .dur=a.dur + b.dur, .fla=a.fla + b.fla, .tex=a.tex + b.tex, .cal=a.cal + b.cal };
     }
 
     friend auto operator*(ingredient a, i32 q) -> ingredient {
-        return { a.cap * q, a.dur * q, a.fla * q, a.tex * q, a.cal * q };
+        return { .cap = a.cap * q, .dur = a.dur * q, .fla = a.fla * q, .tex = a.tex * q, .cal = a.cal * q };
     }
 };
 } // namespace
@@ -44,7 +44,7 @@ auto advent2015::day15() -> result {
         auto result = scn::scan<std::string, i32, i32, i32, i32 ,i32>(s, "{} capacity {}, durability {}, flavor {}, texture {}, calories {}")->values();
         //name, x.cap, x.dur, x.fla, x.tex, x.cal);
         name = std::get<0>(result);
-        return ingredient::from_tuple(result); 
+        return ingredient::from_tuple(result);
     }).toVector();
 
     std::vector<u32> amounts(ingredients.size(), 0);
@@ -87,6 +87,6 @@ auto advent2015::day15() -> result {
         }
     };
 
-    permute(amounts, {0, 0, total, calorie_goal}, permute);
+    permute(amounts, {.index=0, .running_sum=0, .total_teaspoons=total, .calorie_goal=calorie_goal}, permute);
     return aoc::result(bestscore, bestscore_with_calories);
 }

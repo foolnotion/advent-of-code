@@ -32,7 +32,6 @@ auto advent2016::day21() -> result {
     };
 
     auto rotate_left_x = [&](auto& s, char x) {
-        auto i = s.find(x);
         rotate_left(s, rmap[s.find(x)]);
     };
 

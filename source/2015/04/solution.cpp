@@ -13,7 +13,7 @@ auto advent2015::day04() -> result {
         return std::transform_reduce(buf.begin(), buf.begin() + n/2 + n%2, 0UL, std::plus{}, zeros);
     };
 
-    auto find = [&](auto n) {
+    auto find = [&](u64 n) {
         return *std::ranges::find_if(std::views::iota(0), [&](auto i) { return count(i, n) >= n; });
     };
 

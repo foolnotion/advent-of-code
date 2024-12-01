@@ -14,7 +14,6 @@ struct instr {
 template<>
 auto advent2020::day08() -> result {
     auto input = aoc::util::readlines("./source/2020/08/input.txt");
-    aoc::util::hash h;
 
     auto parse = [](auto const& s) {
         auto [name, value] = scn::scan<std::string, i64>(s, "{} {}")->values();
@@ -46,7 +45,7 @@ auto advent2020::day08() -> result {
                     }
             }
         }
-        return { acc, code.size() == i };
+        return { acc, std::ssize(code) == i };
     };
     auto p1 = run(code).first;
 

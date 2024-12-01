@@ -13,7 +13,6 @@ using DURATION = i32; // NOLINT
 
 struct spell {
     enum type { missile, drain, shield, poison, recharge };
-    static constexpr std::array name { "magic missile", "drain", "shield", "poison", "recharge" };
     type typ;
     i32 cost;
     i32 heal;

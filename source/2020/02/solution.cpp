@@ -14,7 +14,7 @@ auto advent2020::day02() -> result {
     for(auto& s : input) {
         auto [lo, hi, let, pass] = scn::scan<u32, u32, char, string>(s, "{}-{} {}: {}")->values();
         constexpr auto nletter{26};
-        std::array<int, nletter> counts = {0};
+        std::array<u32, nletter> counts = {0};
         for (auto c : pass) {
             auto i = c - 'a';
             counts[i]++;

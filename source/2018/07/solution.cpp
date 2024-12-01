@@ -3,8 +3,8 @@
 namespace rg = std::ranges;
 
 namespace {
-    using queue = std::deque<i64>;
-    using graph = Eigen::Matrix<u8, -1, -1>;
+    using queue_t = std::deque<i64>;
+    using graph_t = Eigen::Matrix<u8, -1, -1>;
 
     template<typename T>
     using ref = std::reference_wrapper<T>;
@@ -22,18 +22,18 @@ namespace {
         }
         std::vector<char> letters(nodes.begin(), nodes.end());
         rg::sort(letters);
-        graph graph = graph::Zero(std::ssize(letters), std::ssize(letters));
+        graph_t graph = graph_t::Zero(std::ssize(letters), std::ssize(letters));
         for (auto [i, j] : pairs) { graph(i, j) = 1; }
         return std::tuple{std::move(graph), std::move(letters)};
     }
 
     struct pool {
-        Eigen::Ref<graph const> graph;
+        Eigen::Ref<graph_t const> graph;
         std::span<i64> done;
-        ref<queue> queue;
+        ref<queue_t> queue;
         ref<std::string> steps;
 
-        pool(Eigen::Ref<::graph const> g, std::span<i64> d, ref<::queue> q, ref<std::string> s, i32 n)
+        pool(Eigen::Ref<graph_t const> g, std::span<i64> d, ref<::queue_t> q, ref<std::string> s, i32 n)
             : graph(g), done(d), queue(q), steps(s)
         {
             workers.reserve(n);
@@ -43,7 +43,7 @@ namespace {
         }
 
         struct worker {
-            pool* pool{nullptr};
+            pool* p{nullptr};
 
             auto assign(i64 i, i64 t) -> void {
                 task_id = i;
@@ -51,12 +51,12 @@ namespace {
             }
 
             auto work() -> void {
-                if (free() || pool->task_in_progress(task_id)) {
+                if (free() || p->task_in_progress(task_id)) {
                     return;
                 }
 
                 if (--task_time == 0) {
-                    pool->complete_task(task_id);
+                    p->complete_task(task_id);
                     task_id = -1;
                 }
             }
@@ -103,9 +103,8 @@ namespace {
 template<>
 auto advent2018::day07() -> result {
     auto const& [graph, letters] = parse("source/2018/07/input.txt");
-
-    auto compute_order = [](::graph graph, i32 n_workers) {
-        queue queue;
+    auto compute_order = [](::graph_t graph, i32 n_workers) {
+        queue_t queue;
         std::vector<i64> done(graph.cols());
         for (auto [i, s] : lz::enumerate(graph.colwise().sum())) {
             if (done[i] = s; s == 0) { queue.push_back(i); }

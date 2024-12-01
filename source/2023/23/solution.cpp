@@ -113,6 +113,5 @@ auto advent2023::day23() -> result {
     }
 
     auto const p1 = dmax;
-    auto const p2 = 0;
     return aoc::result(p1, "");
 }

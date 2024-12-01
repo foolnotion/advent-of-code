@@ -48,7 +48,6 @@ auto parse(auto const& input) {
         } else {
             if constexpr (std::is_same_v<T, i64>) {
                 if (s.empty()) { continue; }
-                part_t p{};
                 auto [a, b, c, d] = scn::scan<i64, i64, i64, i64>(s, "{{x={},m={},a={},s={}}}")->values();
                 std::array<i64, 4> v{a, b, c, d};
                 parts.emplace_back(v);

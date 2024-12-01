@@ -20,7 +20,7 @@ auto advent2017::day12() -> result {
     auto input = aoc::util::readlines("./source/2017/12/input.txt");
     std::vector<node> nodes(input.size());
 
-    for (auto i = 0; i < input.size(); ++i) {
+    for (auto i = 0; i < std::ssize(input); ++i) {
         auto& node = nodes[i];
         auto [id, str] = scn::scan<i32, std::string>(input[i], "{} <-> {}")->values();
         node.id = id;

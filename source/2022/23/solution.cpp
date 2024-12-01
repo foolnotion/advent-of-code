@@ -20,7 +20,6 @@ auto advent2022::day23() -> result
 
     aoc::dense::map<point, point, decltype(hash), decltype(eql)> proposed_destinations;
     aoc::dense::map<point, u32, decltype(hash), decltype(eql)> proposed_counts;
-    auto contains = [&](auto const& p) { return elves.contains(p); };
     using std::ranges::any_of;
 
     auto try_move = [&](point const& p, std::array<point, 3> const& pos) -> std::optional<point> {

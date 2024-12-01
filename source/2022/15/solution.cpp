@@ -41,7 +41,6 @@ auto advent2022::day15() -> result {
         return r;
     }).toVector();
 
-    aoc::util::hash h;
     for (auto& r : sensors) {
         point p{xmin, ymin};
         r.c -= p;

@@ -4,9 +4,9 @@ namespace {
     using std::ranges::any_of;
     using std::ranges::none_of;
 
-    template<size_t N>
+    template<i64 N>
     struct state {
-        using point = aoc::point<i32, 2>;
+        using point = aoc::point<i64, 2>;
         static constexpr std::size_t size = N;
 
         i32 level{};
@@ -14,7 +14,7 @@ namespace {
 
         [[nodiscard]] auto neighbors() const {
             std::vector<point> neighbors;
-            for (auto i = 0; i < N; ++i) {
+            for (decltype(N) i = 0; i < N; ++i) {
                 auto [g, m] = items[i];
                 if (g == level) { neighbors.push_back({i, 0}); }
                 if (m == level) { neighbors.push_back({i, 1}); }
@@ -102,21 +102,21 @@ namespace {
 template<>
 auto advent2016::day11() -> result {
     std::array items_p1 {
-        aoc::point<i32, 2>{ 0, 0 },
-        aoc::point<i32, 2>{ 1, 2 },
-        aoc::point<i32, 2>{ 1, 2 },
-        aoc::point<i32, 2>{ 1, 2 },
-        aoc::point<i32, 2>{ 1, 2 },
+        aoc::point<i64, 2>{ 0, 0 },
+        aoc::point<i64, 2>{ 1, 2 },
+        aoc::point<i64, 2>{ 1, 2 },
+        aoc::point<i64, 2>{ 1, 2 },
+        aoc::point<i64, 2>{ 1, 2 },
     };
 
     std::array items_p2 {
-        aoc::point<i32, 2>{ 0, 0 },
-        aoc::point<i32, 2>{ 1, 2 },
-        aoc::point<i32, 2>{ 1, 2 },
-        aoc::point<i32, 2>{ 1, 2 },
-        aoc::point<i32, 2>{ 1, 2 },
-        aoc::point<i32, 2>{ 0, 0 },
-        aoc::point<i32, 2>{ 0, 0 },
+        aoc::point<i64, 2>{ 0, 0 },
+        aoc::point<i64, 2>{ 1, 2 },
+        aoc::point<i64, 2>{ 1, 2 },
+        aoc::point<i64, 2>{ 1, 2 },
+        aoc::point<i64, 2>{ 1, 2 },
+        aoc::point<i64, 2>{ 0, 0 },
+        aoc::point<i64, 2>{ 0, 0 },
     };
 
     auto part1 = bfs(items_p1);

@@ -13,7 +13,7 @@ auto advent2022::day06() -> result {
             std::string_view s{&input[i], marker_size};
             u64 mask{0}; // need at most 14 bits
             for (auto c : s) { mask |= 1UL << static_cast<u8>(c - 'a'); }
-            return std::popcount(mask) == marker_size;
+            return static_cast<u64>(std::popcount(mask)) == marker_size;
         }));
     };
     return aoc::result(find_marker(input, start_marker), find_marker(input, state_marker));

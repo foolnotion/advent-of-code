@@ -37,9 +37,6 @@ namespace aoc::interpreters::asmbunny {
         i32 n{};  // arity
 
         auto toggle() {
-            instruction tmp;
-            aoc::util::hash hash;
-
             switch(n) {
                 case 1: {
                     // inc becomes dec, all other unary instructions become inc
@@ -49,6 +46,9 @@ namespace aoc::interpreters::asmbunny {
                 case 2: {
                     // jnz becomes cpy, all other binary instructions become jnz
                     op = op == opcode::jnz ? opcode::cpy : opcode::jnz;
+                    break;
+                }
+                default: {
                     break;
                 }
             }
@@ -90,7 +90,6 @@ namespace aoc::interpreters::asmbunny {
         }
 
         auto operator()(registers reg, bool detect_cycles = false) {
-            aoc::util::hash h;
             get_value_visitor get{reg};
 
             auto value = [&](auto var) { return std::visit(get, var); };
@@ -114,7 +113,7 @@ namespace aoc::interpreters::asmbunny {
                 switch(instr.op) {
                 case opcode::tgl: {
                     auto j = value(instr.lhs) + i;
-                    if (j >= 0 && j < code_.size()) {
+                    if (j >= 0 && j < std::ssize(code_)) {
                         code_[j].toggle();
                     }
                     break;

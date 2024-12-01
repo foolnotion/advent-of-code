@@ -2,7 +2,7 @@
 #include <doctest/doctest.h>
 #include "nanobench.h"
 
-std::array const advent2018_results {
+std::array constexpr advent2018_results {
     /* day 01 */ std::tuple{"518", "72889"},
     /* day 02 */ std::tuple{"4980", "qysdtrkloagnfozuwujmhrbvx"},
     /* day 03 */ std::tuple{"118223", "412"},
@@ -10,11 +10,14 @@ std::array const advent2018_results {
     /* day 05 */ std::tuple{"9172", "6550"},
     /* day 06 */ std::tuple{"3933", "41145"},
     /* day 07 */ std::tuple{"MNOUBYITKXZFHQRJDASGCPEVWL", "893"},
+    /* day 08 */ std::tuple{"35911", "17206"},
+    /* day 09 */ std::tuple{"418237", "3505711612"}
 };
 
 TEST_CASE("advent 2018 correctness" * doctest::test_suite("2018")) {
     advent2018 advent;
     for (auto i = 0; i < advent2018_results.size(); ++i) {
+        fmt::print("2018 day {}\n", i+1);
         CHECK_EQ(advent2018_results[i], advent(i+1));
     }
 };

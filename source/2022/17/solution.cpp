@@ -22,13 +22,13 @@ namespace {
     };
 
     auto iterate(auto& cave, auto const& jets, auto state) {
-        auto nrow{cave.rows()};
-        auto ncol{cave.cols()};
+        u64 nrow = cave.rows();
+        u64 ncol = cave.cols();
 
         static const std::array shapes{ shape_library::r1(), shape_library::r2(), shape_library::r3(), shape_library::r4(), shape_library::r5() };
         const auto& s = shapes[state.shape_index];
-        auto w = s.cols();
-        auto h = s.rows();
+        u64 w = s.cols();
+        u64 h = s.rows();
         // Each rock appears so that its left edge is two units away from the left wall
         // and its bottom edge is three units above the highest rock in the room
         auto x = state.highest - h - 3L;
@@ -57,9 +57,11 @@ namespace {
     }
 
     auto get_heights(auto const& cave, auto highest) {
-        std::vector<u64> heights(cave.cols(), highest);
-        for (auto i = 0; i < heights.size(); ++i) {
-            while (heights[i] < cave.rows() && cave(heights[i], i) == 0) { ++heights[i]; }
+        u64 nrow = cave.rows();
+        u64 ncol = cave.cols();
+        std::vector<u64> heights(ncol, highest);
+        for (auto i = 0UL; i < heights.size(); ++i) {
+            while (heights[i] < nrow && cave(heights[i], i) == 0) { ++heights[i]; }
         }
         std::ranges::transform(heights, heights.begin(), [&](auto x) { return x - highest; });
         return heights;
@@ -68,7 +70,6 @@ namespace {
     auto tower_height(auto cave, auto const& jets, auto n, bool detect_cycle = false) -> u64 {
         aoc::dense::map<u64, state> last;
         auto const nrow{cave.rows()};
-        auto const ncol{cave.cols()};
 
         auto height{0UL};
         for (state s{0, 0, 0, static_cast<u64>(nrow)}; s.rocks <= n; s = iterate(cave, jets, s)) {
@@ -103,7 +104,6 @@ auto advent2022::day17() -> result {
     constexpr auto width{7};
 
     std::vector<shape> shapes;
-    using point = aoc::point<u32, 2>;
     Eigen::Array<u8, -1, -1, Eigen::RowMajor> chamber(height, width);
     chamber.setConstant(0);
     auto constexpr rocks_p1{2022UL};

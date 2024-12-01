@@ -9,8 +9,6 @@ namespace {
 struct count_occupied_p1 {
     auto operator()(auto const& a, point p) {
         auto [x, y] = p;
-        int i = x;
-        int j = y;
         int n = 0;
         for (int i = x-1; i <= x+1; ++i) {
             for (int j = y-1; j <= y+1; ++j) {
