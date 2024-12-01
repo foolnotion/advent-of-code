@@ -9,8 +9,8 @@ auto print_results(advent<Y> const& adv) {
 };
 
 auto main() -> int {
-    constexpr int year{2016};
-    constexpr int day{14};
+    constexpr int year{2024};
+    constexpr int day{1};
 
     auto result = advent<year>{}(day);
     fmt::print("{}/{}: {}\n", year, day, result);
