@@ -22,7 +22,6 @@ auto advent2015::day19() -> result {
         }
     }
 
-    int total{0};
     aoc::dense::set<u64> uniq;
     aoc::util::hash hasher;
     auto const ms{std::ssize(molecule)};

@@ -95,7 +95,7 @@ struct state {
 template<std::size_t N, std::size_t M>
 auto bfs(auto const& valves, auto const* startpos) {
     state<N, M> start;
-    for (auto i = 0; i < N; ++i) { start.operators[i] = startpos; }
+    for (auto i = 0UL; i < N; ++i) { start.operators[i] = startpos; }
 
     aoc::dense::map<u64, std::tuple<u64, u64>> seen;
 

@@ -25,7 +25,7 @@ auto advent2015::day09() -> result // NOLINT
     ankerl::unordered_dense::set<u64> visited;
     auto search = [&]<typename F, typename G>(auto curr, auto depth, auto distance, F accept, G reject, auto&& search) {
         visited.insert(curr);
-        if (depth == cities.size() && accept(distance, goal)) {
+        if (depth == std::ssize(cities) && accept(distance, goal)) {
             goal = distance;
             visited.erase(curr);
             return;

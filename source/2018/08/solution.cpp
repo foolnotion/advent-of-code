@@ -11,12 +11,11 @@ auto advent2018::day08() -> result {
         std::vector<i32> len(tree.size(), 0);
         std::function<i32(i32)> compute_length = [&](auto i) {
             auto c = tree[i];
-            auto m = tree[i+1];
+            auto m = tree[i+1UL];
             auto l = 0;
             if (c > 0) {
                 for (auto k = 0; k < c; ++k) {
-                    auto x = compute_length(i+l+2);
-                    l += x;
+                    l += compute_length(i+l+2);;
                 }
             }
             len[i] = l+m+2;
@@ -28,14 +27,14 @@ auto advent2018::day08() -> result {
 
     auto metadata_sum = [&](auto i) {
         auto end = tree.begin() + i + len[i];
-        auto beg = end - tree[i+1];
+        auto beg = end - tree[i+1UL];
         return std::reduce(beg, end);
     };
 
     auto compute_value = [&](auto i, auto&& self) {
         auto c = tree[i];
         if (c == 0) { return metadata_sum(i); }
-        auto m = tree[i+1];
+        auto m = tree[i+1UL];
         std::vector<i32> children;
         children.reserve(c);
         for (auto j = 0, k = i+2; j < c; ++j) {
@@ -44,7 +43,7 @@ auto advent2018::day08() -> result {
         }
         auto l = len[i];
         auto child_value = [&](auto j) {
-            return j > 0 && j <= children.size() ? self(children[j-1], self) : 0;
+            return j > 0 && j <= std::ssize(children) ? self(children[j-1], self) : 0;
         };
         return std::transform_reduce(tree.begin()+i+l-m, tree.begin()+i+l, 0, std::plus{}, child_value);
     };

@@ -12,9 +12,6 @@ namespace {
         explicit packet(seq const& v) : variant(v) { }
 
         friend auto operator<(packet const& a, packet const& b) -> bool;
-        friend auto operator>(packet const& a, packet const& b) -> bool;
-        friend auto operator==(packet const& a, packet const& b) -> bool;
-
         friend auto operator<=>(packet const& a, packet const& b) -> std::weak_ordering;
     };
 

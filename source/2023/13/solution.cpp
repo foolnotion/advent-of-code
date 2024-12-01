@@ -69,7 +69,6 @@ namespace {
     template<bool P2>
     struct summary {
         auto operator()(auto const& m) {
-            auto sum { 0L };
             auto constexpr h { 100 };
             auto k = find_horizontal(m, P2);
             return k ? h * k : find_vertical(m, P2);

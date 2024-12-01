@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <aoc.hpp>
 
 template<>
@@ -18,28 +19,8 @@ auto advent2020::day10() -> result {
 
     std::vector<i64> counts;
     std::vector<i64> u {0};
-    std::copy(v.begin(), v.end(), std::back_inserter(u));
+    std::ranges::copy(v, std::back_inserter(u));
     u.push_back(u.back()+3);
-
-    auto get_intervals = [](std::span<i64> u) {
-        std::vector<std::span<i64>> intervals;
-        for(u64 i = 0; i < u.size(); ++i) {
-            auto j = i+1;
-            while(j < u.size() && u[j] - u[i] <= 3) {
-                ++j;
-            }
-
-            if (intervals.empty()) {
-                intervals.emplace_back(u.data()+i, j-i);
-                continue;
-            }
-            auto iv = intervals.back();
-            auto a = iv.data() - u.data();
-            auto b = a + iv.size();
-            intervals.push_back(b > i ? std::span{iv.data(), j} : std::span{&u[i], j-i});
-        }
-        return intervals;
-    };
 
     auto part2 = [](std::span<i64> u) -> u64 {
         std::vector<u64> counts(u.size(), 0);

@@ -29,7 +29,7 @@ auto advent2015::day05() -> result {
             pairs.emplace_back(str.data()+i, 2);
         }
         for (auto i = 0L; i < std::ssize(pairs)-2; ++i) {
-            for (auto j = i+2; j < std::size(pairs); ++j) {
+            for (auto j = i+2; j < std::ssize(pairs); ++j) {
                 if (pairs[i] == pairs[j]) { return true; }
             }
         }

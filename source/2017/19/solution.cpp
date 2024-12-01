@@ -4,10 +4,10 @@ namespace {
     using point  = std::complex<i32>;
 
     struct direction {
-        static constexpr auto right = point{0, +1};
-        static constexpr auto down  = point{+1, 0};
-        static constexpr auto left  = point{0, -1};
-        static constexpr auto up    = point{-1, 0};
+        [[maybe_unused]] static constexpr auto right = point{0, +1};
+        [[maybe_unused]] static constexpr auto down  = point{+1, 0};
+        [[maybe_unused]] static constexpr auto left  = point{0, -1};
+        [[maybe_unused]] static constexpr auto up    = point{-1, 0};
     };
 
     struct turn {

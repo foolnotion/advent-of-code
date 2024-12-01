@@ -4,7 +4,7 @@ namespace {
     inline auto pow(auto x, auto p) -> u64 {
         if (p == 0) { return 1; }
         auto m = x;
-        for (auto i = 1; i < p; ++i) { x *= m; }
+        for (decltype(p) i = 1; i < p; ++i) { x *= m; }
         return x;
     };
 
@@ -30,7 +30,7 @@ namespace {
         [[nodiscard]] auto find_factor(u64 n) const -> u64 {
             for (auto m : magic) {
                 if (m * n < m) {
-                    return ~u64{0} / m + 1;
+                    return (~u64{0} / m) + 1;
                 }
             }
             return 1;
@@ -80,7 +80,7 @@ auto advent2015::day20() -> result {
     constexpr u64 input{33100000};
     constexpr u64 m1{10};
     constexpr u64 m2{11};
-    constexpr u64 maxvisit{50};
+    [[maybe_unused]] constexpr u64 maxvisit{50};
 
     constexpr factorcalc calc{};
 

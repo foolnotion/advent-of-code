@@ -26,8 +26,8 @@ auto advent2023::day01() -> result {
         std::pair<u64, u64> max_digit = { 0, 0 };
         for (auto [i, c] : lz::enumerate(s)) {
             if (std::isdigit(c)) {
-                if (min_digit.first > i) { min_digit = { i, c-'0' }; }
-                if (max_digit.first <= i) { max_digit = { i, c-'0' }; }
+                if (min_digit.first > static_cast<u64>(i)) { min_digit = { i, c-'0' }; }
+                if (max_digit.first <= static_cast<u64>(i)) { max_digit = { i, c-'0' }; }
             }
         }
         for (auto&& [k, v] : values) {

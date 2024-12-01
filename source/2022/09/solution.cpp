@@ -12,9 +12,9 @@ namespace {
         k.fill({0,0});
 
         for (auto const& [m, s] : moves) {
-            for (auto j = 0; j < s; ++j) {
+            for (auto j = 0UL; j < s; ++j) {
                 k[0] += m;
-                for (auto i = 1; i < N; ++i) {
+                for (auto i = 1UL; i < N; ++i) {
                     if ((k[i-1] - k[i]).template lpNorm<-1>() < 2) { break; }
                     k[i] += (k[i-1] - k[i]).cwiseSign();
                 }

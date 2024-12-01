@@ -8,7 +8,6 @@ auto advent2020::day04() -> result {
     constexpr int nfield{7};
     std::array<std::string, nfield> required_fields = { "byr", "iyr", "eyr", "hgt", "hcl", "ecl", "pid" };
 
-    auto constexpr nan = std::numeric_limits<i32>::quiet_NaN();
     aoc::dense::map<std::string_view, bool(*)(std::string_view)> validation_rules {
         {
             "byr", [](auto s) {
@@ -82,12 +81,12 @@ auto advent2020::day04() -> result {
     auto validate_entry = [&](std::string_view entry) {
         // validate passport entry
         fields.clear();
-        auto pos = 0L;
+        auto pos = 0UL;
         while (pos < entry.size()) {
-            if (pos = entry.find(':', pos+1); pos != -1) {
+            if (pos = entry.find(':', pos+1); pos != std::string::npos) {
                 auto field = std::string_view(entry.data() + pos - 3, 3);
                 auto pos1 = entry.find(' ', pos+1);
-                if (pos1 == -1) { pos1 = entry.size(); }
+                if (pos1 == std::string::npos) { pos1 = entry.size(); }
                 auto value = std::string_view(entry.data() + pos + 1, pos1 - pos - 1);
                 auto it = validation_rules.find(field);
 

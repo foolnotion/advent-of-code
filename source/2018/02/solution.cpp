@@ -13,13 +13,11 @@ auto advent2018::day02() -> result {
         }
         return std::ranges::any_of(counts, [n](auto c) { return c == n; });
     };
-    auto exactly_two = [&](std::string_view sv) { return exactly_n(sv, 2); };
-    auto exactly_three = [&](std::string_view sv) { return exactly_n(sv, 3); };
+    auto exactly_two = [&](std::string_view sv) { return exactly_n(sv, 2U); };
+    auto exactly_three = [&](std::string_view sv) { return exactly_n(sv, 3U); };
 
     auto common_letter = [](std::string_view s, std::string_view p) {
         ENSURE(std::ssize(s) == std::ssize(p));
-        char c{};
-
         auto d = std::inner_product(s.begin(), s.end(), p.begin(), 0, std::plus<>{}, std::not_equal_to<>{});
         if (d == 1) {
             std::string result;
@@ -40,9 +38,9 @@ auto advent2018::day02() -> result {
         a += exactly_two(line);
         b += exactly_three(line);
 
-        if (i < lines.size()-1) {
-            if (auto s = common_letter(line, lines[i+1]); !s.empty()) {
-                p2 = s;
+        if (i < std::ssize(line)-1) {
+            if (auto s = common_letter(line, lines[i+1UL]); !s.empty()) {
+                p2 += s;
             }
         }
     }

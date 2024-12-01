@@ -80,7 +80,7 @@ namespace {
 
     auto parse_path(auto const& path) {
         std::vector<move> moves; moves.reserve(path.size());
-        for (auto i = 0; i < path.size();) {
+        for (auto i = 0UL; i < path.size();) {
             if (std::isalpha(path[i])) {
                 moves.emplace_back(0, path[i++]);
                 continue;
@@ -128,7 +128,7 @@ namespace {
             for (auto [j, s] : lz::enumerate(row)) {
                 auto l = (j-1) >= 0 ? j-1 : row.size()-1;
                 s->l = {row[l], orientation::up};
-                auto r = (j+1) < row.size() ? j+1 : 0;
+                auto r = (j+1) < std::ssize(row) ? j+1 : 0;
                 s->r = {row[r], orientation::up};
             }
         }
@@ -139,7 +139,7 @@ namespace {
             for (auto [j, s] : lz::enumerate(row)) {
                 auto u = j-1 >= 0 ? j-1 : row.size()-1;
                 s->u = {row[u], orientation::up};
-                auto d = j+1 < row.size() ? j+1 : 0;
+                auto d = (j+1) < std::ssize(row) ? j+1 : 0;
                 s->d = {row[d], orientation::up};
             }
         }

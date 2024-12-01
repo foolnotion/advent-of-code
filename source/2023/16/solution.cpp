@@ -10,7 +10,7 @@ using std::extents;
 namespace {
     using point = std::complex<i32>;
     using beam  = std::pair<point, point>;
-    using grid  = mdspan<char, extents<u64, std::dynamic_extent, std::dynamic_extent>>;
+    using grid  = mdspan<char, extents<i64, std::dynamic_extent, std::dynamic_extent>>;
 
     struct facing {
         static constexpr point left{0, -1};

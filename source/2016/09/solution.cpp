@@ -3,7 +3,7 @@
 namespace {
     auto length(std::string_view s, bool part2 = false) -> u64 { // NOLINT
         auto len{0UL};
-        for (auto i = 0UL; i < std::ssize(s); ++i, ++len) {
+        for (auto i = 0L; i < std::ssize(s); ++i, ++len) {
             auto c = s[i];
             if (c == '(') {
                 auto j = s.find(')', i);

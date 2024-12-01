@@ -137,6 +137,7 @@ using advent2020 = advent<2020>; // NOLINT
 using advent2021 = advent<2021>; // NOLINT
 using advent2022 = advent<2022>; // NOLINT
 using advent2023 = advent<2023>; // NOLINT
+using advent2024 = advent<2024>; // NOLINT
 
 namespace aoc {
 template<typename T1, typename T2>
@@ -243,7 +244,7 @@ struct knot_hash {
 
 inline auto trim_extra_space(std::string const& s) {
     std::string q; q.reserve(s.size());
-    for (auto i = 0; i < s.size(); ) {
+    for (auto i = 0UL; i < s.size(); ) {
         q.push_back(s[i]);
         if (std::isspace(s[i])) {
             while(std::isspace(s[i])) { ++i; }

@@ -11,7 +11,7 @@ auto advent2017::day09() -> result {
     int nc{0}; // cancelled count
     bool garbage = false;
 
-    for (auto i = 0, j = 0; i < input.size(); ++i) {
+    for (auto i = 0, j = 0; i < std::ssize(input); ++i) {
         auto c = input[i];
         if (c == '!') {
             i += 1;

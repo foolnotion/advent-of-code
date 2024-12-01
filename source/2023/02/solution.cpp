@@ -42,7 +42,6 @@ auto advent2023::day02() -> result {
         std::string_view v{s.begin()+p+2, s.end()};
         for (auto const w : std::views::split(v, "; "sv)) {
             std::string_view sv{w.begin(), w.end()};
-            i64 value{};
             std::string color;
             for (auto z : std::views::split(sv, ", "sv)) {
                 auto [value, color] = scn::scan<i64, std::string>(z, "{} {}")->values();

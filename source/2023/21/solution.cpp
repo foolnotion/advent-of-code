@@ -32,8 +32,8 @@ namespace {
 template<>
 auto advent2023::day21() -> result {
     auto input = aoc::util::readlines("./source/2023/21/example.txt");
-    auto const nrows{input.size()};
-    auto const ncols{input.front().size()};
+    auto const nrows{std::ssize(input)};
+    auto const ncols{std::ssize(input.front())};
     auto buf = parse(input);
     mdspan grid(buf.data(), nrows, ncols);
 

@@ -49,8 +49,8 @@ namespace {
 
         aoc::dense::map<u64, tile> flipped;
         for (auto const& line : input) {
-            auto i = 0;
-            auto j = 0;
+            auto i = 0UL;
+            auto j = 0UL;
             std::vector<int> directions;
             while (j < line.size()) {
                 if (j < line.size() - 1) { ++j; }

@@ -85,7 +85,6 @@ namespace {
             for (auto i = 0; i < std::ssize(code); ++i) {
                 if (i < 0 || i >= std::ssize(code)) { break; }
                 auto const& in = code[i];
-                auto j = i;
                 switch(in.opcode) {
                     case instruction::snd: {
                         auto x = std::visit(*this, in.a);
@@ -136,6 +135,9 @@ namespace {
                         auto y = std::visit(*this, in.b);
                         if (x > 0) { i += y-1; }
                         break;
+                    }
+                    default: {
+                        throw std::runtime_error("unknown opcode");
                     }
                 }
             }

@@ -1,3 +1,4 @@
+#include <algorithm>
 #include <aoc.hpp>
 
 namespace {
@@ -91,11 +92,11 @@ auto advent2020::day16() -> result {
 
         u64 p{1};
         std::vector<std::pair<int, int>> counts(ranges.size());
-        for (size_t i = 0; i < cache.rows(); ++i) {
+        for (auto i = 0L; i < cache.rows(); ++i) {
             auto range = ranges[i];
-            for (size_t j = 0; j < cache.cols(); ++j) {
+            for (auto j = 0L; j < cache.cols(); ++j) {
                 auto values = std::span<u64>(m.col(j).data(), m.col(j).size());
-                cache(i, j) = std::all_of(values.begin(), values.end(), [&](auto v) { return range[0].contains(v) || range[1].contains(v); });
+                cache(i, j) = std::ranges::all_of(values, [&](auto v) { return range[0].contains(v) || range[1].contains(v); });
             }
             counts[i] = { i, (cache.row(i).array() == 1).count() };
         }
