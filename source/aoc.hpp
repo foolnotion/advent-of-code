@@ -40,7 +40,7 @@
 #include <Lz/Lz.hpp>
 
 #include <util/constexpr-xxh3.h>
-#include <util/xxhash.hpp>
+#include <include/xxhash.hpp>
 
 #include <libassert/assert.hpp>
 

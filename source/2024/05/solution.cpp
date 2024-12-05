@@ -1,5 +1,5 @@
 #include <aoc.hpp>
-#include <util/dynamic_bitset.hpp>
+#include <sul/dynamic_bitset.hpp>
 
 namespace {
     using bitset = sul::dynamic_bitset<u64>;

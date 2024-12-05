@@ -29,6 +29,7 @@
             impureUseNativeOptimizations = true;
             nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools_19 cppcheck ninja ];
             buildInputs = with pkgs; [
+              bfg-repo-cleaner
               boost
               cmake-language-server
               cpp-flux
@@ -36,6 +37,7 @@
               cpp-sort
               cpptrace
               doctest
+              dynamic-bitset
               eigen
               fast-float
               fastor
@@ -59,6 +61,7 @@
               tlx
               unordered_dense
               valgrind
+              xxhash_cpp
               z3_4_12
               zstd
             ];

@@ -235,6 +235,7 @@ find_package(date REQUIRED)
 #find_package(gtl REQUIRED)
 find_package(fmt REQUIRED)
 find_package(scn REQUIRED)
+find_package(sul-dynamic_bitset REQUIRED)
 find_package(cpp-lazy REQUIRED)
 find_package(cpp-sort REQUIRED)
 find_package(libassert REQUIRED)
@@ -242,6 +243,7 @@ find_package(mdspan REQUIRED)
 find_package(nlohmann_json REQUIRED)
 find_package(unordered_dense REQUIRED)
 find_package(pratt-parser REQUIRED)
+find_package(xxhash_cpp REQUIRED)
 
 target_link_libraries(aoc_lib PUBLIC
     Boost::boost
@@ -255,8 +257,10 @@ target_link_libraries(aoc_lib PUBLIC
     nlohmann_json::nlohmann_json
     pratt-parser::pratt-parser
     scn::scn
+    sul::dynamic_bitset
     unordered_dense::unordered_dense
     z3
+    xxhash_cpp::xxhash_cpp
 )
 
 # ---- Declare executable ----

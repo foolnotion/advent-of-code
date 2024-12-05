@@ -1,5 +1,5 @@
 #include <aoc.hpp>
-#include <util/dynamic_bitset.hpp>
+#include <sul/dynamic_bitset.hpp>
 
 namespace {
     using point = Eigen::Matrix<i64, 2, 1>;
