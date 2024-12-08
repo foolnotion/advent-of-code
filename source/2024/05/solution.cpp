@@ -19,7 +19,6 @@ template<>
 auto advent2024::day05() -> result {
     auto lines = aoc::util::readlines("./source/2024/05/input.txt");
     aoc::dense::map<u64, std::unique_ptr<node>> nodes;
-    std::vector<std::pair<u64, u64>> pairs;
     decltype(lines)::iterator it;
 
     auto insert = [&](auto id) {
@@ -34,20 +33,8 @@ auto advent2024::day05() -> result {
             auto* pa = insert(a);
             auto* pb = insert(b);
             pa->children.push_back(pb);
+            pb->antecedents.set(a);
         }
-    }
-
-    bitset seen(nbits, false);
-    std::function<void(node*)> update_antecedents = [&](auto* p) {
-        if (seen.test_set(p->id)) { return; }
-        for (auto* c : p->children) {
-            c->antecedents.set(p->id);
-            update_antecedents(c);
-        }
-    };
-
-    for (auto const& [id, ptr] : nodes) {
-        update_antecedents(ptr.get());
     }
 
     auto p1{0UL};
