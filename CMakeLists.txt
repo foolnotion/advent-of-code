@@ -33,21 +33,22 @@ target_include_directories(
 target_compile_features(aoc_lib PUBLIC cxx_std_20)
 
 # ---- Find deps ----
-find_package(Boost CONFIG REQUIRED)
-find_package(Eigen3 REQUIRED NO_MODULE)
-find_package(date REQUIRED)
 #find_package(gtl REQUIRED)
-find_package(fmt REQUIRED)
-find_package(scn REQUIRED)
-find_package(sul-dynamic_bitset REQUIRED)
-find_package(cpp-lazy REQUIRED)
-find_package(cpp-sort REQUIRED)
-find_package(libassert REQUIRED)
-find_package(mdspan REQUIRED)
-find_package(nlohmann_json REQUIRED)
-find_package(unordered_dense REQUIRED)
-find_package(pratt-parser REQUIRED)
-find_package(xxhash_cpp REQUIRED)
+find_package(Boost CONFIG REQUIRED)
+find_package(cpp-lazy CONFIG REQUIRED)
+find_package(cpp-sort CONFIG REQUIRED)
+find_package(date CONFIG REQUIRED)
+find_package(Eigen3 CONFIG REQUIRED NO_MODULE)
+find_package(fmt CONFIG REQUIRED)
+find_package(libassert CONFIG REQUIRED)
+find_package(mdspan CONFIG REQUIRED)
+find_package(nanobench CONFIG REQUIRED)
+find_package(nlohmann_json CONFIG REQUIRED)
+find_package(pratt-parser CONFIG REQUIRED)
+find_package(scn CONFIG REQUIRED)
+find_package(sul-dynamic_bitset CONFIG REQUIRED)
+find_package(unordered_dense CONFIG REQUIRED)
+find_package(xxhash_cpp CONFIG REQUIRED)
 
 target_link_libraries(aoc_lib PUBLIC
     Boost::boost
@@ -58,6 +59,7 @@ target_link_libraries(aoc_lib PUBLIC
     fmt::fmt
     #gtl
     libassert::assert
+    nanobench::nanobench
     nlohmann_json::nlohmann_json
     pratt-parser::pratt-parser
     scn::scn
