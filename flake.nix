@@ -53,6 +53,7 @@
               libdwarf
               linuxPackages_latest.perf
               mdspan
+              nanobench
               nlohmann_json
               pkg-config
               pratt.packages.${system}.default
