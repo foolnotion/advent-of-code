@@ -13,3 +13,4 @@
 #include "advent2020.hpp"
 #include "advent2022.hpp"
 #include "advent2023.hpp"
+#include "advent2024.hpp"
