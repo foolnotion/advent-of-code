@@ -10,7 +10,8 @@ std::array const advent2024_results {
     /* day 05 */ std::tuple{"6949", "4145"},
     /* day 06 */ std::tuple{"4663", "1530"},
     /* day 07 */ std::tuple{"1260333054159", "162042343638683"},
-    /* day 08 */ std::tuple{"320", "1157"}
+    /* day 08 */ std::tuple{"320", "1157"},
+    /* day 09 */ std::tuple{"6390180901651", "6412390114238"}
 };
 
 TEST_CASE("advent 2024 correctness" * doctest::test_suite("2024")) {
@@ -24,7 +25,7 @@ TEST_CASE("advent 2024 correctness" * doctest::test_suite("2024")) {
 TEST_CASE("advent 2024 performance" * doctest::test_suite("2024")) {
     namespace nb = ankerl::nanobench;
     nb::Bench bench;
-    advent2023 advent;
+    advent2024 advent;
     // bench.output(nullptr);
     aoc::util::hash hash;
     auto h{0UL};
