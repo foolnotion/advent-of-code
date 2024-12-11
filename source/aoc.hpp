@@ -30,6 +30,7 @@
 #include <fmt/color.h>
 #include <fmt/core.h>
 #include <fmt/ranges.h>
+#include <fmt/ostream.h>
 #include <scn/scan.h>
 #include <scn/ranges.h>
 #include <ankerl/unordered_dense.h>

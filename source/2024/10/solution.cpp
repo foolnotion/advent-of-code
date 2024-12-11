@@ -45,7 +45,7 @@ auto advent2024::day10() -> result {
         }
         return c;
     };
-    auto const p1 = std::transform_reduce(start.begin(), start.end(), 0L, std::plus{}, [&](auto const p){ return count_trailheads(p, false); });
-    auto const p2 = std::transform_reduce(start.begin(), start.end(), 0L, std::plus{}, [&](auto const p){ return count_trailheads(p, true); });
+    auto const p1 = std::transform_reduce(start.begin(), start.end(), 0L, std::plus{}, [&](auto const& p){ return count_trailheads(p, false); });
+    auto const p2 = std::transform_reduce(start.begin(), start.end(), 0L, std::plus{}, [&](auto const& p){ return count_trailheads(p, true); });
     return aoc::result(p1, p2);
 }
