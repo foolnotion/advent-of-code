@@ -3,7 +3,7 @@
 .idea/
 .vs/
 .vscode/
-build/
+build*/
 cmake/open-cpp-coverage.cmake
 cmake-build-*/
 prefix/
