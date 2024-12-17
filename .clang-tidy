@@ -6,6 +6,7 @@ Checks: "*,\
   -cppcoreguidelines-pro-bounds-constant-array-index,\
   -readability-implicit-bool-conversion,\
   -readability-identifier-length,\
+  -readability-math-missing-parentheses,\
   -google-readability-todo,\
   -abseil-*,\
   -altera-*,\
