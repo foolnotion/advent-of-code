@@ -1,5 +1,4 @@
 #include <aoc.hpp>
-#include <util/plf_list.h>
 
 namespace {
 struct block {
