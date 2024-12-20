@@ -45,6 +45,10 @@
 
 #include <libassert/assert.hpp>
 
+#define MDSPAN_IMPL_STANDARD_NAMESPACE std
+#define MDSPAN_IMPL_PROPOSED_NAMESPACE experimental
+#include <mdspan/mdspan.hpp>
+
 #define EXPECT ASSERT
 #define ENSURE ASSERT
 

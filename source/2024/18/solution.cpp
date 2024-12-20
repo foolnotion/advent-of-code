@@ -1,7 +1,4 @@
 #include <aoc.hpp>
-#define MDSPAN_IMPL_STANDARD_NAMESPACE std
-#define MDSPAN_IMPL_PROPOSED_NAMESPACE experimental
-#include <mdspan/mdspan.hpp>
 #include <sul/dynamic_bitset.hpp>
 
 namespace {
