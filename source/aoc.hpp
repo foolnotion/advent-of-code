@@ -43,6 +43,8 @@
 #include <util/constexpr-xxh3.h>
 #include <include/xxhash.hpp>
 
+#include <util/random.hpp>
+
 #include <libassert/assert.hpp>
 
 #define MDSPAN_IMPL_STANDARD_NAMESPACE std
