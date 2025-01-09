@@ -91,11 +91,7 @@ auto advent2024::day23() -> result {
     }
     auto const nodes = g.nodes();
     auto const p1 = std::transform_reduce(nodes.begin(), nodes.end(), 0, std::plus{}, std::mem_fn(&node::count));
-
     auto max_clique = g.max_clique();
-    auto extract_name = [](auto const* n) { return n->name() + ","; };
-    auto password = std::transform_reduce(max_clique.begin(), max_clique.end(), std::string{}, std::plus{}, extract_name);
-    password.pop_back();
-    auto const p2 = password;
+    auto const p2 = fmt::format("{}", fmt::join(max_clique | vs::transform(&node::name), ","));
     return aoc::result(p1, p2);
 }
