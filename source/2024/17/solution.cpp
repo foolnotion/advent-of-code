@@ -11,8 +11,7 @@ namespace {
 
     struct computer {
         enum : u8 { a = 0, b, c };
-        // registers
-        std::array<u64, 3> r{};
+        std::array<u64, 3> r{}; // registers
 
         [[nodiscard]] auto combo(u64 b) const {
             if (b < 4) { return b; }
@@ -126,5 +125,8 @@ auto advent2024::day17() -> result {
         }
     };
     dfs(0L, 0UL);
-    return aoc::result(comp.buf, best);
+    std::add_pointer_t<std::string(u64)> to_str = &std::to_string;
+    auto const p1 = fmt::format("{}", fmt::join(comp.buf | std::views::transform(to_str), ","));
+    auto const p2 = best;
+    return aoc::result(p1, p2);
 }
