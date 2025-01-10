@@ -69,14 +69,14 @@ auto advent2024::day18() -> result {
     auto [p1, bad] = shortest_path(start, end);
 
     // part 2
-    point p2;
+    std::string p2;
     for (auto const& line : lines | std::views::drop(threshold)) {
         auto [x, y] = scn::scan<i32, i32>(line, "{},{}")->values();
         grid(y, x) = '#';
         if (bad.test(x * ncol + y)) { continue; }
         auto result = shortest_path(start, end);
         if (result.first == no_path) {
-            p2 = {x, y};
+            p2 = fmt::format("{},{}", x, y);
             break;
         }
         std::swap(bad, result.second);
