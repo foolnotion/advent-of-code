@@ -20,28 +20,36 @@ constexpr auto next(u32 n) -> u32 {
 template<>
 auto advent2024::day22() -> result {
     auto const lines = aoc::util::readlines("./source/2024/22/input.txt");
-    constexpr auto r{2000UL};
+    constexpr auto rounds{2000UL};
     aoc::random::sfc32 rng{};
-    aoc::dense::map<u32, u32> sums;
     auto sum{0UL};
-    for (auto n : lines | vs::transform(aoc::util::read<u32>)) {
-        aoc::dense::set<u32> seen;
-        auto h = rng();
 
-        for (auto i = 0; i < r; ++i) {
+    constexpr auto r{19}; // price change range from -9 to +9
+    constexpr auto s{r*r*r*r}; // total size of the cache array
+
+    using extents = std::extents<i32, r, r, r, r>;
+    using mdarray = std::experimental::mdarray<u32, extents, std::layout_right, std::array<u32, s>>;
+
+    mdarray sums(r, r, r, r);
+    mdarray seen(r, r, r, r);
+
+    for (auto n : lines | vs::transform(aoc::util::read<u32>)) {
+        rs::fill(seen.container(), 1);
+        std::array<u32, 4> changes{0,0,0,0};
+
+        for (auto i = 0; i < rounds; ++i) {
             auto const m = next(n);
             auto const p = m % 10;
-            auto const c = static_cast<u8>(p - n % 10);
-            h = (h << 8U) + c;
-            if (auto [it, ok] = seen.insert(h); ok) {
-                sums[h] += p;
-            }
+            auto const c = p + 9U - n % 10;
+            rs::rotate(changes, changes.begin()+1);
+            changes.back() = c;
+            auto [x, y, z, w] = changes;
+            sums(x, y, z, w) += p * std::exchange(seen(x, y, z, w), 0);
             n = m;
         }
         sum += n;
     }
-
     auto const p1 = sum;
-    auto const p2 = rs::max(sums.values() | vs::transform([](auto const p) { return p.second; }));
+    auto const p2 = rs::max(sums.container());
     return aoc::result(p1, p2);
 }
