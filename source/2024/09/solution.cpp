@@ -1,70 +1,97 @@
+#include <algorithm>
 #include <aoc.hpp>
 
+namespace rs = std::ranges;
+namespace vs = std::views;
+
 namespace {
-struct block {
-    i32 id{-1};
-    i32 size{0};
-    bool moved{false};
-};
+struct file {
+    u64 index;
+    u64 id;
+    u64 size;
 
-auto checksum(auto const& blocks) {
-    auto sum{0UL};
-    auto i = 0;
-    for (auto const& b : blocks) {
-        if (b.id >= 0) {
-            for (auto j = i; j < i + b.size; ++j) {
-                sum += b.id * j;
-            }
-        }
-        i += b.size;
+    constexpr auto operator==(file const&) const -> bool = default;
+
+    [[nodiscard]] auto checksum() const -> u64 {
+        auto nums = vs::iota(index, index+size);
+        return std::reduce(nums.begin(), nums.end()) * id;
     }
-    return sum;
 };
 
-auto fragment(auto blocks, bool part2) {
-    auto a = std::prev(blocks.end());
-    auto b = blocks.begin();
-
-    while(true) {
-        if (part2) { b = blocks.begin(); }
-        for(; a != b && (a->id == -1 || a->moved); --a){}
-        if (a == b) { break; }
-
-        auto const size = part2 ? a->size : 1;
-        for(; b != a && (b->id >=  0 || b->size < size); ++b){}
-
-        if (b == a) {
-            if (part2) { --a; continue; }
-            break;
-        }
-
-        if (a->size == b->size) { // file fits exactly - do a swap
-            std::swap(a->id, b->id);
-            b->moved = true;
-        } else if (a->size < b->size) { // file fits into space
-            b->size -= a->size;
-            blocks.insert(b, {a->id, a->size, true});
-            a->id = -1;
-        } else { // file doesn't fit
-            b->id = a->id;
-            a->size -= b->size;
-        }
-    }
-    return checksum(blocks);
-};
+constexpr auto operator<=>(file const& a, file const& b) -> std::weak_ordering {
+    return a.index <=> b.index;
+}
 } // namespace
+
+template<>
+struct fmt::formatter<file> {
+    template<typename Context>
+    constexpr auto parse(Context& ctx) { return ctx.begin(); }
+
+    template<typename Context>
+    constexpr auto format(file const& f, Context& ctx) const {
+        return fmt::format_to(ctx.out(), "[{}, {}, {}]", f.index, f.id, f.size);
+    }
+};
 
 template<>
 auto advent2024::day09() -> result {
     auto const input = aoc::util::readlines("./source/2024/09/input.txt").front();
+    constexpr auto n = 10UL;
 
-    std::list<block> blocks;
-    for (auto i = 0; i < std::ssize(input); ++i) {
-        auto const id = i % 2 == 0 ? i/2 : -1;
-        auto const size = input[i]-'0';
-        blocks.insert(blocks.end(), {id, size});
+    using queue = aoc::priority_queue<u64, rs::greater>;
+    std::array<queue, n> space;
+    aoc::priority_queue<file> files;
+    for (auto i = 0, s = 0; i < std::ssize(input); ++i) {
+        auto const v = input[i]-'0';
+        if (i % 2 == 0) { files.emplace(s, i/2, v); }
+        else            { if (v > 0) { space[v].push(s); } }
+        s += v;
     }
-    auto const p1 = fragment(blocks, false);
-    auto const p2 = fragment(blocks, true);
+
+    auto top_or_default = [](queue const& q) {
+        return q.empty() ? ~0UL : q.top();
+    };
+
+    auto defrag = [&](auto files, auto space, bool move_whole_files = false) {
+        aoc::priority_queue<file> defragged;
+
+        while(!files.empty()) {
+            auto f = files.top();
+            files.pop();
+
+            auto const x = move_whole_files ? f.size : 1;
+            auto it = rs::min_element(space.begin()+x, space.end(), rs::less{}, top_or_default);
+
+            if (it == space.end() || it->empty() || it->top() > f.index) {
+                defragged.emplace(f.index, f.id, f.size);
+                continue;
+            }
+            auto const s = rs::distance(space.begin(), it);
+            auto const i = it->top();
+            it->pop();
+
+            if (f.size <= s) {
+                defragged.emplace(i, f.id, f.size);
+                space[f.size].push(f.index);
+                if (s > f.size) {
+                    space[s-f.size].push(i+f.size);
+                }
+            } else if (f.size > s) {
+                if (move_whole_files) { throw std::runtime_error("logical problem"); }
+                defragged.emplace(i, f.id, s);
+                files.emplace(f.index, f.id, f.size-s);
+            }
+        }
+        return defragged;
+    };
+
+    auto checksum = [](auto files) {
+        auto const& vals = files.values();
+        return std::transform_reduce(vals.begin(), vals.end(), 0UL, std::plus{}, std::mem_fn(&file::checksum));
+    };
+
+    auto const p1 = checksum(defrag(files, space, false));
+    auto const p2 = checksum(defrag(files, space, true));
     return aoc::result(p1, p2);
 }
