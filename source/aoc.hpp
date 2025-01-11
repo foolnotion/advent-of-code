@@ -44,6 +44,7 @@
 #include <include/xxhash.hpp>
 
 #include <util/random.hpp>
+#include <util/priority_queue.hpp>
 
 #include <libassert/assert.hpp>
 
