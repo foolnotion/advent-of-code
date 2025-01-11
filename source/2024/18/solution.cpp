@@ -4,7 +4,7 @@
 namespace {
     using point   = aoc::point<i32, 2>;
     using extents = std::extents<i32, std::dynamic_extent, std::dynamic_extent>;
-    using mdspan  = std::mdspan<char, extents>;
+    using mdarray = std::experimental::mdarray<char, extents>;
     using bitset  = sul::dynamic_bitset<u64>;
 
     auto operator+(point const& a, point const& b) -> point {
@@ -17,8 +17,8 @@ auto advent2024::day18() -> result {
     auto const lines = aoc::util::readlines("./source/2024/18/input.txt");
     constexpr auto nrow{71};
     constexpr auto ncol{71};
-    std::vector<char> data((static_cast<std::size_t>(nrow * ncol)), '.');
-    mdspan grid(data.data(), nrow, ncol);
+    mdarray grid(nrow, ncol);
+    std::ranges::fill(grid.container(), '.');
 
     auto valid = [&](point const p) {
         return p[0] >= 0 && p[0] < nrow && p[1] >= 0 && p[1] < ncol;
