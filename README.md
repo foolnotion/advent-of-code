@@ -4,33 +4,17 @@ This is the aoc project.
 
 ## Progress
 
-| Day | 2015 | 2016 | 2017 | 2018 | 2019 | 2020 | 2021 | 2022 | 2023 |
-|----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|:----:|
-| 1   | ✅   | ✅   | ✅   | ✅   | ✅   | ✅   | ✅   | ✅   |      |
-| 2   | ✅   | ✅   | ✅   | ✅   | ✅   | ✅   | ✅   | ✅   |      |
-| 3   | ✅   | ✅   | ✅   |      | ✅   | ✅   | ✅   | ✅   |      |
-| 4   | ✅   | ✅   | ✅   |      |      | ✅   | ✅   | ✅   |      |
-| 5   | ✅   | ✅   | ✅   |      | ✅   | ✅   | ✅   | ✅   |      |
-| 6   | ✅   | ✅   | ✅   |      | ✅   | ✅   | ✅   | ✅   |      |
-| 7   | ✅   | ✅   | ✅   |      | ✅   | ✅   | ✅   | ✅   |      |
-| 8   | ✅   | ✅   | ✅   |      | ✅   | ✅   | ✅   | ✅   |      |
-| 9   | ✅   | ✅   | ✅   |      | ✅   | ✅   | ✅   | ✅   |      |
-| 10  | ✅   | ✅   | ✅   |      | ✅   | ✅   | ✅   | ✅   |      |
-| 11  | ✅   | ✅   | ✅   |      | ✅   | ✅   | ✅   | ✅   |      |
-| 12  | ✅   | ✅   | ✅   |      | ✅   | ✅   | ✅   | ✅   |      |
-| 13  | ✅   | ✅   | ✅   | ✅   | ✅   | ✅   | ✅   | ✅   |      |
-| 14  | ✅   | ✅   | ✅   |      | ✅   | ✅   | ✅   | ✅   |      |
-| 15  | ✅   | ✅   | ✅   |      | ✅   | ✅   | ✅   | ✅   |      |
-| 16  | ✅   | ✅   |      |      | ✅   | ✅   | ✅   | ✅   |      |
-| 17  | ✅   | ✅   |      |      | ✅   | ✅   | ✅   | ✅   |      |
-| 18  | ✅   | ✅   |      |      | ✅   | ✅   | ✅   | ✅   |      |
-| 19  | ✅   | ✅   |      |      | ✅   | ✅   | ✅   | ✅   |      |
-| 20  | ✅   | ✅   |      |      | ✅   | ✅   | ✅   | ✅   |      |
-| 21  | ✅   | ✅   |      |      |      | ✅   | ✅   | ✅   |      |
-| 22  | ✅   | ✅   |      |      |      | ✅   | ✅   | ✅   |      |
-| 23  | ✅   | ✅   |      |      |      | ✅   | ✅   | ✅   |      |
-| 24  | ✅   | ✅   |      |      |      | ✅   | ✅   | ✅   |      |
-| 25  | ✅   | ✅   |      |      |      | ✅   | ✅   | ✅   |      |
+![](https://img.shields.io/badge/⭐%202015-50-brightgreen)
+![](https://img.shields.io/badge/⭐%202016-50-brightgreen)
+![](https://img.shields.io/badge/⭐%202017-50-brightgreen)
+![](https://img.shields.io/badge/⭐%202018-22-yellow)
+![](https://img.shields.io/badge/⭐%202019-40-yellow)
+![](https://img.shields.io/badge/⭐%202020-50-brightgreen)\
+![](https://img.shields.io/badge/⭐%202021-50-brightgreen)
+![](https://img.shields.io/badge/⭐%202022-50-brightgreen)
+![](https://img.shields.io/badge/⭐%202023-50-brightgreen)
+![](https://img.shields.io/badge/⭐%202024-50-brightgreen)
+![](https://img.shields.io/badge/⭐%202025-50-brightgreen)
 
 # Building and installing
 
@@ -42,8 +26,4 @@ See the [CONTRIBUTING](CONTRIBUTING.md) document.
 
 # Licensing
 
-<!--
-Please go to https://choosealicense.com/licenses/ and choose a license that
-fits your needs. The recommended license for a project of this type is the
-GNU AGPLv3.
--->
+[MIT](LICENSE)
