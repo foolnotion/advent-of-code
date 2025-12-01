@@ -147,6 +147,7 @@ using advent2021 = advent<2021>; // NOLINT
 using advent2022 = advent<2022>; // NOLINT
 using advent2023 = advent<2023>; // NOLINT
 using advent2024 = advent<2024>; // NOLINT
+using advent2025 = advent<2025>; // NOLINT
 
 namespace aoc {
 template<typename T1, typename T2>
