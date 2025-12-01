@@ -19,19 +19,18 @@
             inherit system;
             overlays = [ foolnotion.overlay ];
           };
-          stdenv = pkgs.llvmPackages_19.stdenv;
-          #stdenv = pkgs.gcc14Stdenv;
+          stdenv = pkgs.llvmPackages_21.stdenv;
         in
         rec {
           devShells.default = stdenv.mkDerivation {
             name = "aoc";
             hardeningDisable = [ "all" ];
             impureUseNativeOptimizations = true;
-            nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools_19 cppcheck ninja ];
+            nativeBuildInputs = with pkgs; [ cmake-init cmake clang-tools cppcheck ninja ];
             buildInputs = with pkgs; [
               bfg-repo-cleaner
               boost
-              cmake-language-server
+              # cmake-language-server
               cpp-flux
               cpp-lazy
               cpp-sort
@@ -63,18 +62,14 @@
               unordered_dense
               valgrind
               xxhash_cpp
-              z3_4_12
+              z3
               zstd
             ];
 
             shellHook = ''
               alias bb="cmake --build build -j"
             '';
-
-            env = {
-              CLANGD_FLAGS = "--query-driver=${pkgs.lib.getExe stdenv.cc}";
-            };
-          };
         };
+      };
     };
 }
